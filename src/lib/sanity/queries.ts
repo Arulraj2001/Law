@@ -231,6 +231,32 @@ export async function getFeaturedTestimonialsSanity() {
   });
 }
 
+const ALL_TESTIMONIALS_QUERY = groq`
+  *[_type == "testimonial" && isActive == true] 
+  | order(sortOrder asc) {
+    _id,
+    studentName,
+    currentPost,
+    "course": course->{ title },
+    courseName,
+    college,
+    batchYear,
+    quote,
+    videoUrl,
+    type,
+    rating,
+    isFeatured,
+    photo { asset->{ url, metadata { dimensions } } }
+  }
+`;
+
+export async function getAllTestimonialsSanity() {
+  return sanityClient.fetch(ALL_TESTIMONIALS_QUERY, {}, {
+    next: { tags: ["testimonials"], revalidate: 3600 },
+  });
+}
+
+
 // ==========================================
 // BLOG POSTS
 // ==========================================
