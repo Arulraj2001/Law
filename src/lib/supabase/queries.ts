@@ -213,6 +213,15 @@ export async function getLatestExamUpdates(
 // SITE SETTINGS
 // ==========================================
 export async function getSiteSettings(): Promise<Record<string, string>> {
+  const isMockEnv =
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL === "your_supabase_url" ||
+    !process.env.NEXT_PUBLIC_SUPABASE_URL.startsWith("http");
+
+  if (isMockEnv) {
+    return (globalThis as any).__mockSiteSettings || {};
+  }
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from("site_settings")
@@ -230,6 +239,15 @@ export async function getSiteSettings(): Promise<Record<string, string>> {
 }
 
 export async function getSetting(key: string): Promise<string | null> {
+  const isMockEnv =
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL === "your_supabase_url" ||
+    !process.env.NEXT_PUBLIC_SUPABASE_URL.startsWith("http");
+
+  if (isMockEnv) {
+    return (globalThis as any).__mockSiteSettings?.[key] || null;
+  }
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from("site_settings")

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceSupabaseClient } from "@/lib/supabase/server";
 import type { LeadInsert } from "@/lib/supabase/types";
+import { SITE_CONFIG } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
   try {
@@ -84,7 +85,7 @@ export async function POST(request: NextRequest) {
       console.log("[Dev Mode] Lead received successfully:", leadData);
     }
 
-    // Optional: Send email via Resend if valid key provided
+    // Send email via Resend if configured
     if (
       process.env.RESEND_API_KEY &&
       process.env.RESEND_API_KEY !== "your_resend_key" &&
@@ -93,23 +94,84 @@ export async function POST(request: NextRequest) {
       try {
         const { Resend } = await import("resend");
         const resend = new Resend(process.env.RESEND_API_KEY);
+
+        const emailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>New Lead — XYZ Law Coaching</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f0;">
+  <div style="background: #042C53; color: white; padding: 24px; border-radius: 12px 12px 0 0;">
+    <h1 style="margin: 0; font-size: 22px;">
+      🎯 New Lead — XYZ Law Coaching
+    </h1>
+    <p style="margin: 8px 0 0; opacity: 0.8; font-size: 14px;">
+      ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST
+    </p>
+  </div>
+  
+  <div style="background: white; padding: 24px; border-radius: 0 0 12px 12px; border: 1px solid #e0e0e0; border-top: none;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr style="border-bottom: 1px solid #f0f0f0;">
+        <td style="padding: 10px 0; color: #666; font-size: 13px; width: 40%;">Name</td>
+        <td style="padding: 10px 0; font-weight: 600; color: #042C53;">${name}</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #f0f0f0;">
+        <td style="padding: 10px 0; color: #666; font-size: 13px;">Phone / WhatsApp</td>
+        <td style="padding: 10px 0; font-weight: 600; color: #1D9E75;">${phone}</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #f0f0f0;">
+        <td style="padding: 10px 0; color: #666; font-size: 13px;">Email</td>
+        <td style="padding: 10px 0; font-weight: 500; color: #444;">${email || "Not provided"}</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #f0f0f0;">
+        <td style="padding: 10px 0; color: #666; font-size: 13px;">Course Interest</td>
+        <td style="padding: 10px 0; font-weight: 600;">${course_interest || "Not specified"}</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #f0f0f0;">
+        <td style="padding: 10px 0; color: #666; font-size: 13px;">Form Type</td>
+        <td style="padding: 10px 0; text-transform: capitalize;">${form_type}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 0; color: #666; font-size: 13px;">Message</td>
+        <td style="padding: 10px 0; color: #444;">${message || "No message"}</td>
+      </tr>
+    </table>
+    
+    <div style="margin-top: 20px; padding: 16px; background: #e1f5ee; border-radius: 8px; border-left: 4px solid #1D9E75;">
+      <p style="margin: 0; font-weight: 600; color: #0F6E56; font-size: 14px;">
+        ⚡ Quick action
+      </p>
+      <p style="margin: 6px 0 12px; color: #444; font-size: 13px;">
+        Reply on WhatsApp immediately for higher conversion rates.
+      </p>
+      <a href="https://wa.me/${phone.replace(/\\D/g, "")}?text=${encodeURIComponent(
+            "Hi " + name + ", thank you for your enquiry about " + (course_interest || "our courses") + ". How can we help you?"
+          )}" 
+        style="display: inline-block; background: #25D366; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">
+        💬 Reply on WhatsApp
+      </a>
+    </div>
+    
+    <p style="margin-top: 20px; font-size: 12px; color: #999; text-align: center;">
+      XYZ Law Coaching Admin · View all leads at /studio
+    </p>
+  </div>
+</body>
+</html>
+`;
+
         await resend.emails.send({
-          from: "leads@yourdomain.com",
-          to: "contact@yourdomain.com",
-          subject: `New Lead: ${name} — ${course_interest || "General Enquiry"}`,
-          html: `
-            <h2>New Lead Received</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Phone:</strong> ${phone}</p>
-            <p><strong>Email:</strong> ${email || "Not provided"}</p>
-            <p><strong>Course:</strong> ${course_interest || "Not specified"}</p>
-            <p><strong>Form Type:</strong> ${form_type}</p>
-            <p><strong>Message:</strong> ${message || "None"}</p>
-            <p><strong>Time:</strong> ${new Date().toLocaleString("en-IN")}</p>
-          `,
+          from: process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev",
+          to: SITE_CONFIG.email,
+          subject: `New ${form_type} lead: ${name} — ${course_interest || "General"}`,
+          html: emailHtml,
         });
       } catch (emailError) {
-        console.error("Email send failed:", emailError);
+        // Log error but don't fail the lead save
+        console.error("Email send failed (non-fatal):", emailError);
       }
     }
 

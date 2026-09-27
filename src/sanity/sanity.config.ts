@@ -7,9 +7,13 @@ import { structure } from "./structure";
 import {
   welcomeWidget,
   statsWidget,
-  leadsWidget,
+  siteSettingsWidget,
   quickActionsWidget,
+  batchWidget,
   examUpdatesWidget,
+  contentHealthWidget,
+  leadsWidget,
+  studioGuideWidget,
 } from "./plugins/dashboard";
 import { leadsPlugin } from "./plugins/leads";
 
@@ -22,6 +26,29 @@ export default defineConfig({
   title: "XYZ Law Coaching — Admin",
   projectId,
   dataset,
+  document: {
+    productionUrl: async (prev, context) => {
+      const { document } = context;
+      const baseUrl =
+        process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+      if (document._type === "blogPost") {
+        const slug = (document.slug as any)?.current;
+        if (slug) return `${baseUrl}/blog/${slug}`;
+      }
+
+      if (document._type === "course") {
+        const slug = (document.slug as any)?.current;
+        if (slug) return `${baseUrl}/courses/${slug}`;
+      }
+
+      if (document._type === "siteSettings") {
+        return baseUrl;
+      }
+
+      return prev;
+    },
+  },
   plugins: [
     dashboardTool({
       title: "Dashboard",
@@ -29,9 +56,16 @@ export default defineConfig({
       widgets: [
         welcomeWidget,
         statsWidget,
+        {
+          ...siteSettingsWidget,
+          layout: { width: "full" },
+        },
         quickActionsWidget,
+        batchWidget,
         examUpdatesWidget,
+        contentHealthWidget,
         leadsWidget,
+        studioGuideWidget,
       ],
     }),
     structureTool({ structure }),

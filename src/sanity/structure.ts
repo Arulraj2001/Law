@@ -5,8 +5,9 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title("XYZ Law Coaching Admin")
     .items([
+      // TOP: Quick access
       S.listItem()
-        .title("Dashboard")
+        .title("📊 Dashboard Home")
         .icon(() => "📊")
         .child(
           S.component()
@@ -41,7 +42,7 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("Leads & Enquiries")
+        .title("🎯 Leads & Enquiries")
         .icon(() => "🎯")
         .child(
           S.component()
@@ -77,8 +78,9 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      // CONTENT: Main content types
       S.listItem()
-        .title("Site Settings")
+        .title("⚙️ Site Settings")
         .icon(() => "⚙️")
         .child(
           S.document()
@@ -87,10 +89,17 @@ export const structure: StructureResolver = (S) =>
             .title("Site Settings")
         ),
 
-      S.divider(),
+      S.listItem()
+        .title("📅 Batches & Schedule")
+        .icon(() => "📅")
+        .child(
+          S.documentTypeList("batch")
+            .title("Batches & Schedule")
+            .defaultOrdering([{ field: "startDate", direction: "asc" }])
+        ),
 
       S.listItem()
-        .title("Courses")
+        .title("📚 Courses")
         .icon(() => "📚")
         .child(
           S.documentTypeList("course")
@@ -98,19 +107,11 @@ export const structure: StructureResolver = (S) =>
             .defaultOrdering([{ field: "sortOrder", direction: "asc" }])
         ),
 
-      S.listItem()
-        .title("Batches & Schedule")
-        .icon(() => "📅")
-        .child(
-          S.documentTypeList("batch")
-            .title("Upcoming Batches")
-            .defaultOrdering([{ field: "startDate", direction: "asc" }])
-        ),
-
       S.divider(),
 
+      // SOCIAL PROOF
       S.listItem()
-        .title("Faculty")
+        .title("👨‍🏫 Faculty")
         .icon(() => "👨‍🏫")
         .child(
           S.documentTypeList("faculty")
@@ -119,16 +120,16 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("Toppers & Results")
+        .title("🏆 Toppers & Results")
         .icon(() => "🏆")
         .child(
           S.documentTypeList("topper")
-            .title("All Toppers")
+            .title("Toppers & Results")
             .defaultOrdering([{ field: "sortOrder", direction: "asc" }])
         ),
 
       S.listItem()
-        .title("Testimonials")
+        .title("💬 Testimonials")
         .icon(() => "💬")
         .child(
           S.documentTypeList("testimonial")
@@ -138,8 +139,9 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      // BLOG & UPDATES
       S.listItem()
-        .title("Blog Posts")
+        .title("✍️ Blog Posts")
         .icon(() => "✍️")
         .child(
           S.list()
@@ -175,7 +177,7 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("Exam Updates")
+        .title("🔔 Exam Updates")
         .icon(() => "🔔")
         .child(
           S.documentTypeList("examUpdate")
