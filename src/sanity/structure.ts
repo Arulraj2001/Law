@@ -1,9 +1,82 @@
 import type { StructureResolver } from "sanity/structure";
+import React from "react";
 
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("XYZ Law Coaching Admin")
     .items([
+      S.listItem()
+        .title("Dashboard")
+        .icon(() => "📊")
+        .child(
+          S.component()
+            .title("Dashboard")
+            .id("dashboard-shortcut")
+            .component(() => {
+              if (typeof window !== "undefined") {
+                window.location.href = "/studio/dashboard";
+              }
+              return React.createElement(
+                "div",
+                { style: { padding: "32px", fontFamily: "system-ui" } },
+                React.createElement(
+                  "h3",
+                  { style: { color: "#042C53", margin: "0 0 8px 0" } },
+                  "📊 Opening Studio Dashboard..."
+                ),
+                React.createElement(
+                  "p",
+                  null,
+                  React.createElement(
+                    "a",
+                    {
+                      href: "/studio/dashboard",
+                      style: { color: "#1D9E75", fontWeight: "600" },
+                    },
+                    "Click here to open Dashboard immediately →"
+                  )
+                )
+              );
+            })
+        ),
+
+      S.listItem()
+        .title("Leads & Enquiries")
+        .icon(() => "🎯")
+        .child(
+          S.component()
+            .title("All Leads")
+            .id("leads-shortcut")
+            .component(() => {
+              if (typeof window !== "undefined") {
+                window.location.href = "/studio/leads";
+              }
+              return React.createElement(
+                "div",
+                { style: { padding: "32px", fontFamily: "system-ui" } },
+                React.createElement(
+                  "h3",
+                  { style: { color: "#042C53", margin: "0 0 8px 0" } },
+                  "🎯 Opening Leads Manager..."
+                ),
+                React.createElement(
+                  "p",
+                  null,
+                  React.createElement(
+                    "a",
+                    {
+                      href: "/studio/leads",
+                      style: { color: "#1D9E75", fontWeight: "600" },
+                    },
+                    "Click here to open Leads Manager immediately →"
+                  )
+                )
+              );
+            })
+        ),
+
+      S.divider(),
+
       S.listItem()
         .title("Site Settings")
         .icon(() => "⚙️")

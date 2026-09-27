@@ -1,8 +1,17 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { dashboardTool } from "@sanity/dashboard";
 import { schemaTypes } from "./schemaTypes";
 import { structure } from "./structure";
+import {
+  welcomeWidget,
+  statsWidget,
+  leadsWidget,
+  quickActionsWidget,
+  examUpdatesWidget,
+} from "./plugins/dashboard";
+import { leadsPlugin } from "./plugins/leads";
 
 const rawProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "xyz-law-coaching";
 const projectId = rawProjectId.replace(/_/g, "-");
@@ -14,7 +23,19 @@ export default defineConfig({
   projectId,
   dataset,
   plugins: [
+    dashboardTool({
+      title: "Dashboard",
+      name: "dashboard",
+      widgets: [
+        welcomeWidget,
+        statsWidget,
+        quickActionsWidget,
+        examUpdatesWidget,
+        leadsWidget,
+      ],
+    }),
     structureTool({ structure }),
+    leadsPlugin(),
     visionTool({ defaultApiVersion: "2024-01-01" }),
   ],
   schema: {
