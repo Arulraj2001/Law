@@ -1,78 +1,363 @@
 import type { Metadata } from "next";
-import { LeadForm } from "@/components/shared/LeadForm";
-import { BatchTable } from "@/components/shared/BatchTable";
-import { CheckCircle2 } from "lucide-react";
-import { COURSES } from "@/lib/constants";
+import { CourseHero } from "@/components/courses/CourseHero";
+import { CourseHighlights } from "@/components/courses/CourseHighlights";
+import { ExamPatternSection } from "@/components/courses/ExamPatternSection";
+import { SyllabusSection } from "@/components/courses/SyllabusSection";
+import { CourseFeatures } from "@/components/courses/CourseFeatures";
+import { CourseFAQ } from "@/components/courses/CourseFAQ";
+import { CourseEnrollCTA } from "@/components/courses/CourseEnrollCTA";
+import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
+import { RelatedCourses } from "@/components/courses/RelatedCourses";
+import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "SET Law Coaching Tamil Nadu | State Eligibility Test Preparation",
+  title:
+    "SET Law Coaching Tamil Nadu | TNSET Law Exam Preparation | XYZ",
   description:
-    "Preparation for the Tamil Nadu State Eligibility Test (TN-SET) in Law. Tailored for law postgraduates targeting assistant professorship.",
+    "XYZ offers SET Law coaching for Tamil Nadu SET and other state SET exams. For law graduates targeting assistant professor eligibility. Online classes. Expert faculty.",
+  keywords: [
+    "SET law coaching Tamil Nadu",
+    "TNSET law exam preparation",
+    "SET law coaching Chennai",
+    "state eligibility test law coaching",
+    "SET exam law preparation online",
+  ],
+  openGraph: {
+    title: "SET Law Coaching — Tamil Nadu | XYZ Law Coaching",
+    description:
+      "Complete preparation for the Tamil Nadu State Eligibility Test (TNSET) in Law and other state SET exams. Achieve assistant professor eligibility in Tamil Nadu law colleges. Online classes available.",
+  },
 };
 
 export default function SETLawPage() {
-  const course = COURSES.find((c) => c.slug === "set-law")!;
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
+
+  const breadcrumb = [
+    { label: "Home", href: "/" },
+    { label: "Courses", href: "/courses" },
+    { label: "SET Law", href: "/courses/set-law" },
+  ];
+
+  const highlights = [
+    "Tamil Nadu SET pattern — complete prep",
+    "Paper I — General aptitude & teaching",
+    "Paper II — all law subjects",
+    "Tamil Nadu specific legislation covered",
+    "Madras High Court key judgments",
+    "BNS, BNSS & BSA covered",
+    "Previous year question bank",
+    "Mock tests — TNSET pattern",
+    "Online classes available",
+    "Multi-state SET exam preparation",
+  ];
+
+  const stages = [
+    {
+      name: "Paper I: General Aptitude",
+      description: "General awareness paper",
+      marks: 100,
+      duration: "1 hour",
+      details: [
+        "50 questions — general aptitude",
+        "Teaching methodology",
+        "Research aptitude",
+        "Reasoning and comprehension",
+        "General awareness",
+        "ICT basics",
+      ],
+    },
+    {
+      name: "Paper II: Law",
+      description: "Subject-specific law paper",
+      marks: 200,
+      duration: "2 hours",
+      details: [
+        "100 questions from law subjects",
+        "Constitutional law focus",
+        "All core law subjects",
+        "Tamil Nadu specific law provisions",
+        "Current legal developments",
+      ],
+    },
+  ];
+
+  const syllabus = [
+    {
+      stage: "Paper I — General Paper",
+      tabLabel: "Paper I: General",
+      topics: [
+        "Teaching aptitude and methodology",
+        "Research methods and ethics",
+        "Logical reasoning",
+        "Reading comprehension",
+        "General awareness — Tamil Nadu focus",
+        "ICT and education technology",
+      ],
+    },
+    {
+      stage: "Paper II — Constitutional Law",
+      tabLabel: "Paper II: Constitution",
+      topics: [
+        "Constitution of India",
+        "Fundamental Rights and Directive Principles",
+        "Federal structure and Centre-State relations",
+        "Tamil Nadu in the constitutional framework",
+        "Constitutional amendments",
+        "Judicial review",
+      ],
+    },
+    {
+      stage: "Paper II — Core Law",
+      tabLabel: "Paper II: Core Law",
+      topics: [
+        "Jurisprudence",
+        "Indian Contract Act",
+        "Transfer of Property Act",
+        "BNS / IPC",
+        "BNSS / CrPC",
+        "BSA / Indian Evidence Act",
+        "Family Law — Hindu and Muslim",
+        "Law of Torts",
+        "Administrative Law",
+      ],
+    },
+    {
+      stage: "Tamil Nadu Specific Laws",
+      tabLabel: "TN Specific Laws",
+      topics: [
+        "Tamil Nadu Rent Control Act",
+        "Tamil Nadu Panchayats Act",
+        "Tamil Nadu Shops and Establishments Act",
+        "Tamil Nadu specific court procedures",
+        "Key Madras High Court judgments",
+        "Tamil Nadu government schemes (legal aspects)",
+      ],
+    },
+  ];
+
+  const features = [
+    {
+      icon: "book-open",
+      title: "TNSET Pattern Coverage",
+      description:
+        "Complete preparation specifically for Tamil Nadu SET pattern including Tamil Nadu-specific law provisions not in national tests.",
+    },
+    {
+      icon: "map-pin",
+      title: "Tamil Nadu Law Focus",
+      description:
+        "Tamil Nadu specific legislation, Madras High Court judgments, and state-specific legal provisions — unique to TNSET preparation.",
+    },
+    {
+      icon: "clipboard-list",
+      title: "Previous Year Questions",
+      description:
+        "Analysis of past TNSET Law papers with model answers and targeted exam strategy.",
+    },
+    {
+      icon: "refresh-cw",
+      title: "New Criminal Laws Covered",
+      description:
+        "BNS, BNSS and BSA fully integrated into the criminal law portion — updated for current exam requirements.",
+    },
+    {
+      icon: "monitor",
+      title: "Online Classes Available",
+      description:
+        "Live online coaching sessions with recorded lectures for revision and WhatsApp group support.",
+    },
+    {
+      icon: "users",
+      title: "Multi-State SET Preparation",
+      description:
+        "Covers Tamil Nadu SET and can be adapted for other state SET exams with similar law syllabus patterns.",
+    },
+  ];
+
+  const faqs = [
+    {
+      question: "What is TNSET and how is it different from UGC-NET?",
+      answer:
+        "TNSET (Tamil Nadu State Eligibility Test) is conducted by the Tamil Nadu government and qualifies candidates for assistant professor positions specifically in Tamil Nadu colleges. UGC-NET is national and qualifies for colleges across India. Both have similar patterns but TNSET includes Tamil Nadu-specific content.",
+    },
+    {
+      question: "What qualification is needed for TNSET Law?",
+      answer:
+        "You must have a postgraduate degree (LLM) with minimum 55% marks (50% for reserved categories) OR an LLB with equivalent qualifications as per TNSET notification. Check the latest official TNSET notification for current criteria.",
+    },
+    {
+      question: "Can I prepare for both UGC-NET and TNSET simultaneously?",
+      answer:
+        "Yes. The syllabus of UGC-NET Law and TNSET Law overlaps significantly. The main difference is that TNSET includes Tamil Nadu-specific legal provisions. XYZ's coaching covers both with targeted sessions for Tamil Nadu content.",
+    },
+    {
+      question: "Does XYZ offer online SET Law coaching?",
+      answer:
+        "Yes. Complete online coaching is available for SET Law — live classes, recorded lectures, previous year questions, mock tests and WhatsApp mentorship. Accessible from anywhere in India.",
+    },
+  ];
+
+  const relatedCourses = [
+    {
+      title: "UGC-NET Law Coaching",
+      slug: "ugc-net-law",
+      badge: "National Eligibility",
+      description:
+        "Complete preparation for Paper I & II with teaching aptitude, research aptitude, and JRF focused guidance.",
+    },
+    {
+      title: "Civil Judge Exam Coaching",
+      slug: "civil-judge",
+      badge: "Primary Focus",
+      description:
+        "Tamil Nadu judicial service examination preparation for Prelims, Mains, and Viva-Voce.",
+    },
+    {
+      title: "APP Exam Coaching",
+      slug: "app-exam",
+      badge: "Primary Focus",
+      description:
+        "TNPSC Assistant Public Prosecutor preparation covering criminal law, GS, and interview.",
+    },
+  ];
+
+  // Schemas
+  const courseSchema = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: "SET Law Coaching — Tamil Nadu",
+    description:
+      "Complete preparation for the Tamil Nadu State Eligibility Test (TNSET) in Law and other state SET exams. Achieve assistant professor eligibility in Tamil Nadu law colleges.",
+    provider: {
+      "@type": "EducationalOrganization",
+      name: SITE_CONFIG.name || "XYZ Law Coaching",
+      sameAs: siteUrl,
+    },
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: ["online"],
+      location: {
+        "@type": "Place",
+        name: "Tamil Nadu, India",
+      },
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${siteUrl}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Courses",
+        item: `${siteUrl}/courses`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "SET Law",
+        item: `${siteUrl}/courses/set-law`,
+      },
+    ],
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.answer,
+      },
+    })),
+  };
 
   return (
-    <div className="py-16 md:py-24">
-      <div className="container px-4 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2 space-y-10">
-            <div>
-              <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold bg-gold-light/20 rounded-full mb-3">
-                {course.badge}
-              </span>
-              <h1 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-navy-dark tracking-tight mb-4">
-                {course.title}
-              </h1>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                {course.description}
-              </p>
-            </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
-            <div className="p-6 rounded-xl bg-slate-50 border space-y-4">
-              <h2 className="font-heading font-bold text-xl text-navy-dark">Key Highlights</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {course.highlights.map((h, i) => (
-                  <div key={i} className="flex items-start gap-2.5 text-sm text-slate-700">
-                    <CheckCircle2 className="w-5 h-5 text-emerald shrink-0 mt-0.5" />
-                    <span>{h}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+      <CourseStickySidebar courseTitle="SET Law Coaching" />
 
-            <div className="space-y-6">
-              <h2 className="font-heading font-bold text-2xl text-navy-dark">Tamil Nadu SET Curriculum</h2>
-              <div className="space-y-4">
-                <div className="p-5 border rounded-lg">
-                  <h3 className="font-semibold text-navy-mid text-base mb-2">Paper I: General Teaching &amp; Research Paper</h3>
-                  <p className="text-sm text-slate-600">
-                    50 objective questions evaluating teaching aptitude, reasoning skills, data interpretation, and ICT fundamentals.
-                  </p>
-                </div>
-                <div className="p-5 border rounded-lg">
-                  <h3 className="font-semibold text-navy-mid text-base mb-2">Paper II: Law Subjects</h3>
-                  <p className="text-sm text-slate-600">
-                    State SET specific pattern covering Constitutional Law, Jurisprudence, Family Law, Contracts, Torts, and Criminal Law.
-                  </p>
-                </div>
-              </div>
-            </div>
+      <CourseHero
+        title="SET Law Coaching — Tamil Nadu"
+        subtitle="Complete preparation for the Tamil Nadu State Eligibility Test (TNSET) in Law and other state SET exams. Achieve assistant professor eligibility in Tamil Nadu law colleges. Online classes available."
+        badge="TNSET Law · 40% Focus"
+        badgeColor="gold"
+        highlights={[
+          "Tamil Nadu SET pattern",
+          "All law subjects covered",
+          "Previous year questions",
+          "Online classes available",
+        ]}
+        duration="4–6 Months"
+        mode="Live Online Classes"
+        fee="Contact for fee details"
+        courseSlug="set-law"
+        breadcrumb={breadcrumb}
+      />
 
-            <div>
-              <h2 className="font-heading font-bold text-2xl text-navy-dark mb-4">Batch Schedules</h2>
-              <BatchTable />
-            </div>
-          </div>
+      <CourseHighlights
+        highlights={highlights}
+        courseTitle="SET Law"
+      />
 
-          <div>
-            <div className="sticky top-24">
-              <LeadForm defaultCourse="set-law" source="set-law-course-page" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <ExamPatternSection
+        examName="Tamil Nadu SET Law Exam Pattern"
+        stages={stages}
+        totalMarks={300}
+        meritNote="TNSET is conducted by the Tamil Nadu government for assistant professor eligibility in Tamil Nadu colleges. Pattern is similar to UGC-NET but with Tamil Nadu-specific content. Check TNSET official notification for current exam dates."
+        eligibilityTitle="Eligibility for TNSET Law"
+        eligibility={[
+          { label: "Degree", value: "LLM or LLB with 55%", icon: "🎓" },
+          { label: "Conducted By", value: "Govt of Tamil Nadu", icon: "🏛" },
+          { label: "Qualifies", value: "TN Assistant Professor", icon: "⭐" },
+          { label: "Mode", value: "Online Batches", icon: "🌐" },
+        ]}
+      />
+
+      <SyllabusSection courseTitle="SET Law" syllabus={syllabus} />
+
+      <CourseFeatures features={features} courseTitle="SET Law" />
+
+      {/* No ToppersSection rendered as specified */}
+
+      <CourseFAQ faqs={faqs} courseTitle="SET Law" />
+
+      {/* Related Courses Strip */}
+      <RelatedCourses
+        relatedCourses={relatedCourses}
+        facultyHref="/faculty"
+        resultsHref="/results"
+        demoHref="/demo-class"
+      />
+
+      <CourseEnrollCTA
+        courseTitle="SET Law Coaching"
+        courseSlug="set-law"
+        defaultCourseName="SET Law Coaching"
+        subText="Qualify for assistant professor positions in Tamil Nadu law colleges. Attend a free demo session to understand our Tamil Nadu focused curriculum."
+      />
+    </>
   );
 }
