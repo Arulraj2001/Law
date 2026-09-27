@@ -8,18 +8,20 @@ import {
 import { TestimonialsCTA } from "@/components/testimonials/TestimonialsCTA";
 import { getAllTestimonialsSanity } from "@/lib/sanity/queries";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "Student Testimonials — Judges & APPs Who Trained at XYZ | Tamil Nadu",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Student Testimonials — Judges & APPs Who Trained at XYZ",
   description:
     "Read testimonials from Civil Judges and Assistant Public Prosecutors who prepared with XYZ Law Coaching. Real words from real judicial officers serving Tamil Nadu.",
-  openGraph: {
-    title: "Student Testimonials — XYZ Law Coaching Tamil Nadu",
-    description:
-      "Words from those who are now serving as judges and prosecutors across Tamil Nadu.",
-  },
-};
+  keywords: [
+    "judiciary coaching reviews Tamil Nadu",
+    "XYZ law coaching feedback",
+    "civil judge topper testimonials",
+    "APP exam success stories",
+  ],
+  path: "/testimonials",
+});
 
 const placeholderTestimonials: TestimonialItem[] = [
   {

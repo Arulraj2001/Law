@@ -10,10 +10,10 @@ import { CourseFAQ } from "@/components/courses/CourseFAQ";
 import { CourseEnrollCTA } from "@/components/courses/CourseEnrollCTA";
 import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "Civil Judge Exam Coaching in Tamil Nadu | TNPSC Civil Judge Coaching | XYZ",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Civil Judge Exam Coaching in Tamil Nadu | TNPSC Civil Judge Coaching",
   description:
     "XYZ offers the most comprehensive TNPSC Civil Judge exam coaching in Tamil Nadu. Prelims + Mains + Viva preparation, BNS/BNSS/BSA coverage, weekly mock tests, translation classes. 25+ students selected. Online & offline.",
   keywords: [
@@ -24,13 +24,8 @@ export const metadata: Metadata = {
     "civil judge coaching Chennai",
     "judiciary coaching Tamil Nadu 2026",
   ],
-  openGraph: {
-    title:
-      "TNPSC Civil Judge Exam Coaching — Tamil Nadu | XYZ Law Coaching",
-    description:
-      "25+ Civil Judges trained. Complete Prelims, Mains & Viva preparation with BNS, BNSS & BSA coverage. Online + offline classes.",
-  },
-};
+  path: "/courses/civil-judge",
+});
 
 export default function CivilJudgeCoursePage() {
   const siteUrl =

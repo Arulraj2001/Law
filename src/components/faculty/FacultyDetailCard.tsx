@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, CheckCircle2 } from "lucide-react";
+import { getBlurDataUrl } from "@/lib/image-config";
 
 export interface FacultyDetailItem {
   id: string;
@@ -93,6 +94,8 @@ export function FacultyDetailCard({ faculty, index }: FacultyDetailCardProps) {
                 alt={faculty.name}
                 fill
                 sizes="(max-width: 768px) 200px, (max-width: 1024px) 240px, 280px"
+                placeholder="blur"
+                blurDataURL={getBlurDataUrl(280, 360)}
                 className="object-cover"
               />
             ) : (

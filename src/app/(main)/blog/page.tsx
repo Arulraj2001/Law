@@ -7,10 +7,10 @@ import {
   getLatestExamUpdatesSanity,
 } from "@/lib/sanity/queries";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "Law Exam Blog — Civil Judge & Judiciary Coaching Resources | XYZ Tamil Nadu",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Law Exam Blog — Civil Judge & Judiciary Resources",
   description:
     "Free guides, exam updates, and expert articles for TNPSC Civil Judge, APP Exam, Patent Agent and UGC-NET Law aspirants in Tamil Nadu. Written by practicing lawyers.",
   keywords: [
@@ -20,13 +20,8 @@ export const metadata: Metadata = {
     "BNS BNSS BSA guide",
     "Tamil Nadu law exam blog",
   ],
-  openGraph: {
-    title:
-      "Law Exam Blog — Civil Judge & Judiciary Coaching Resources | XYZ Tamil Nadu",
-    description:
-      "Free guides, exam updates, and expert articles for TNPSC Civil Judge, APP Exam, Patent Agent and UGC-NET Law aspirants in Tamil Nadu.",
-  },
-};
+  path: "/blog",
+});
 
 const placeholderPosts: BlogPostItem[] = [
   {

@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ThankYouContent } from "@/components/thank-you/ThankYouContent";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Thank You — We'll Be in Touch! | XYZ Law Coaching",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Thank You — We'll Be in Touch!",
   description:
     "Thank you for reaching out to XYZ Law Coaching. We will contact you on WhatsApp within 2 hours to confirm your enquiry or demo class booking.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  path: "/thank-you",
+  noIndex: true,
+});
 
 export default function ThankYouPage() {
   return (

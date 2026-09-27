@@ -3,86 +3,79 @@ import { ContactHero } from "@/components/contact/ContactHero";
 import { ContactFormSection } from "@/components/contact/ContactFormSection";
 import { ContactMap } from "@/components/contact/ContactMap";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
+import { localBusinessSchema, breadcrumbSchema } from "@/lib/seo/schemas";
 
-export const metadata: Metadata = {
+// TODO Phase 7+: Create city-specific landing pages if expanding:
+// /coaching-in-chennai
+// /coaching-in-coimbatore
+// /online-civil-judge-coaching
+
+export const metadata: Metadata = generatePageMetadata({
   title: "Contact XYZ Law Coaching — Tamil Nadu Judiciary Coaching",
   description:
     "Contact XYZ Law Coaching for Civil Judge, APP Exam coaching enquiries. Call, WhatsApp or visit us at our Tamil Nadu centre. Free counselling available.",
-};
+  keywords: [
+    "contact XYZ law coaching",
+    "judiciary coaching Chennai address",
+    "civil judge coaching phone number",
+    "Tamil Nadu law coaching enquiries",
+  ],
+  path: "/contact",
+});
 
 export default function ContactPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", href: "/" },
+    { name: "Contact", href: "/contact" },
+  ]);
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Contact",
-        item: `${siteUrl}/contact`,
-      },
-    ],
-  };
-
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "LegalService",
-    name: SITE_CONFIG.name,
-    description: SITE_CONFIG.description,
-    url: siteUrl,
-    telephone: SITE_CONFIG.phone,
+  const businessSchema = localBusinessSchema({
+    phone: SITE_CONFIG.phone,
     email: SITE_CONFIG.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: SITE_CONFIG.address,
-      addressRegion: "Tamil Nadu",
-      addressCountry: "IN",
-    },
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "09:00",
-        closes: "19:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Saturday"],
-        opens: "09:00",
-        closes: "17:00",
-      },
-    ],
-    sameAs: [
-      SITE_CONFIG.social.youtube,
-      SITE_CONFIG.social.instagram,
-      SITE_CONFIG.social.facebook,
-      SITE_CONFIG.social.whatsappChannel,
-    ].filter(Boolean),
-  };
+    address: SITE_CONFIG.address,
+    mapUrl: SITE_CONFIG.mapUrl,
+  });
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}
       />
 
       <main className="min-h-screen">
         <ContactHero />
         <ContactFormSection />
         <ContactMap />
+
+        {/* Find us on Google Section */}
+        <section className="py-10 bg-slate-50 border-t border-slate-200/80">
+          <div className="container mx-auto px-4 sm:px-6 max-w-4xl text-center">
+            <span className="text-xs uppercase tracking-widest font-bold text-slate-500 block mb-1">
+              Google Business Profile
+            </span>
+            <h3 className="font-heading text-lg sm:text-xl font-bold text-navy-dark mb-2">
+              Find us on Google
+            </h3>
+            <p className="text-sm text-slate-600 max-w-xl mx-auto leading-relaxed mb-4">
+              Search <span className="font-semibold text-navy-dark">&quot;XYZ Law Coaching Tamil Nadu&quot;</span> on
+              Google to find our verified business listing, student reviews, photo gallery, and direct driving directions.
+            </p>
+            <a
+              href={SITE_CONFIG.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-emerald hover:text-emerald-dark underline"
+            >
+              <span>View Verified Listing on Google Maps →</span>
+            </a>
+          </div>
+        </section>
       </main>
     </>
   );

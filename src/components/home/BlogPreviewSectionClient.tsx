@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { BookOpen, Scale, FileText, Briefcase, ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { getBlurDataUrl } from "@/lib/image-config";
 
 export interface BlogPostItem {
   _id: string;
@@ -128,6 +129,8 @@ export function BlogPreviewSectionClient({ posts }: BlogPreviewSectionClientProp
                         src={coverImageUrl}
                         alt={post.title}
                         fill
+                        placeholder="blur"
+                        blurDataURL={getBlurDataUrl(600, 360)}
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />

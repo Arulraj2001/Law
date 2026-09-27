@@ -12,6 +12,7 @@ import {
   getLatestExamUpdatesSanity,
 } from "@/lib/sanity/queries";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generateBlogMetadata } from "@/lib/seo/metadata";
 
 export const revalidate = 1800; // 30 minutes ISR
 
@@ -373,35 +374,16 @@ export async function generateMetadata({
     };
   }
 
-  const title =
-    post.seoTitle ||
-    `${post.title} | XYZ Law Coaching Tamil Nadu`;
-  const description =
-    post.seoDescription ||
-    post.excerpt ||
-    "Expert legal preparation guide from XYZ Law Coaching.";
-
-  const coverImageUrl = post.coverImage?.asset?.url || null;
-
-  return {
-    title,
-    description,
-    keywords: post.tags || [
-      "Tamil Nadu judicial service",
-      "TNPSC law coaching",
-      "judiciary preparation Chennai",
-    ],
-    openGraph: {
-      title,
-      description,
-      images: coverImageUrl ? [{ url: coverImageUrl }] : undefined,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+  return generateBlogMetadata({
+    title: post.title,
+    seoTitle: post.seoTitle,
+    seoDescription: post.seoDescription,
+    excerpt: post.excerpt,
+    slug: post.slug,
+    tags: post.tags,
+    publishedAt: post.publishedAt,
+    coverImage: post.coverImage,
+  });
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {

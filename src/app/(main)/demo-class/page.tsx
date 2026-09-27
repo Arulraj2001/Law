@@ -4,13 +4,19 @@ import { DemoFormSection } from "@/components/demo/DemoFormSection";
 import { DemoBenefits } from "@/components/demo/DemoBenefits";
 import { DemoTestimonial } from "@/components/demo/DemoTestimonial";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Book a Free Demo Class — Experience XYZ Coaching | Tamil Nadu",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Book a Free Demo Class — Experience XYZ Coaching",
   description:
     "Attend a free demo class at XYZ Law Coaching before you enrol. Experience our teaching style — Civil Judge, APP Exam coaching. Online and offline. No commitment required.",
-  robots: "index, follow",
-};
+  keywords: [
+    "free demo law class Chennai",
+    "civil judge trial coaching Tamil Nadu",
+    "free judiciary counseling",
+  ],
+  path: "/demo-class",
+});
 
 export default function DemoClassPage() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";

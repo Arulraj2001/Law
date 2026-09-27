@@ -15,60 +15,88 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  ),
   title: {
-    default: "Civil Judge & APP Exam Coaching in Tamil Nadu | XYZ",
+    default:
+      "Civil Judge & APP Exam Coaching in Tamil Nadu | XYZ Law Coaching",
     template: "%s | XYZ Law Coaching",
   },
   description:
-    "XYZ is Tamil Nadu's trusted judiciary coaching institute for TNPSC Civil Judge, APP Exam, Patent Agent, Trademark Agent, UGC-NET and SET Law exams. Expert faculty, weekly mock tests, 25+ judges selected.",
+    "XYZ Law Coaching is Tamil Nadu's trusted judiciary coaching institute for TNPSC Civil Judge, APP Exam, Patent Agent, Trademark Agent, UGC-NET & SET Law exams. 25+ students selected. Online & offline. Expert faculty.",
   keywords: [
     "civil judge coaching Tamil Nadu",
-    "APP exam coaching Chennai",
     "TNPSC civil judge coaching",
+    "APP exam coaching Tamil Nadu",
     "judiciary coaching Tamil Nadu",
+    "civil judge coaching Chennai",
+    "APP exam coaching Chennai",
     "patent agent exam coaching",
     "trademark agent exam coaching",
     "UGC NET law coaching Tamil Nadu",
     "SET law coaching Tamil Nadu",
+    "Tamil Nadu judicial service coaching",
+    "civil judge exam preparation 2026",
   ],
-  authors: [{ name: "XYZ Law Coaching" }],
+  authors: [
+    {
+      name: "XYZ Law Coaching Tamil Nadu",
+    },
+  ],
   creator: "XYZ Law Coaching",
+  publisher: "XYZ Law Coaching",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: process.env.NEXT_PUBLIC_SITE_URL,
-    siteName: "XYZ Law Coaching",
-    title: "Civil Judge & APP Exam Coaching in Tamil Nadu | XYZ",
+    siteName: "XYZ Law Coaching Tamil Nadu",
+    title:
+      "Civil Judge & APP Exam Coaching in Tamil Nadu | XYZ Law Coaching",
     description:
-      "Tamil Nadu's trusted judiciary coaching. 1000+ students, 25+ judges selected. Online & offline classes.",
+      "Tamil Nadu's trusted judiciary coaching. 1000+ students, 25+ judges selected. Online & offline.",
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_SITE_URL}/og-image.jpg`,
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "XYZ Law Coaching Tamil Nadu",
+        alt: "XYZ Law Coaching Tamil Nadu — Civil Judge & APP Exam Coaching",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Civil Judge & APP Exam Coaching in Tamil Nadu | XYZ",
-    description: "Tamil Nadu's trusted judiciary coaching. 1000+ students, 25+ judges selected.",
+    title:
+      "Civil Judge & APP Exam Coaching | XYZ Law Coaching Tamil Nadu",
+    description:
+      "Tamil Nadu's trusted judiciary coaching. 25+ judges trained.",
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
   verification: {
-    google: "your-google-verification-code",
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
   },
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_SITE_URL,
+  },
+  category: "education",
 };
 
 export default function RootLayout({
@@ -78,6 +106,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://api.sanity.io" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+      </head>
       <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   );

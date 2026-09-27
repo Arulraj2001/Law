@@ -9,10 +9,10 @@ import { CourseEnrollCTA } from "@/components/courses/CourseEnrollCTA";
 import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "Patent Agent Exam Coaching India | CGPDTM Patent Agent Preparation | XYZ",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Patent Agent Exam Coaching India | CGPDTM Preparation",
   description:
     "XYZ offers expert Patent Agent exam coaching covering the Patent Act, Rules, IP law fundamentals and patent drafting. Online classes. Expert faculty.",
   keywords: [
@@ -22,12 +22,8 @@ export const metadata: Metadata = {
     "how to become a patent agent India",
     "patent agent exam coaching Tamil Nadu",
   ],
-  openGraph: {
-    title: "Patent Agent Exam Coaching — Pan India | XYZ Law Coaching",
-    description:
-      "Comprehensive preparation for the CGPDTM Patent Agent Examination. Patent Act, patent drafting, prosecution, and international IP law.",
-  },
-};
+  path: "/courses/patent-agent",
+});
 
 export default function PatentAgentPage() {
   const siteUrl =

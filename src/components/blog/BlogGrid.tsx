@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, Calendar, Search, ArrowRight, User } from "lucide-react";
+import { getBlurDataUrl } from "@/lib/image-config";
 
 export interface BlogPostItem {
   _id: string;
@@ -135,6 +136,8 @@ export function BlogGrid({ posts, searchQuery = "" }: BlogGridProps) {
                       src={featuredPost.coverImage.asset.url}
                       alt={featuredPost.title}
                       fill
+                      placeholder="blur"
+                      blurDataURL={getBlurDataUrl(800, 400)}
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
@@ -228,6 +231,8 @@ export function BlogGrid({ posts, searchQuery = "" }: BlogGridProps) {
                           src={post.coverImage.asset.url}
                           alt={post.title}
                           fill
+                          placeholder="blur"
+                          blurDataURL={getBlurDataUrl(600, 300)}
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (

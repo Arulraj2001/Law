@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Quote, Award, MapPin, Calendar, Building } from "lucide-react";
 import type { Topper } from "@/lib/supabase/types";
+import { getBlurDataUrl } from "@/lib/image-config";
 
 export interface TopperCardProps {
   topper: Topper | any;
@@ -52,6 +53,8 @@ export function TopperCard({
                     alt={topper.name}
                     width={avatarSize}
                     height={avatarSize}
+                    placeholder="blur"
+                    blurDataURL={getBlurDataUrl(avatarSize, avatarSize)}
                     className="object-cover w-full h-full rounded-full"
                   />
                   {/* Subtle quote icon overlay on hover */}

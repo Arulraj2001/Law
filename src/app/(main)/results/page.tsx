@@ -7,19 +7,20 @@ import { ResultsTestimonials } from "@/components/results/ResultsTestimonials";
 import { ResultsCTA } from "@/components/results/ResultsCTA";
 import { getAllToppersSanity } from "@/lib/sanity/queries";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "Results & Toppers — Civil Judge & APP Selections | XYZ Law Coaching Tamil Nadu",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Results & Toppers — Civil Judge Selections",
   description:
     "25+ students from XYZ Law Coaching are now serving as Civil Judges and APPs across Tamil Nadu. See the complete list of successful selections from our coaching programmes.",
-  openGraph: {
-    title:
-      "Our Results — 25+ Tamil Nadu Judicial Officers | XYZ Law Coaching",
-    description:
-      "Real students, real results. See the complete list of Civil Judges and APPs trained at XYZ Law Coaching.",
-  },
-};
+  keywords: [
+    "civil judge selections Tamil Nadu",
+    "TNPSC judiciary results",
+    "XYZ law coaching toppers",
+    "APP exam selections Chennai",
+  ],
+  path: "/results",
+});
 
 const placeholderToppers: TopperItem[] = [
   {

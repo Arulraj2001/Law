@@ -9,10 +9,10 @@ import { CourseEnrollCTA } from "@/components/courses/CourseEnrollCTA";
 import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "Trademark Agent Exam Coaching | Trade Marks Registry Agent Preparation | XYZ",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Trademark Agent Exam Coaching | Trade Marks Registry Prep",
   description:
     "XYZ offers expert Trademark Agent exam coaching covering the Trade Marks Act, TM filing procedures, opposition, registration and IP law. Online classes available.",
   keywords: [
@@ -22,13 +22,8 @@ export const metadata: Metadata = {
     "how to become a trademark agent India",
     "trademark agent coaching Tamil Nadu",
   ],
-  openGraph: {
-    title:
-      "Trademark Agent Exam Coaching — Pan India | XYZ Law Coaching",
-    description:
-      "Comprehensive coaching for the Trade Marks Registry Agent Examination. Trade Marks Act, NICE classification, opposition, and Madrid Protocol.",
-  },
-};
+  path: "/courses/trademark-agent",
+});
 
 export default function TrademarkAgentPage() {
   const siteUrl =

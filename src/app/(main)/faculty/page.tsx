@@ -8,18 +8,20 @@ import { FacultyPhilosophy } from "@/components/faculty/FacultyPhilosophy";
 import { FacultyCTA } from "@/components/faculty/FacultyCTA";
 import { getAllFacultySanity } from "@/lib/sanity/queries";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "Our Faculty — Expert Judiciary Coaching Faculty | XYZ Law Coaching Tamil Nadu",
+export const metadata: Metadata = generatePageMetadata({
+  title: "Our Faculty — Expert Judiciary Mentors",
   description:
     "Meet the expert faculty behind XYZ Law Coaching — practicing lawyers and legal educators with 10+ years of judiciary exam mentoring experience in Tamil Nadu.",
-  openGraph: {
-    title: "Expert Faculty — XYZ Law Coaching",
-    description:
-      "Trained by practicing lawyers, not just educators. Meet the team behind 25+ successful judicial selections.",
-  },
-};
+  keywords: [
+    "law coaching faculty Tamil Nadu",
+    "judiciary mentors Chennai",
+    "TNPSC civil judge teachers",
+    "APP exam faculty",
+  ],
+  path: "/faculty",
+});
 
 const placeholderFaculty: FacultyDetailItem[] = [
   {

@@ -9,10 +9,10 @@ import { CourseEnrollCTA } from "@/components/courses/CourseEnrollCTA";
 import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "UGC NET Law Coaching Tamil Nadu | UGC NET Law Exam Preparation | XYZ",
+export const metadata: Metadata = generatePageMetadata({
+  title: "UGC NET Law Coaching Tamil Nadu | UGC NET Law Prep",
   description:
     "XYZ offers comprehensive UGC-NET Law coaching covering Paper I and Paper II. For law graduates targeting assistant lectureship and JRF. Online classes. Expert faculty.",
   keywords: [
@@ -22,12 +22,8 @@ export const metadata: Metadata = {
     "UGC NET law coaching online India",
     "UGC NET law 2026",
   ],
-  openGraph: {
-    title: "UGC-NET Law Coaching — Tamil Nadu | XYZ Law Coaching",
-    description:
-      "Complete preparation for the UGC National Eligibility Test in Law. Paper I (Teaching & Research) and Paper II (Law). JRF-focused coaching.",
-  },
-};
+  path: "/courses/ugc-net-law",
+});
 
 export default function UGCNETLawPage() {
   const siteUrl =

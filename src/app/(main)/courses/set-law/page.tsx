@@ -9,10 +9,10 @@ import { CourseEnrollCTA } from "@/components/courses/CourseEnrollCTA";
 import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "SET Law Coaching Tamil Nadu | TNSET Law Exam Preparation | XYZ",
+export const metadata: Metadata = generatePageMetadata({
+  title: "SET Law Coaching Tamil Nadu | TNSET Law Exam Prep",
   description:
     "XYZ offers SET Law coaching for Tamil Nadu SET and other state SET exams. For law graduates targeting assistant professor eligibility. Online classes. Expert faculty.",
   keywords: [
@@ -22,12 +22,8 @@ export const metadata: Metadata = {
     "state eligibility test law coaching",
     "SET exam law preparation online",
   ],
-  openGraph: {
-    title: "SET Law Coaching — Tamil Nadu | XYZ Law Coaching",
-    description:
-      "Complete preparation for the Tamil Nadu State Eligibility Test (TNSET) in Law and other state SET exams. Achieve assistant professor eligibility in Tamil Nadu law colleges. Online classes available.",
-  },
-};
+  path: "/courses/set-law",
+});
 
 export default function SETLawPage() {
   const siteUrl =

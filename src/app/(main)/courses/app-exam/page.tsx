@@ -10,10 +10,10 @@ import { CourseEnrollCTA } from "@/components/courses/CourseEnrollCTA";
 import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title:
-    "APP Exam Coaching Tamil Nadu | TNPSC Assistant Public Prosecutor Coaching | XYZ",
+export const metadata: Metadata = generatePageMetadata({
+  title: "APP Exam Coaching Tamil Nadu | TNPSC Assistant Public Prosecutor",
   description:
     "XYZ offers complete TNPSC APP Grade II exam coaching in Tamil Nadu. All 200 MCQs covered — Law, GS & Aptitude. BNS, BNSS & BSA included. Online & offline. Expert faculty.",
   keywords: [
@@ -23,13 +23,8 @@ export const metadata: Metadata = {
     "APP grade 2 exam preparation",
     "APP exam coaching Chennai",
   ],
-  openGraph: {
-    title:
-      "TNPSC APP Grade II Exam Coaching — Tamil Nadu | XYZ Law Coaching",
-    description:
-      "Complete preparation for TNPSC Assistant Public Prosecutor Grade II exam. Criminal law (BNS/BNSS/BSA), GS & Aptitude. Online + offline classes.",
-  },
-};
+  path: "/courses/app-exam",
+});
 
 export default function APPExamPage() {
   const siteUrl =

@@ -7,17 +7,20 @@ import { AchievementsTimeline } from "@/components/about/AchievementsTimeline";
 import { TeamSection } from "@/components/about/TeamSection";
 import { AboutCTA } from "@/components/about/AboutCTA";
 import { SITE_CONFIG } from "@/lib/constants";
+import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "About Us — XYZ Law Coaching Tamil Nadu",
+export const metadata: Metadata = generatePageMetadata({
+  title: "About Us — Tamil Nadu Judiciary Coaching",
   description:
     "Learn about XYZ Law Coaching — Tamil Nadu's trusted judiciary coaching institute led by practicing lawyers. 10+ years, 25+ judges selected, online and offline classes.",
-  openGraph: {
-    title: "About XYZ Law Coaching — Tamil Nadu Judiciary Coaching",
-    description:
-      "Founded by a practicing advocate, XYZ has trained 1000+ students and produced 25+ Civil Judges and APPs across Tamil Nadu.",
-  },
-};
+  keywords: [
+    "about XYZ law coaching",
+    "Tamil Nadu judiciary coaching institute",
+    "law coaching Chennai history",
+    "judiciary faculty Tamil Nadu",
+  ],
+  path: "/about",
+});
 
 export default function AboutPage() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
