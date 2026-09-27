@@ -1,23 +1,44 @@
 import type { Metadata } from "next";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { FAQS } from "@/lib/constants";
-import { SchemaMarkup } from "@/components/shared/SchemaMarkup";
+import { FAQPageHero } from "@/components/faq/FAQPageHero";
+import { FAQFullList } from "@/components/faq/FAQFullList";
+import { FAQ_CATEGORIES } from "@/lib/faq-data";
+import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions (FAQ) | TNPSC Judiciary & APP Exams",
+  title: "FAQ — Frequently Asked Questions | XYZ Law Coaching Tamil Nadu",
   description:
-    "Everything you need to know about TNPSC Civil Judge exam eligibility, Tamil translation paper, new criminal laws, fees, and batch options.",
+    "Answers to common questions about XYZ Law Coaching programmes, TNPSC Civil Judge exam, APP exam, fees, batches, online classes and more.",
 };
 
 export default function FAQPage() {
-  const faqSchemaData = {
-    mainEntity: FAQS.map((faq) => ({
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "FAQ",
+        item: `${siteUrl}/faq`,
+      },
+    ],
+  };
+
+  // Flatten all category questions into single FAQPage schema
+  const allQuestions = FAQ_CATEGORIES.flatMap((category) => category.items);
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: allQuestions.map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: {
@@ -28,32 +49,20 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="py-16 md:py-24">
-      <SchemaMarkup type="FAQ" data={faqSchemaData} />
-      <div className="container px-4 sm:px-8 max-w-4xl mx-auto">
-        <SectionHeading
-          badge="Aspirant Helpdesk"
-          title="Frequently Asked Questions"
-          subtitle="Clear, verified answers to common questions about eligibility, batch timings, translation papers, and criminal law changes."
-        />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
-        <Accordion type="single" collapsible className="w-full space-y-4">
-          {FAQS.map((faq, index) => (
-            <AccordionItem
-              key={index}
-              value={`item-${index}`}
-              className="border border-slate-200 rounded-lg px-6 bg-white"
-            >
-              <AccordionTrigger className="text-left font-heading font-semibold text-navy-dark hover:no-underline py-5 text-base">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-sm text-slate-600 leading-relaxed pb-5">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-    </div>
+      <main className="min-h-screen">
+        <FAQPageHero />
+        <FAQFullList />
+      </main>
+    </>
   );
 }

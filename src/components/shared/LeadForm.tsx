@@ -10,7 +10,7 @@ export interface LeadFormProps {
   courseOptions?: string[];
   defaultCourse?: string;
   source?: string;
-  onSuccess?: () => void;
+  onSuccess?: (course?: string) => void;
   className?: string;
   buttonText?: string;
   buttonVariant?: "primary" | "whatsapp";
@@ -159,7 +159,7 @@ export function LeadForm({
       }
 
       setStatus("success");
-      if (onSuccess) onSuccess();
+      if (onSuccess) onSuccess(formData.course_interest);
 
       // If WhatsApp variant, open chat with prefilled text
       if (buttonVariant === "whatsapp") {
