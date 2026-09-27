@@ -1,84 +1,212 @@
 import type { Metadata } from "next";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Scale, BookOpen, GraduationCap } from "lucide-react";
+import { FacultyPageHero } from "@/components/faculty/FacultyPageHero";
+import {
+  FacultyDetailCard,
+  FacultyDetailItem,
+} from "@/components/faculty/FacultyDetailCard";
+import { FacultyPhilosophy } from "@/components/faculty/FacultyPhilosophy";
+import { FacultyCTA } from "@/components/faculty/FacultyCTA";
+import { getAllFacultySanity } from "@/lib/sanity/queries";
+import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Faculty & Mentors | Senior Advocates & Judicial Educators",
+  title:
+    "Our Faculty — Expert Judiciary Coaching Faculty | XYZ Law Coaching Tamil Nadu",
   description:
-    "Meet our faculty team: practicing advocates from the Madras High Court, former prosecutors, and judicial examination educators.",
+    "Meet the expert faculty behind XYZ Law Coaching — practicing lawyers and legal educators with 10+ years of judiciary exam mentoring experience in Tamil Nadu.",
+  openGraph: {
+    title: "Expert Faculty — XYZ Law Coaching",
+    description:
+      "Trained by practicing lawyers, not just educators. Meet the team behind 25+ successful judicial selections.",
+  },
 };
 
-const FACULTY_MEMBERS = [
+const placeholderFaculty: FacultyDetailItem[] = [
   {
-    name: "Senior Advocate (Madras High Court)",
-    designation: "Head of Criminal Law & Trial Advocacy",
-    experience: "25+ Years Experience",
-    specialization: "BNS, BNSS, BSA, Trial Practice & Criminal Appeals",
-    bio: "Practiced before the Madras High Court and trial courts across Tamil Nadu. Trained hundreds of aspiring judicial magistrates in evidence appreciation.",
+    id: "1",
+    name: "[Founder Name]",
+    designation: "Founder & Chief Faculty",
+    qualification: "BA.BL / LLM",
+    specialization: "Civil Law · Criminal Law",
+    short_bio:
+      "Practicing advocate with 10+ years mentoring judiciary aspirants across Tamil Nadu.",
+    credentials: [
+      "Practicing Advocate",
+      "10+ Years",
+      "Madras High Court Bar",
+    ],
+    is_founder: true,
+    photo_url: null,
+    philosophy:
+      "Law should be taught the way courts apply it, not the way textbooks explain it. Every session is designed around the question: 'How would a judge think about this?'",
+    courses_taught: [
+      { name: "Civil Judge Exam Coaching", href: "/courses/civil-judge" },
+      { name: "APP Exam Coaching", href: "/courses/app-exam" },
+    ],
   },
   {
-    name: "Senior Legal Counsel",
-    designation: "Lead Faculty - Civil Law & CPC",
-    experience: "18+ Years Experience",
-    specialization: "Code of Civil Procedure, Transfer of Property, Specific Relief",
-    bio: "Specializes in civil pleadings, interlocutory applications, and judgment writing for the TNPSC Civil Judge Mains exam.",
+    id: "2",
+    name: "[Faculty Name 2]",
+    designation: "Senior Faculty — Criminal Law",
+    qualification: "LLB · LLM",
+    specialization: "Criminal Law · BNS · BNSS",
+    short_bio:
+      "Specialist in new criminal laws (BNS, BNSS, BSA) with extensive exam coaching experience.",
+    credentials: ["LLB · LLM", "Criminal Law Expert", "Trial Practice"],
+    is_founder: false,
+    photo_url: null,
+    philosophy:
+      "Criminal law clarity comes from understanding the purpose behind each provision. I teach the intent of every section, not just its words.",
+    courses_taught: [
+      { name: "APP Exam Coaching", href: "/courses/app-exam" },
+      { name: "Civil Judge (Criminal Law)", href: "/courses/civil-judge" },
+    ],
   },
   {
-    name: "Former Public Prosecutor",
-    designation: "Lead Faculty - APP Exam",
-    experience: "20+ Years Experience",
-    specialization: "State Prosecution, Minor Penal Acts & Forensic Science",
-    bio: "Decades of active courtroom prosecution experience bringing practical procedural nuances into the classroom.",
-  },
-  {
-    name: "Judicial Vernacular Expert",
-    designation: "Legal Translation Faculty",
-    experience: "14+ Years Experience",
-    specialization: "Tamil-to-English & English-to-Tamil Legal Translation",
-    bio: "Expert translator for legal records, depositions, FIRs, and High Court judgments. Author of judicial translation manuals.",
+    id: "3",
+    name: "[Faculty Name 3]",
+    designation: "Faculty — IP Law",
+    qualification: "LLB · Patent Agent",
+    specialization: "IP Law · Patent · Trademark",
+    short_bio:
+      "Certified patent agent coaching Patent Agent and Trademark Agent exam aspirants.",
+    credentials: [
+      "Certified Patent Agent",
+      "IP Specialist",
+      "Registered Trademark Agent",
+    ],
+    is_founder: false,
+    photo_url: null,
+    philosophy:
+      "IP law is the intersection of creativity and commerce. I help students see patents and trademarks as business tools, not just legal documents.",
+    courses_taught: [
+      { name: "Patent Agent Exam", href: "/courses/patent-agent" },
+      { name: "Trademark Agent Exam", href: "/courses/trademark-agent" },
+    ],
   },
 ];
 
-export default function FacultyPage() {
+export default async function FacultyPage() {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
+
+  let facultyList: FacultyDetailItem[] = placeholderFaculty;
+
+  try {
+    const sanityFaculty = await getAllFacultySanity();
+    if (Array.isArray(sanityFaculty) && sanityFaculty.length > 0) {
+      facultyList = sanityFaculty.map((f: any, idx: number) => ({
+        id: f._id || String(idx + 1),
+        name: f.name || `Faculty Member ${idx + 1}`,
+        designation: f.designation || "Law Faculty",
+        qualification: f.qualification || "LLB · LLM",
+        specialization: f.specialization || "Judicial Preparation",
+        short_bio:
+          f.shortBio ||
+          "Expert educator dedicated to guiding aspirants toward judicial success.",
+        full_bio: f.fullBio || null,
+        credentials: Array.isArray(f.credentials) ? f.credentials : [],
+        is_founder: Boolean(f.isFounder),
+        photo_url: f.photo?.asset?.url || null,
+        philosophy: f.philosophy || undefined,
+        courses_taught: Array.isArray(f.coursesTaught)
+          ? f.coursesTaught.map((c: any) => ({
+              name: typeof c === "string" ? c : c.name || "Law Course",
+              href:
+                typeof c === "string"
+                  ? `/courses/${c.toLowerCase().replace(/\s+/g, "-")}`
+                  : c.href || "/courses",
+            }))
+          : undefined,
+      }));
+    }
+  } catch {
+    facultyList = placeholderFaculty;
+  }
+
+  // Schema generation
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${siteUrl}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Faculty",
+        item: `${siteUrl}/faculty`,
+      },
+    ],
+  };
+
+  const personSchemas = facultyList.map((faculty) => ({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: faculty.name,
+    jobTitle: faculty.designation,
+    worksFor: {
+      "@type": "EducationalOrganization",
+      name: SITE_CONFIG.name || "XYZ Law Coaching",
+      sameAs: siteUrl,
+    },
+    description: faculty.short_bio,
+    image: faculty.photo_url || undefined,
+  }));
+
   return (
-    <div className="py-16 md:py-24">
-      <div className="container px-4 sm:px-8">
-        <SectionHeading
-          badge="Faculty & Leadership"
-          title="Taught by Advocates Who Live the Law"
-          subtitle="Our mentors combine courtroom practice with systematic pedagogical rigor to prepare you for every stage of judicial selection."
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {personSchemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
+      ))}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {FACULTY_MEMBERS.map((member, i) => (
-            <Card key={i} className="border-slate-200 hover:shadow-md transition-shadow">
-              <CardContent className="pt-6 space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-navy-tint text-navy-dark flex items-center justify-center font-bold text-lg shrink-0">
-                    <Scale className="w-7 h-7 text-navy-mid" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading font-bold text-lg text-navy-dark">{member.name}</h3>
-                    <p className="text-sm font-semibold text-emerald">{member.designation}</p>
-                    <Badge variant="outline" className="text-xs bg-slate-50 mt-1">
-                      {member.experience}
-                    </Badge>
-                  </div>
-                </div>
+      {/* Section 1: Hero */}
+      <FacultyPageHero />
 
-                <p className="text-sm text-slate-600 leading-relaxed">{member.bio}</p>
+      {/* Section 2: Faculty Detailed Cards */}
+      <section className="py-16 sm:py-24 bg-slate-50 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
+          <div className="text-center mb-12 sm:mb-16">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald">
+              Our Mentors
+            </span>
+            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-navy-dark mt-2">
+              Learn Directly from Practicing Advocates
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto mt-3">
+              Every mentor brings real-world courtroom insight, exam pattern mastery, and a personal commitment to your judicial selection.
+            </p>
+          </div>
 
-                <div className="pt-3 border-t text-xs text-slate-700 flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-navy-mid shrink-0" />
-                  <span><strong>Subjects:</strong> {member.specialization}</span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+          <div className="space-y-6">
+            {facultyList.map((faculty, index) => (
+              <FacultyDetailCard
+                key={faculty.id}
+                faculty={faculty}
+                index={index}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* Section 3: Teaching Philosophy */}
+      <FacultyPhilosophy />
+
+      {/* Section 4: CTA */}
+      <FacultyCTA />
+    </>
   );
 }
