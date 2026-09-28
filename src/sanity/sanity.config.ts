@@ -27,6 +27,7 @@ export default defineConfig({
   title: "XYZ Law Coaching — Admin",
   projectId,
   dataset,
+  basePath: "/studio",
   document: {
     productionUrl: async (prev, context) => {
       const { document } = context;

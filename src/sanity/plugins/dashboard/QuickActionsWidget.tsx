@@ -7,25 +7,25 @@ export function QuickActionsWidget() {
     {
       title: "Add New Topper",
       icon: "🏆",
-      href: "/studio#/intent/create/template=topper;type=topper/",
+      href: "/studio/intent/create/template=topper;type=topper/",
       target: "_self",
     },
     {
       title: "Add New Batch",
       icon: "📅",
-      href: "/studio#/intent/create/template=batch;type=batch/",
+      href: "/studio/intent/create/template=batch;type=batch/",
       target: "_self",
     },
     {
       title: "Write Blog Post",
       icon: "✍️",
-      href: "/studio#/intent/create/template=blogPost;type=blogPost/",
+      href: "/studio/intent/create/template=blogPost;type=blogPost/",
       target: "_self",
     },
     {
       title: "Add Exam Update",
       icon: "🔔",
-      href: "/studio#/intent/create/template=examUpdate;type=examUpdate/",
+      href: "/studio/intent/create/template=examUpdate;type=examUpdate/",
       target: "_self",
     },
     {
@@ -37,10 +37,11 @@ export function QuickActionsWidget() {
     {
       title: "View Leads Report",
       icon: "📊",
-      href: "/studio#/leads",
+      href: "/studio/leads",
       target: "_self",
     },
   ];
+
 
 
   return (
