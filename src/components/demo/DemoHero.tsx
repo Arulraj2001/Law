@@ -68,10 +68,11 @@ export function DemoHero() {
 
         {/* H1 Title */}
         <motion.h1
+          suppressHydrationWarning
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-extrabold text-white leading-tight tracking-tight mb-5"
+          className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold text-white leading-tight tracking-tight mb-5"
         >
           Experience Our Teaching <br className="hidden sm:inline" />
           Before You Enrol

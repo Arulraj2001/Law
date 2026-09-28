@@ -106,10 +106,11 @@ export function ThankYouContent() {
 
         {/* Heading */}
         <motion.h1
+          suppressHydrationWarning
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="font-heading text-3xl sm:text-4xl font-extrabold text-navy-dark tracking-tight mb-4"
+          className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark tracking-tight mb-4"
         >
           You&apos;re All Set! 🎉
         </motion.h1>

@@ -529,7 +529,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
 
           {/* H1 Heading */}
-          <h1 className="font-heading font-extrabold text-2xl sm:text-3xl md:text-[42px] text-white leading-tight tracking-tight mb-4">
+          <h1
+            suppressHydrationWarning
+            className="font-serif font-bold text-2xl sm:text-3xl md:text-[46px] text-white leading-tight tracking-tight mb-4"
+          >
             {post.title}
           </h1>
 

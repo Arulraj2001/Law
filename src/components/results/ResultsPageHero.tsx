@@ -53,10 +53,11 @@ export function ResultsPageHero() {
 
         {/* H1 Heading */}
         <motion.h1
+          suppressHydrationWarning
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="font-heading font-extrabold text-[30px] sm:text-[38px] md:text-[44px] text-white leading-tight tracking-tight mb-6"
+          className="font-serif font-bold text-[34px] sm:text-[42px] md:text-[50px] text-white leading-tight tracking-tight mb-6"
         >
           Our Students Are Now Tamil Nadu&apos;s Civil Judges and Prosecutors
         </motion.h1>

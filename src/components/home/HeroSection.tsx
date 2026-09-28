@@ -12,6 +12,7 @@ import {
 import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
 import { STATS } from "@/lib/constants";
 import { useWhatsApp } from "@/hooks/useWhatsApp";
+import { HeroShowcase } from "@/components/home/HeroShowcase";
 
 export function HeroSection() {
   const { openDemoClass } = useWhatsApp();
@@ -24,33 +25,6 @@ export function HeroSection() {
       window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
     }
   };
-
-  const statItems = [
-    {
-      icon: <GraduationCap className="w-5 h-5 text-emerald shrink-0" />,
-      value: STATS[0]?.value ?? 1000,
-      suffix: STATS[0]?.suffix ?? "+",
-      label: "Students Trained",
-    },
-    {
-      icon: <Scale className="w-5 h-5 text-emerald shrink-0" />,
-      value: STATS[1]?.value ?? 25,
-      suffix: STATS[1]?.suffix ?? "+",
-      label: "Civil Judges & APPs Selected",
-    },
-    {
-      icon: <Award className="w-5 h-5 text-gold shrink-0" />,
-      value: STATS[2]?.value ?? 10,
-      suffix: STATS[2]?.suffix ?? "+",
-      label: "Years of Mentoring Experience",
-    },
-    {
-      icon: <BookOpen className="w-5 h-5 text-sky-400 shrink-0" />,
-      value: STATS[3]?.value ?? 6,
-      suffix: STATS[3]?.suffix ?? "",
-      label: "Exam Categories Covered",
-    },
-  ];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#021730]">
@@ -129,8 +103,8 @@ export function HeroSection() {
       {/* Main Content Container */}
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 md:pt-36 md:pb-28 relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* LEFT COLUMN: Main Copy & CTAs (60% width on desktop) */}
-          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
+          {/* LEFT COLUMN: Main Copy & CTAs (50% width on desktop) */}
+          <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
             {/* Eyebrow Badge (delay 0) */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
@@ -148,7 +122,10 @@ export function HeroSection() {
             </motion.div>
 
             {/* H1 Headline (3-line stagger animation, delay 0.2) */}
-            <h1 className="font-heading font-extrabold text-[32px] sm:text-[40px] lg:text-[56px] text-white tracking-tight leading-[1.15] space-y-1">
+            <h1
+              suppressHydrationWarning
+              className="font-serif font-bold text-[38px] sm:text-[48px] lg:text-[64px] text-white tracking-tight leading-[1.12] space-y-1"
+            >
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -233,70 +210,14 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* RIGHT COLUMN: Floating Glass Track Record Card (40% width on desktop) */}
-          <div className="lg:col-span-5 w-full">
+          {/* RIGHT COLUMN: Auto-Advancing Elite Judicial Showcase (6 cols on desktop) */}
+          <div className="lg:col-span-6 w-full">
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="relative rounded-[20px] p-7 sm:p-8 bg-white/[0.08] backdrop-blur-xl border border-white/15 shadow-2xl overflow-hidden"
+              transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
             >
-              {/* Card Header */}
-              <div className="flex items-center gap-2 mb-6 pb-3 border-b border-white/10">
-                <span className="w-2 h-2 rounded-full bg-[#1D9E75] animate-pulse" />
-                <span className="font-heading text-[11px] font-bold uppercase tracking-widest text-[#1D9E75]">
-                  Our Track Record
-                </span>
-              </div>
-
-              {/* 4 Stat Rows */}
-              <div className="space-y-4">
-                {statItems.map((stat, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: 0.6 + idx * 0.15,
-                      ease: "easeOut",
-                    }}
-                    className="flex items-center justify-between pb-4 border-b border-white/10 last:border-b-0 last:pb-0"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                        {stat.icon}
-                      </div>
-                      <span className="text-[13px] text-white/70 font-medium">
-                        {stat.label}
-                      </span>
-                    </div>
-
-                    <div className="text-right shrink-0">
-                      <span className="font-heading font-extrabold text-[28px] sm:text-[32px] text-white tracking-tight">
-                        <AnimatedCounter
-                          value={stat.value}
-                          suffix={stat.suffix}
-                          duration={2}
-                        />
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Card Footer Pill (delay 1.2) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 1.2, ease: "easeOut" }}
-                className="mt-6 pt-4 border-t border-white/10 flex justify-center"
-              >
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1D9E75]/20 text-[#9FE1CB] border border-[#1D9E75]/30 text-xs font-semibold tracking-wide">
-                  <span>📍</span>
-                  <span>Tamil Nadu · Online + Offline</span>
-                </span>
-              </motion.div>
+              <HeroShowcase />
             </motion.div>
           </div>
         </div>

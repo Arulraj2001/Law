@@ -18,6 +18,7 @@ import {
   Phone,
 } from "lucide-react";
 import { SITE_CONFIG, COURSES } from "@/lib/constants";
+import { TopAlertBar } from "@/components/layout/TopAlertBar";
 
 // Helper for course icon mapping
 function getCourseIcon(slug: string) {
@@ -112,6 +113,7 @@ export function Navbar() {
             : "bg-white/95 backdrop-blur-md text-navy-dark shadow-sm border-b border-navy-mid/10"
         }`}
       >
+        <TopAlertBar />
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[60px] md:h-[72px]">
             {/* Logo Left */}

@@ -64,10 +64,11 @@ export function AboutHero() {
 
         {/* H1 heading */}
         <motion.h1
+          suppressHydrationWarning
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-          className="font-heading font-extrabold text-[32px] sm:text-[40px] md:text-[48px] text-white leading-tight tracking-tight mb-4"
+          className="font-serif font-bold text-[36px] sm:text-[44px] md:text-[54px] text-white leading-tight tracking-tight mb-4"
         >
           About {SITE_CONFIG.name || "XYZ Law Coaching"}
         </motion.h1>

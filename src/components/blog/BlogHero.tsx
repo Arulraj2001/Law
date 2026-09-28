@@ -48,10 +48,11 @@ export function BlogHero({
 
         {/* H1 Heading */}
         <motion.h1
+          suppressHydrationWarning
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="font-heading font-extrabold text-3xl sm:text-4xl md:text-[42px] text-white leading-tight tracking-tight mb-4"
+          className="font-serif font-bold text-3xl sm:text-4xl md:text-[48px] text-white leading-tight tracking-tight mb-4"
         >
           Guides &amp; Articles for Tamil Nadu Law Exam Aspirants
         </motion.h1>

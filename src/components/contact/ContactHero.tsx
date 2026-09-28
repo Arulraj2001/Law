@@ -39,10 +39,11 @@ export function ContactHero() {
 
         {/* H1 */}
         <motion.h1
+          suppressHydrationWarning
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight tracking-tight mb-4"
+          className="font-serif text-3xl sm:text-4xl md:text-[54px] font-bold text-white leading-tight tracking-tight mb-4"
         >
           We Are Here to Help You <br className="hidden sm:inline" />
           Start Your Judicial Career

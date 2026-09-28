@@ -40,10 +40,11 @@ export function TestimonialsHero() {
 
         {/* H1 Heading */}
         <motion.h1
+          suppressHydrationWarning
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-white leading-tight tracking-tight mb-6"
+          className="font-serif font-bold text-3xl sm:text-4xl md:text-[54px] text-white leading-tight tracking-tight mb-6"
         >
           Words from Those Who Are Now Serving as Tamil Nadu&apos;s Judges
         </motion.h1>

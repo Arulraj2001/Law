@@ -105,7 +105,10 @@ export function CourseHero({
             </div>
 
             {/* H1 Heading */}
-            <h1 className="font-heading font-extrabold text-[30px] sm:text-[38px] md:text-[44px] text-white leading-[1.2] tracking-tight">
+            <h1
+              suppressHydrationWarning
+              className="font-serif font-bold text-[34px] sm:text-[42px] md:text-[50px] text-white leading-[1.15] tracking-tight"
+            >
               {title}
             </h1>
 
