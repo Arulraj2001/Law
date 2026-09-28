@@ -78,7 +78,7 @@ async function seedSiteSettings() {
         "Honest, result-oriented guidance\n" +
         "Continuous improvement of material\n" +
         "Accessibility — online and offline",
-    });
+    } as any);
     console.log("   ✅ Site settings seeded successfully");
   } catch (err: any) {
     console.error("   ❌ Failed to seed site settings:", err?.message || err);
@@ -276,7 +276,7 @@ async function seedCourses() {
     ];
 
     for (const c of courses) {
-      await client.create(c);
+      await client.create(c as any);
     }
     console.log(`   ✅ ${courses.length} courses seeded successfully`);
   } catch (err: any) {
@@ -345,7 +345,7 @@ async function seedBatches() {
     ];
 
     for (const b of batches) {
-      await client.create(b);
+      await client.create(b as any);
     }
     console.log(`   ✅ ${batches.length} batches seeded successfully`);
   } catch (err: any) {
@@ -420,7 +420,7 @@ async function seedFaculty() {
     ];
 
     for (const f of facultyMembers) {
-      await client.create(f);
+      await client.create(f as any);
     }
     console.log(`   ✅ ${facultyMembers.length} faculty seeded successfully`);
   } catch (err: any) {
@@ -501,7 +501,7 @@ async function seedToppers() {
     ];
 
     for (const t of toppers) {
-      await client.create(t);
+      await client.create(t as any);
     }
     console.log(`   ✅ ${toppers.length} toppers seeded successfully`);
   } catch (err: any) {
@@ -567,7 +567,7 @@ async function seedTestimonials() {
     ];
 
     for (const t of testimonials) {
-      await client.create(t);
+      await client.create(t as any);
     }
     console.log(`   ✅ ${testimonials.length} testimonials seeded successfully`);
   } catch (err: any) {
@@ -669,7 +669,7 @@ async function seedBlogPosts() {
     ];
 
     for (const p of posts) {
-      await client.create(p);
+      await client.create(p as any);
     }
     console.log(`   ✅ ${posts.length} blog posts seeded successfully`);
   } catch (err: any) {
@@ -714,7 +714,7 @@ async function seedExamUpdates() {
     ];
 
     for (const u of updates) {
-      await client.create(u);
+      await client.create(u as any);
     }
     console.log(`   ✅ ${updates.length} exam updates seeded successfully`);
   } catch (err: any) {
@@ -785,7 +785,7 @@ async function seedFAQs() {
     ];
 
     for (const f of faqs) {
-      await client.create(f);
+      await client.create(f as any);
     }
     console.log(`   ✅ ${faqs.length} FAQs seeded successfully`);
   } catch (err: any) {
