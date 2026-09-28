@@ -6,11 +6,20 @@ import { Phone, Mail, MapPin, ExternalLink, Scale } from "lucide-react";
 import { SITE_CONFIG_FALLBACK, type SiteConfig } from "@/lib/site-config.shared";
 import { COURSES } from "@/lib/constants";
 
-interface FooterProps {
-  config?: SiteConfig;
+interface CourseItem {
+  id: string;
+  title: string;
+  slug: string;
+  href: string;
 }
 
-export function Footer({ config }: FooterProps) {
+interface FooterProps {
+  config?: SiteConfig;
+  courses?: CourseItem[];
+}
+
+export function Footer({ config, courses: coursesProp }: FooterProps) {
+  const courses = (coursesProp && coursesProp.length > 0) ? coursesProp : COURSES;
   const fallback = SITE_CONFIG_FALLBACK;
   const cfg = {
     name: config?.name || fallback.name,
@@ -200,7 +209,7 @@ export function Footer({ config }: FooterProps) {
               Judiciary Courses
             </h4>
             <ul className="space-y-2.5 text-sm">
-              {COURSES.map((course) => (
+              {courses.map((course) => (
                 <li key={course.id}>
                   <Link
                     href={course.href}

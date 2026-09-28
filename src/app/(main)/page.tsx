@@ -6,7 +6,8 @@ import WhyUsSection from "@/components/home/WhyUsSection";
 import FacultySection from "@/components/home/FacultySection";
 import ProcessSection from "@/components/home/ProcessSection";
 import { SEOTextSection } from "@/components/home/SEOTextSection";
-import { SITE_CONFIG } from "@/lib/constants";
+import { SITE_CONFIG, COURSES } from "@/lib/constants";
+import { getSiteSettingsFull, getAllCoursesSanity } from "@/lib/sanity/queries";
 import {
   organizationSchema,
   websiteSchema,
@@ -105,13 +106,23 @@ function HomepageSchemas({ config }: { config: SiteConfig }) {
 }
 
 export default async function HomePage() {
-  const config = await getSiteConfig();
+  const [config, sanitySettings, sanityCourses] = await Promise.all([
+    getSiteConfig(),
+    getSiteSettingsFull().catch(() => null),
+    getAllCoursesSanity().catch(() => null),
+  ]);
+
+  const stats = sanitySettings?.stats ?? undefined;
+  const courseNames =
+    Array.isArray(sanityCourses) && sanityCourses.length > 0
+      ? sanityCourses.map((c: any) => c.title as string)
+      : COURSES.map((c) => c.title);
 
   return (
     <>
       <HomepageSchemas config={config} />
       <HeroSection />
-      <TrustBar />
+      <TrustBar stats={stats} />
       <CoursesSection />
       <WhyUsSection />
       <FacultySection />
@@ -120,7 +131,7 @@ export default async function HomePage() {
       <TestimonialsSection />
       <ExamOverviewSection />
       <BatchesSection />
-      <DemoClassSection />
+      <DemoClassSection courseNames={courseNames} />
       <BlogPreviewSection />
       <FAQSection />
       <SEOTextSection />

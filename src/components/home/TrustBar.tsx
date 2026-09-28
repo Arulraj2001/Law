@@ -5,27 +5,37 @@ import { motion, useInView } from "framer-motion";
 import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
 import { STATS } from "@/lib/constants";
 
-export function TrustBar() {
+interface SanityStats {
+  studentsCount?: number;
+  judgesCount?: number;
+  experienceYears?: number;
+}
+
+interface TrustBarProps {
+  stats?: SanityStats;
+}
+
+export function TrustBar({ stats }: TrustBarProps = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.25 });
 
   const trustItems = [
     {
       type: "counter",
-      value: STATS[0]?.value ?? 1000,
-      suffix: STATS[0]?.suffix ?? "+",
+      value: stats?.studentsCount ?? STATS[0]?.value ?? 1000,
+      suffix: "+",
       label: "Students Trained",
     },
     {
       type: "counter",
-      value: STATS[1]?.value ?? 25,
-      suffix: STATS[1]?.suffix ?? "+",
+      value: stats?.judgesCount ?? STATS[1]?.value ?? 25,
+      suffix: "+",
       label: "Judges & APPs Selected",
     },
     {
       type: "counter",
-      value: STATS[2]?.value ?? 10,
-      suffix: STATS[2]?.suffix ?? "+",
+      value: stats?.experienceYears ?? STATS[2]?.value ?? 10,
+      suffix: "+",
       label: "Years Experience",
     },
     {

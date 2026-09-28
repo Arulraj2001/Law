@@ -16,13 +16,16 @@ function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
-export function DemoClassSection() {
+export function DemoClassSection({ courseNames: courseNamesProp }: { courseNames?: string[] } = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const { openDemoClass } = useWhatsApp();
 
-  const courseNames = COURSES.map((c) => c.title);
+  const courseNames =
+    courseNamesProp && courseNamesProp.length > 0
+      ? courseNamesProp
+      : COURSES.map((c) => c.title);
 
   const benefits = [
     "Experience our teaching style first-hand",

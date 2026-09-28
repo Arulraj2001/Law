@@ -10,7 +10,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
-import { STATS } from "@/lib/constants";
+
 import { useWhatsApp } from "@/hooks/useWhatsApp";
 import { HeroShowcase } from "@/components/home/HeroShowcase";
 

@@ -21,8 +21,19 @@ import { COURSES } from "@/lib/constants";
 import { SITE_CONFIG_FALLBACK, type SiteConfig } from "@/lib/site-config.shared";
 import { TopAlertBar } from "@/components/layout/TopAlertBar";
 
+interface CourseItem {
+  id: string;
+  title: string;
+  slug: string;
+  href: string;
+  badge?: string;
+  badgeColor?: string;
+  description?: string;
+}
+
 interface NavbarProps {
   config?: SiteConfig;
+  courses?: CourseItem[];
 }
 
 // Helper for course icon mapping
@@ -58,9 +69,11 @@ function getBadgeClasses(color?: string) {
   }
 }
 
-export function Navbar({ config }: NavbarProps = {}) {
+export function Navbar({ config, courses: coursesProp }: NavbarProps = {}) {
+  const courses = (coursesProp && coursesProp.length > 0) ? coursesProp : COURSES;
   const siteName = config?.name || SITE_CONFIG_FALLBACK.name;
   const phone = config?.phone || SITE_CONFIG_FALLBACK.phone;
+
   const pathname = usePathname();
 
   // Scroll detection hook
@@ -201,7 +214,7 @@ export function Navbar({ config }: NavbarProps = {}) {
                         </div>
 
                         <div className="grid grid-cols-2 gap-2 pt-3">
-                          {COURSES.map((course) => (
+                          {courses.map((course) => (
                             <Link
                               key={course.id}
                               href={course.href}
@@ -384,7 +397,7 @@ export function Navbar({ config }: NavbarProps = {}) {
                           transition={{ duration: 0.2 }}
                           className="pl-4 pr-1 py-1 space-y-1 overflow-hidden"
                         >
-                          {COURSES.map((course) => (
+                          {courses.map((course) => (
                             <Link
                               key={course.id}
                               href={course.href}

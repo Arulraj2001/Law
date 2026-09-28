@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-28T12:16:15.821Z",
+  "timestamp": "2026-09-28T12:51:36.251Z",
   "siteUrl": "http://localhost:3000",
   "totalPassed": 134,
   "totalFailed": 0,
@@ -513,7 +513,7 @@
       "category": "Build Output",
       "name": "package.json script: seed:sanity",
       "passed": true,
-      "details": "npx ts-node --skipProject src/scripts/seed-sanity.ts",
+      "details": "npx tsx src/scripts/seed-sanity.ts",
       "critical": false
     },
     {
@@ -667,7 +667,7 @@
       "category": "API Endpoints",
       "name": "Leads API — valid submission",
       "passed": true,
-      "details": "Lead ID: mock-lead-1790597770102",
+      "details": "Lead ID: mock-lead-1790599894104",
       "critical": true
     },
     {
