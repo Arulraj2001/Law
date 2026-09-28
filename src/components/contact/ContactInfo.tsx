@@ -1,5 +1,5 @@
 import { SITE_CONFIG } from "@/lib/constants";
-import type { SiteConfig } from "@/lib/site-config";
+import type { SiteConfig } from "@/lib/site-config.shared";
 import { useWhatsApp } from "@/hooks/useWhatsApp";
 import { Phone, Mail, MapPin, Globe, ArrowRight } from "lucide-react";
 

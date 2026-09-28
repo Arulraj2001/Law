@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ExternalLink, Scale } from "lucide-react";
-import { SITE_CONFIG_FALLBACK, type SiteConfig } from "@/lib/site-config";
+import { SITE_CONFIG_FALLBACK, type SiteConfig } from "@/lib/site-config.shared";
 import { COURSES } from "@/lib/constants";
 
 interface FooterProps {

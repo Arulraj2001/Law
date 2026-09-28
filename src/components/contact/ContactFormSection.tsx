@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { LeadForm } from "@/components/shared/LeadForm";
 import { COURSES } from "@/lib/constants";
 import { ContactInfo } from "@/components/contact/ContactInfo";
-import type { SiteConfig } from "@/lib/site-config";
+import type { SiteConfig } from "@/lib/site-config.shared";
 
 interface ContactFormSectionProps {
   config?: SiteConfig;

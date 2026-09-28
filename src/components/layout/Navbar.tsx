@@ -18,7 +18,7 @@ import {
   Phone,
 } from "lucide-react";
 import { COURSES } from "@/lib/constants";
-import { SITE_CONFIG_FALLBACK, type SiteConfig } from "@/lib/site-config";
+import { SITE_CONFIG_FALLBACK, type SiteConfig } from "@/lib/site-config.shared";
 import { TopAlertBar } from "@/components/layout/TopAlertBar";
 
 interface NavbarProps {
