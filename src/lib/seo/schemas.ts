@@ -1,15 +1,27 @@
 import { SITE_CONFIG } from "@/lib/constants";
+import type { SiteConfig } from "@/lib/site-config";
 import { validateSchema } from "./validate";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yourdomain.com";
 
-export function organizationSchema() {
+export function organizationSchema(config?: SiteConfig) {
+  const name = config?.name || SITE_CONFIG.name;
+  const phone = config?.phone || SITE_CONFIG.phone;
+  const whatsapp = config?.whatsapp || SITE_CONFIG.whatsapp;
+  const address = config?.address || SITE_CONFIG.address;
+  const foundingDate =
+    config?.establishedYear || SITE_CONFIG.established || "2016";
+  const youtube = config?.social?.youtube || SITE_CONFIG.social.youtube;
+  const instagram =
+    config?.social?.instagram || SITE_CONFIG.social.instagram;
+  const facebook = config?.social?.facebook || SITE_CONFIG.social.facebook;
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     "@id": `${siteUrl}/#organization`,
-    name: "XYZ Law Coaching",
-    alternateName: "XYZ Judiciary Coaching",
+    name,
+    alternateName: `${name} Judiciary Coaching`,
     url: siteUrl,
     logo: {
       "@type": "ImageObject",
@@ -19,10 +31,10 @@ export function organizationSchema() {
     },
     description:
       "Tamil Nadu's trusted judiciary coaching institute for TNPSC Civil Judge, APP Exam, Patent Agent, Trademark Agent, UGC-NET & SET Law.",
-    foundingDate: SITE_CONFIG.established || "2016",
+    foundingDate,
     address: {
       "@type": "PostalAddress",
-      streetAddress: SITE_CONFIG.address,
+      streetAddress: address,
       addressLocality: "Chennai",
       addressRegion: "Tamil Nadu",
       addressCountry: "IN",
@@ -30,23 +42,19 @@ export function organizationSchema() {
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: SITE_CONFIG.phone,
+        telephone: phone,
         contactType: "customer service",
         availableLanguage: ["English", "Tamil"],
         contactOption: "TollFree",
       },
       {
         "@type": "ContactPoint",
-        telephone: SITE_CONFIG.whatsapp,
+        telephone: whatsapp,
         contactType: "sales",
         availableLanguage: ["English", "Tamil"],
       },
     ],
-    sameAs: [
-      SITE_CONFIG.social.youtube,
-      SITE_CONFIG.social.instagram,
-      SITE_CONFIG.social.facebook,
-    ].filter(Boolean),
+    sameAs: [youtube, instagram, facebook].filter(Boolean),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Law Coaching Programmes",
@@ -260,11 +268,13 @@ export function articleSchema({
 }
 
 export function localBusinessSchema({
+  name,
   phone,
   email,
   address,
   mapUrl,
 }: {
+  name?: string;
   phone: string;
   email: string;
   address: string;
@@ -274,7 +284,7 @@ export function localBusinessSchema({
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "EducationalOrganization"],
     "@id": `${siteUrl}/#organization`,
-    name: "XYZ Law Coaching",
+    name: name || SITE_CONFIG.name,
     url: siteUrl,
     telephone: phone,
     email,

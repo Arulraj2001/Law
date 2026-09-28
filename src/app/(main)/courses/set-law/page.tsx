@@ -10,24 +10,33 @@ import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
 import { generatePageMetadata } from "@/lib/seo/metadata";
+import { getCourseFullData } from "@/lib/sanity/queries";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "SET Law Coaching Tamil Nadu | TNSET Law Exam Prep",
-  description:
-    "XYZ offers SET Law coaching for Tamil Nadu SET and other state SET exams. For law graduates targeting assistant professor eligibility. Online classes. Expert faculty.",
-  keywords: [
-    "SET law coaching Tamil Nadu",
-    "TNSET law exam preparation",
-    "SET law coaching Chennai",
-    "state eligibility test law coaching",
-    "SET exam law preparation online",
-  ],
-  path: "/courses/set-law",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const course = await getCourseFullData("set-law");
+
+  return generatePageMetadata({
+    title:
+      course?.seoTitle ||
+      "SET Law Coaching Tamil Nadu | TNSET Law Exam Prep",
+    description:
+      course?.seoDescription ||
+      "XYZ offers SET Law coaching for Tamil Nadu SET and other state SET exams. For law graduates targeting assistant professor eligibility. Online classes. Expert faculty.",
+    keywords: course?.subjects || [
+      "SET law coaching Tamil Nadu",
+      "TNSET law exam preparation",
+      "SET law coaching Chennai",
+      "state eligibility test law coaching",
+      "SET exam law preparation online",
+    ],
+    path: "/courses/set-law",
+  });
+}
 
 export const revalidate = 3600;
 
-export default function SETLawPage() {
+export default async function SETLawPage() {
+  const course = await getCourseFullData("set-law");
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
 
@@ -200,33 +209,54 @@ export default function SETLawPage() {
     {
       title: "UGC-NET Law Coaching",
       slug: "ugc-net-law",
-      badge: "National Eligibility",
+      badge: "NET · JRF",
       description:
         "Complete preparation for Paper I & II with teaching aptitude, research aptitude, and JRF focused guidance.",
     },
     {
       title: "Civil Judge Exam Coaching",
       slug: "civil-judge",
-      badge: "Primary Focus",
+      badge: "Judiciary",
       description:
         "Tamil Nadu judicial service examination preparation for Prelims, Mains, and Viva-Voce.",
     },
     {
       title: "APP Exam Coaching",
       slug: "app-exam",
-      badge: "Primary Focus",
+      badge: "Prosecution",
       description:
         "TNPSC Assistant Public Prosecutor preparation covering criminal law, GS, and interview.",
     },
   ];
 
+  const courseData = {
+    title: course?.title || "SET Law Coaching — Tamil Nadu",
+    subtitle:
+      course?.shortDescription ||
+      "Complete preparation for the Tamil Nadu State Eligibility Test (TNSET) in Law and other state SET exams. Achieve assistant professor eligibility in Tamil Nadu law colleges. Online classes available.",
+    badge: course?.badge || "SET Law",
+    badgeColor: (course?.badgeColor as "navy" | "emerald" | "gold") || "gold",
+    duration: course?.duration || "4–6 Months",
+    mode: course?.mode || "Live Online Classes",
+    fee: course?.fee || "Contact for fee details",
+    feeNote: course?.feeNote || "",
+    highlights: course?.highlights?.length ? course.highlights : highlights,
+    syllabus: course?.syllabus?.length ? course.syllabus : syllabus,
+    faqs: course?.faqs?.length ? course.faqs : faqs,
+    seoTitle:
+      course?.seoTitle ||
+      "SET Law Coaching Tamil Nadu | TNSET Law Exam Prep",
+    seoDescription:
+      course?.seoDescription ||
+      "XYZ offers SET Law coaching for Tamil Nadu SET and other state SET exams. For law graduates targeting assistant professor eligibility. Online classes. Expert faculty.",
+  };
+
   // Schemas
   const courseSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
-    name: "SET Law Coaching — Tamil Nadu",
-    description:
-      "Complete preparation for the Tamil Nadu State Eligibility Test (TNSET) in Law and other state SET exams. Achieve assistant professor eligibility in Tamil Nadu law colleges.",
+    name: courseData.title,
+    description: courseData.subtitle,
     provider: {
       "@type": "EducationalOrganization",
       name: SITE_CONFIG.name || "XYZ Law Coaching",
@@ -261,7 +291,7 @@ export default function SETLawPage() {
       {
         "@type": "ListItem",
         position: 3,
-        name: "SET Law",
+        name: courseData.title,
         item: `${siteUrl}/courses/set-law`,
       },
     ],
@@ -270,7 +300,7 @@ export default function SETLawPage() {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
+    mainEntity: courseData.faqs.map((f: { question: string; answer: string }) => ({
       "@type": "Question",
       name: f.question,
       acceptedAnswer: {
@@ -295,29 +325,25 @@ export default function SETLawPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <CourseStickySidebar courseTitle="SET Law Coaching" />
+      <CourseStickySidebar courseTitle={courseData.title} />
 
       <CourseHero
-        title="SET Law Coaching — Tamil Nadu"
-        subtitle="Complete preparation for the Tamil Nadu State Eligibility Test (TNSET) in Law and other state SET exams. Achieve assistant professor eligibility in Tamil Nadu law colleges. Online classes available."
-        badge="TNSET Law · 40% Focus"
-        badgeColor="gold"
-        highlights={[
-          "Tamil Nadu SET pattern",
-          "All law subjects covered",
-          "Previous year questions",
-          "Online classes available",
-        ]}
-        duration="4–6 Months"
-        mode="Live Online Classes"
-        fee="Contact for fee details"
+        title={courseData.title}
+        subtitle={courseData.subtitle}
+        badge={courseData.badge}
+        badgeColor={courseData.badgeColor}
+        highlights={courseData.highlights.slice(0, 4)}
+        duration={courseData.duration}
+        mode={courseData.mode}
+        fee={courseData.fee}
+        feeNote={courseData.feeNote}
         courseSlug="set-law"
         breadcrumb={breadcrumb}
       />
 
       <CourseHighlights
-        highlights={highlights}
-        courseTitle="SET Law"
+        highlights={courseData.highlights}
+        courseTitle={courseData.title}
       />
 
       <ExamPatternSection
@@ -334,13 +360,13 @@ export default function SETLawPage() {
         ]}
       />
 
-      <SyllabusSection courseTitle="SET Law" syllabus={syllabus} />
+      <SyllabusSection courseTitle={courseData.title} syllabus={courseData.syllabus} />
 
-      <CourseFeatures features={features} courseTitle="SET Law" />
+      <CourseFeatures features={features} courseTitle={courseData.title} />
 
       {/* No ToppersSection rendered as specified */}
 
-      <CourseFAQ faqs={faqs} courseTitle="SET Law" />
+      <CourseFAQ faqs={courseData.faqs} courseTitle={courseData.title} />
 
       {/* Related Courses Strip */}
       <RelatedCourses
@@ -351,9 +377,9 @@ export default function SETLawPage() {
       />
 
       <CourseEnrollCTA
-        courseTitle="SET Law Coaching"
+        courseTitle={courseData.title}
         courseSlug="set-law"
-        defaultCourseName="SET Law Coaching"
+        defaultCourseName={courseData.title}
         subText="Qualify for assistant professor positions in Tamil Nadu law colleges. Attend a free demo session to understand our Tamil Nadu focused curriculum."
       />
     </>

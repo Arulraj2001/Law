@@ -11,24 +11,33 @@ import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
 import { generatePageMetadata } from "@/lib/seo/metadata";
+import { getCourseFullData } from "@/lib/sanity/queries";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "APP Exam Coaching Tamil Nadu | TNPSC Assistant Public Prosecutor",
-  description:
-    "XYZ offers complete TNPSC APP Grade II exam coaching in Tamil Nadu. All 200 MCQs covered — Law, GS & Aptitude. BNS, BNSS & BSA included. Online & offline. Expert faculty.",
-  keywords: [
-    "APP exam coaching Tamil Nadu",
-    "TNPSC APP coaching",
-    "assistant public prosecutor coaching Tamil Nadu",
-    "APP grade 2 exam preparation",
-    "APP exam coaching Chennai",
-  ],
-  path: "/courses/app-exam",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const course = await getCourseFullData("app-exam");
+
+  return generatePageMetadata({
+    title:
+      course?.seoTitle ||
+      "APP Exam Coaching Tamil Nadu | TNPSC Assistant Public Prosecutor",
+    description:
+      course?.seoDescription ||
+      "XYZ offers complete TNPSC APP Grade II exam coaching in Tamil Nadu. All 200 MCQs covered — Law, GS & Aptitude. BNS, BNSS & BSA included. Online & offline. Expert faculty.",
+    keywords: course?.subjects || [
+      "APP exam coaching Tamil Nadu",
+      "TNPSC APP coaching",
+      "assistant public prosecutor coaching Tamil Nadu",
+      "APP grade 2 exam preparation",
+      "APP exam coaching Chennai",
+    ],
+    path: "/courses/app-exam",
+  });
+}
 
 export const revalidate = 3600;
 
-export default function APPExamPage() {
+export default async function APPExamPage() {
+  const course = await getCourseFullData("app-exam");
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
 
@@ -255,21 +264,21 @@ export default function APPExamPage() {
     {
       title: "Civil Judge Exam Coaching",
       slug: "civil-judge",
-      badge: "Primary Focus",
+      badge: "Judiciary",
       description:
         "Comprehensive Prelims, Mains & Viva preparation for the Tamil Nadu judicial service examination.",
     },
     {
       title: "Patent Agent Exam Coaching",
       slug: "patent-agent",
-      badge: "IP Specialisation",
+      badge: "Patent Office",
       description:
         "CGPDTM Patent Agent exam coaching covering Patent Act, rules, and drafting.",
     },
     {
       title: "UGC-NET Law Coaching",
       slug: "ugc-net-law",
-      badge: "Academic Eligibility",
+      badge: "NET · JRF",
       description:
         "Paper I and Paper II coaching for assistant professor and JRF eligibility.",
     },
@@ -302,13 +311,34 @@ export default function APPExamPage() {
     },
   ];
 
+  const courseData = {
+    title: course?.title || "APP Exam Coaching in Tamil Nadu",
+    subtitle:
+      course?.shortDescription ||
+      "Complete preparation for the TNPSC Assistant Public Prosecutor Grade II exam — all 200 MCQs, Mains, and Interview. BNS, BNSS & BSA fully covered. Expert faculty. Online and offline batches.",
+    badge: course?.badge || "Prosecution Service",
+    badgeColor: (course?.badgeColor as "navy" | "emerald" | "gold") || "navy",
+    duration: course?.duration || "8–10 Months",
+    mode: course?.mode || "Online + Offline Batches",
+    fee: course?.fee || "Contact for fee details",
+    feeNote: course?.feeNote || "",
+    highlights: course?.highlights?.length ? course.highlights : highlights,
+    syllabus: course?.syllabus?.length ? course.syllabus : syllabus,
+    faqs: course?.faqs?.length ? course.faqs : faqs,
+    seoTitle:
+      course?.seoTitle ||
+      "APP Exam Coaching Tamil Nadu | TNPSC Assistant Public Prosecutor",
+    seoDescription:
+      course?.seoDescription ||
+      "XYZ offers complete TNPSC APP Grade II exam coaching in Tamil Nadu. All 200 MCQs covered — Law, GS & Aptitude. BNS, BNSS & BSA included. Online & offline. Expert faculty.",
+  };
+
   // Schemas
   const courseSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
-    name: "APP Exam Coaching — Tamil Nadu",
-    description:
-      "Complete preparation for the TNPSC Assistant Public Prosecutor Grade II exam — all 200 MCQs, Mains, and Interview.",
+    name: courseData.title,
+    description: courseData.subtitle,
     provider: {
       "@type": "EducationalOrganization",
       name: SITE_CONFIG.name || "XYZ Law Coaching",
@@ -343,7 +373,7 @@ export default function APPExamPage() {
       {
         "@type": "ListItem",
         position: 3,
-        name: "APP Exam Coaching",
+        name: courseData.title,
         item: `${siteUrl}/courses/app-exam`,
       },
     ],
@@ -352,7 +382,7 @@ export default function APPExamPage() {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
+    mainEntity: courseData.faqs.map((f: { question: string; answer: string }) => ({
       "@type": "Question",
       name: f.question,
       acceptedAnswer: {
@@ -377,29 +407,25 @@ export default function APPExamPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <CourseStickySidebar courseTitle="APP Exam Coaching" />
+      <CourseStickySidebar courseTitle={courseData.title} />
 
       <CourseHero
-        title="APP Exam Coaching in Tamil Nadu"
-        subtitle="Complete preparation for the TNPSC Assistant Public Prosecutor Grade II exam — all 200 MCQs, Mains, and Interview. BNS, BNSS & BSA fully covered. Expert faculty. Online and offline batches."
-        badge="TNPSC APP Grade II · Primary Focus"
-        badgeColor="navy"
-        highlights={[
-          "All 200 Prelims MCQs covered",
-          "Law + GS + Aptitude sections",
-          "BNS, BNSS & BSA covered",
-          "Online + Offline batches",
-        ]}
-        duration="8–10 Months"
-        mode="Online + Offline Batches"
-        fee="Contact for fee details"
+        title={courseData.title}
+        subtitle={courseData.subtitle}
+        badge={courseData.badge}
+        badgeColor={courseData.badgeColor}
+        highlights={courseData.highlights.slice(0, 4)}
+        duration={courseData.duration}
+        mode={courseData.mode}
+        fee={courseData.fee}
+        feeNote={courseData.feeNote}
         courseSlug="app-exam"
         breadcrumb={breadcrumb}
       />
 
       <CourseHighlights
-        highlights={highlights}
-        courseTitle="APP Exam Coaching"
+        highlights={courseData.highlights}
+        courseTitle={courseData.title}
       />
 
       <ExamPatternSection
@@ -416,7 +442,7 @@ export default function APPExamPage() {
         ]}
       />
 
-      <SyllabusSection courseTitle="APP Exam" syllabus={syllabus} />
+      <SyllabusSection courseTitle="APP Exam" syllabus={courseData.syllabus} />
 
       <CourseFeatures features={features} courseTitle="APP Exam" />
 
@@ -427,7 +453,7 @@ export default function APPExamPage() {
         toppers={appToppers}
       />
 
-      <CourseFAQ faqs={faqs} courseTitle="APP Exam" />
+      <CourseFAQ faqs={courseData.faqs} courseTitle="APP Exam" />
 
       {/* Related Courses Strip */}
       <RelatedCourses
@@ -438,9 +464,9 @@ export default function APPExamPage() {
       />
 
       <CourseEnrollCTA
-        courseTitle="APP Exam Coaching"
+        courseTitle={courseData.title}
         courseSlug="app-exam"
-        defaultCourseName="APP Exam Coaching"
+        defaultCourseName={courseData.title}
         subText="Join the coaching programme dedicated to preparing Assistant Public Prosecutors for Tamil Nadu. Online and offline batches available."
       />
     </>

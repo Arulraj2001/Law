@@ -2,39 +2,40 @@ import type { Metadata } from "next";
 import { ContactHero } from "@/components/contact/ContactHero";
 import { ContactFormSection } from "@/components/contact/ContactFormSection";
 import { ContactMap } from "@/components/contact/ContactMap";
-import { SITE_CONFIG } from "@/lib/constants";
+import { getSiteConfig } from "@/lib/site-config";
 import { generatePageMetadata } from "@/lib/seo/metadata";
 import { localBusinessSchema, breadcrumbSchema } from "@/lib/seo/schemas";
 
-// TODO Phase 7+: Create city-specific landing pages if expanding:
-// /coaching-in-chennai
-// /coaching-in-coimbatore
-// /online-civil-judge-coaching
+export const revalidate = 3600;
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "Contact XYZ Law Coaching — Tamil Nadu Judiciary Coaching",
-  description:
-    "Contact XYZ Law Coaching for Civil Judge, APP Exam coaching enquiries. Call, WhatsApp or visit us at our Tamil Nadu centre. Free counselling available.",
-  keywords: [
-    "contact XYZ law coaching",
-    "judiciary coaching Chennai address",
-    "civil judge coaching phone number",
-    "Tamil Nadu law coaching enquiries",
-  ],
-  path: "/contact",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const config = await getSiteConfig();
+  return generatePageMetadata({
+    title: `Contact ${config.name} — Tamil Nadu Judiciary Coaching`,
+    description: `Contact ${config.name} for Civil Judge, APP Exam coaching enquiries. Call, WhatsApp or visit us at our Tamil Nadu centre. Free counselling available.`,
+    keywords: [
+      `contact ${config.name.toLowerCase()}`,
+      "judiciary coaching Chennai address",
+      "civil judge coaching phone number",
+      "Tamil Nadu law coaching enquiries",
+    ],
+    path: "/contact",
+  });
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const config = await getSiteConfig();
+
   const breadcrumb = breadcrumbSchema([
     { name: "Home", href: "/" },
     { name: "Contact", href: "/contact" },
   ]);
 
   const businessSchema = localBusinessSchema({
-    phone: SITE_CONFIG.phone,
-    email: SITE_CONFIG.email,
-    address: SITE_CONFIG.address,
-    mapUrl: SITE_CONFIG.mapUrl,
+    phone: config.phone,
+    email: config.email,
+    address: config.address,
+    mapUrl: config.mapUrl,
   });
 
   return (
@@ -50,8 +51,8 @@ export default function ContactPage() {
 
       <main className="min-h-screen">
         <ContactHero />
-        <ContactFormSection />
-        <ContactMap />
+        <ContactFormSection config={config} />
+        <ContactMap mapUrl={config.mapUrl} address={config.address} />
 
         {/* Find us on Google Section */}
         <section className="py-10 bg-slate-50 border-t border-slate-200/80">
@@ -63,11 +64,11 @@ export default function ContactPage() {
               Find us on Google
             </h3>
             <p className="text-sm text-slate-600 max-w-xl mx-auto leading-relaxed mb-4">
-              Search <span className="font-semibold text-navy-dark">&quot;XYZ Law Coaching Tamil Nadu&quot;</span> on
+              Search <span className="font-semibold text-navy-dark">&quot;{config.name} Tamil Nadu&quot;</span> on
               Google to find our verified business listing, student reviews, photo gallery, and direct driving directions.
             </p>
             <a
-              href={SITE_CONFIG.mapUrl}
+              href={config.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-emerald hover:text-emerald-dark underline"

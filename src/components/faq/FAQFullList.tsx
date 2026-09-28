@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowUpRight } from "lucide-react";
 import { useWhatsApp } from "@/hooks/useWhatsApp";
-import { FAQ_CATEGORIES } from "@/lib/faq-data";
+import { FAQ_CATEGORIES, FAQCategory } from "@/lib/faq-data";
 
 function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -16,7 +16,48 @@ function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-export function FAQFullList() {
+export interface FAQFullListProps {
+  categories?: FAQCategory[];
+  groupedFaqs?: Record<string, Array<{ question: string; answer: string }>>;
+}
+
+const CATEGORY_ORDER = [
+  { key: "about-courses", id: "about-the-courses", title: "About the Courses" },
+  { key: "fees-batches", id: "fees-and-batches", title: "Fees & Batches" },
+  { key: "study-prep", id: "study-and-preparation", title: "Study & Preparation" },
+  { key: "online-classes", id: "online-classes", title: "Online Classes" },
+  { key: "career-results", id: "career-and-results", title: "Career & Results" },
+];
+
+export function FAQFullList({ categories, groupedFaqs }: FAQFullListProps) {
+  const renderedCategories: FAQCategory[] = useMemo(() => {
+    if (categories && categories.length > 0) return categories;
+    if (groupedFaqs && Object.keys(groupedFaqs).length > 0) {
+      const result: FAQCategory[] = [];
+      for (const def of CATEGORY_ORDER) {
+        const items = groupedFaqs[def.key] || groupedFaqs[def.id] || [];
+        if (items.length > 0) {
+          result.push({
+            id: def.id,
+            title: def.title,
+            items,
+          });
+        }
+      }
+      for (const [key, items] of Object.entries(groupedFaqs)) {
+        if (!CATEGORY_ORDER.some((c) => c.key === key || c.id === key) && items.length > 0) {
+          result.push({
+            id: key,
+            title: key.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+            items,
+          });
+        }
+      }
+      if (result.length > 0) return result;
+    }
+    return FAQ_CATEGORIES;
+  }, [categories, groupedFaqs]);
+
   // Independent activeIndex for each category
   const [activeIndices, setActiveIndices] = useState<Record<string, number | null>>({
     "about-the-courses": 0,
@@ -50,7 +91,7 @@ export function FAQFullList() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 140;
-      for (const cat of FAQ_CATEGORIES) {
+      for (const cat of renderedCategories) {
         const el = document.getElementById(cat.id);
         if (el) {
           const top = el.offsetTop;
@@ -65,7 +106,7 @@ export function FAQFullList() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [renderedCategories]);
 
   return (
     <section className="py-16 sm:py-20 bg-white">
@@ -73,7 +114,7 @@ export function FAQFullList() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* LEFT: Accordion Sections (70% on desktop = col-span-8) */}
           <div className="lg:col-span-8 space-y-14">
-            {FAQ_CATEGORIES.map((category) => {
+            {renderedCategories.map((category) => {
               const currentActive = activeIndices[category.id];
 
               return (
@@ -163,7 +204,7 @@ export function FAQFullList() {
                 Jump to:
               </h4>
               <ul className="space-y-1.5">
-                {FAQ_CATEGORIES.map((cat) => {
+                {renderedCategories.map((cat) => {
                   const isActive = activeCategory === cat.id;
 
                   return (

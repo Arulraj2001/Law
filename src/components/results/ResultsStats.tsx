@@ -1,38 +1,114 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
+import type { SelectionStat } from "@/lib/supabase/types";
 
-export function ResultsStats() {
-  const examCategories = [
-    {
-      name: "Civil Judge",
-      count: 18,
-      widthPercent: 72,
-      barColor: "bg-navy-dark",
-      textColor: "text-navy-dark",
-    },
-    {
-      name: "APP Exam",
-      count: 7,
-      widthPercent: 28,
-      barColor: "bg-emerald",
-      textColor: "text-emerald",
-    },
-    {
-      name: "Other Judicial",
-      count: "3+",
-      widthPercent: 12,
-      barColor: "bg-navy-light",
-      textColor: "text-navy-light",
-    },
-  ];
+const defaultExamCategories = [
+  {
+    name: "Civil Judge",
+    count: 18 as number | string,
+    widthPercent: 72,
+    barColor: "bg-navy-dark",
+    textColor: "text-navy-dark",
+  },
+  {
+    name: "APP Exam",
+    count: 7 as number | string,
+    widthPercent: 28,
+    barColor: "bg-emerald",
+    textColor: "text-emerald",
+  },
+  {
+    name: "Other Judicial",
+    count: "3+" as number | string,
+    widthPercent: 12,
+    barColor: "bg-navy-light",
+    textColor: "text-navy-light",
+  },
+];
 
-  const yearWise = [
-    { year: "2021", count: 2, heightPercent: 18 },
-    { year: "2022", count: 3, heightPercent: 26 },
-    { year: "2023", count: 7, heightPercent: 55 },
-    { year: "2024", count: 13, heightPercent: 100 },
-  ];
+const defaultYearWise = [
+  { year: "2021", count: 2, heightPercent: 18 },
+  { year: "2022", count: 3, heightPercent: 26 },
+  { year: "2023", count: 7, heightPercent: 55 },
+  { year: "2024", count: 13, heightPercent: 100 },
+];
+
+export interface ResultsStatsProps {
+  stats?: SelectionStat[];
+}
+
+export function ResultsStats({ stats }: ResultsStatsProps = {}) {
+  const examCategories = useMemo(() => {
+    if (!stats || stats.length === 0) {
+      return defaultExamCategories;
+    }
+
+    const cjCount = stats
+      .filter((s) => s.exam_name.toLowerCase().includes("civil"))
+      .reduce((sum, s) => sum + s.count, 0);
+
+    const appCount = stats
+      .filter((s) => s.exam_name.toLowerCase().includes("app"))
+      .reduce((sum, s) => sum + s.count, 0);
+
+    const otherCount = stats
+      .filter(
+        (s) =>
+          !s.exam_name.toLowerCase().includes("civil") &&
+          !s.exam_name.toLowerCase().includes("app")
+      )
+      .reduce((sum, s) => sum + s.count, 0);
+
+    const total = Math.max(cjCount + appCount + (otherCount || 3), 1);
+
+    return [
+      {
+        name: "Civil Judge",
+        count: cjCount || 18,
+        widthPercent: Math.round(((cjCount || 18) / total) * 100),
+        barColor: "bg-navy-dark",
+        textColor: "text-navy-dark",
+      },
+      {
+        name: "APP Exam",
+        count: appCount || 7,
+        widthPercent: Math.round(((appCount || 7) / total) * 100),
+        barColor: "bg-emerald",
+        textColor: "text-emerald",
+      },
+      {
+        name: "Other Judicial",
+        count: otherCount ? `${otherCount}+` : "3+",
+        widthPercent: Math.round(((otherCount || 3) / total) * 100),
+        barColor: "bg-navy-light",
+        textColor: "text-navy-light",
+      },
+    ];
+  }, [stats]);
+
+  const yearWise = useMemo(() => {
+    if (!stats || stats.length === 0) {
+      return defaultYearWise;
+    }
+
+    const yearlyMap: Record<string, number> = {};
+    for (const item of stats) {
+      yearlyMap[item.year] = (yearlyMap[item.year] || 0) + item.count;
+    }
+
+    const years = Object.keys(yearlyMap).sort();
+    if (years.length === 0) return defaultYearWise;
+
+    const maxCount = Math.max(...Object.values(yearlyMap), 1);
+
+    return years.map((yr) => ({
+      year: yr,
+      count: yearlyMap[yr],
+      heightPercent: Math.max(Math.round((yearlyMap[yr] / maxCount) * 100), 10),
+    }));
+  }, [stats]);
 
   return (
     <section className="bg-white py-16 sm:py-20 border-b border-slate-200">

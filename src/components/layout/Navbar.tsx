@@ -17,8 +17,13 @@ import {
   Award,
   Phone,
 } from "lucide-react";
-import { SITE_CONFIG, COURSES } from "@/lib/constants";
+import { COURSES } from "@/lib/constants";
+import { SITE_CONFIG_FALLBACK, type SiteConfig } from "@/lib/site-config";
 import { TopAlertBar } from "@/components/layout/TopAlertBar";
+
+interface NavbarProps {
+  config?: SiteConfig;
+}
 
 // Helper for course icon mapping
 function getCourseIcon(slug: string) {
@@ -53,7 +58,9 @@ function getBadgeClasses(color?: string) {
   }
 }
 
-export function Navbar() {
+export function Navbar({ config }: NavbarProps = {}) {
+  const siteName = config?.name || SITE_CONFIG_FALLBACK.name;
+  const phone = config?.phone || SITE_CONFIG_FALLBACK.phone;
   const pathname = usePathname();
 
   // Scroll detection hook
@@ -135,7 +142,7 @@ export function Navbar() {
                   isTransparent ? "text-white" : "text-navy-dark"
                 }`}
               >
-                {SITE_CONFIG.name}
+                {siteName}
               </span>
             </Link>
 
@@ -322,7 +329,7 @@ export function Navbar() {
                     className="flex items-center gap-2 font-heading font-semibold text-lg text-white"
                   >
                     <span className="text-xl">⚖</span>
-                    <span>{SITE_CONFIG.name}</span>
+                    <span>{siteName}</span>
                   </Link>
 
                   <button
@@ -384,7 +391,18 @@ export function Navbar() {
                               onClick={() => setIsMobileOpen(false)}
                               className="flex items-center justify-between py-2 px-3 text-xs rounded-lg text-slate-300 hover:text-emerald hover:bg-white/5 transition-colors"
                             >
-                              <span>{course.title}</span>
+                              <div className="flex items-center gap-2">
+                                <span>{course.title}</span>
+                                {course.badge && (
+                                  <span
+                                    className={`text-[9px] px-1.5 py-0.5 rounded-full border font-medium ${getBadgeClasses(
+                                      course.badgeColor
+                                    )}`}
+                                  >
+                                    {course.badge}
+                                  </span>
+                                )}
+                              </div>
                               <ArrowRight className="w-3 h-3 text-slate-500" />
                             </Link>
                           ))}
@@ -430,7 +448,7 @@ export function Navbar() {
 
                 <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
                   <Phone className="w-3.5 h-3.5 text-emerald" />
-                  <span>Call us: {SITE_CONFIG.phone}</span>
+                  <span>Call us: {phone}</span>
                 </div>
               </div>
             </motion.div>

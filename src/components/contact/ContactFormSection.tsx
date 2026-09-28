@@ -4,8 +4,13 @@ import { useRouter } from "next/navigation";
 import { LeadForm } from "@/components/shared/LeadForm";
 import { COURSES } from "@/lib/constants";
 import { ContactInfo } from "@/components/contact/ContactInfo";
+import type { SiteConfig } from "@/lib/site-config";
 
-export function ContactFormSection() {
+interface ContactFormSectionProps {
+  config?: SiteConfig;
+}
+
+export function ContactFormSection({ config }: ContactFormSectionProps = {}) {
   const router = useRouter();
 
   const handleSuccess = () => {
@@ -42,7 +47,7 @@ export function ContactFormSection() {
 
           {/* RIGHT: Contact Information (40% on desktop = col-span-5) */}
           <div className="lg:col-span-5">
-            <ContactInfo />
+            <ContactInfo config={config} />
           </div>
         </div>
       </div>

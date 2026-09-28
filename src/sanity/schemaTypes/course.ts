@@ -22,7 +22,7 @@ export const courseSchema = defineType({
       name: "badge",
       title: "Badge Label",
       type: "string",
-      description: "e.g. Primary Focus, 60% Focus, 40% Focus",
+      description: "e.g. Judiciary, Prosecution, Patent Office, TM Registry, NET · JRF, SET Law",
     }),
     defineField({
       name: "badgeColor",

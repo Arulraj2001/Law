@@ -6,17 +6,17 @@ export const dynamic = "force-dynamic";
 
 // In-memory / global fallback settings for mock or development mode
 const INITIAL_SETTINGS: Record<string, string> = {
-  phone: SITE_CONFIG.phone || "+91 XXXXX XXXXX",
-  whatsapp: SITE_CONFIG.whatsapp || "91XXXXXXXXXX",
-  email: SITE_CONFIG.email || "contact@yourdomain.com",
+  phone: SITE_CONFIG.phone || "+91 98765 43210",
+  whatsapp: SITE_CONFIG.whatsapp || "919876543210",
+  email: SITE_CONFIG.email || "contact@xyzlawcoaching.com",
   students_count: String(STATS.find((s) => s.label.includes("Students"))?.value || "1000"),
   judges_count: String(STATS.find((s) => s.label.includes("Judges"))?.value || "25"),
   experience_years: String(STATS.find((s) => s.label.includes("Years"))?.value || "10"),
   states_count: "15",
-  youtube_url: SITE_CONFIG.social.youtube || "https://youtube.com/@yourchannel",
-  instagram_url: SITE_CONFIG.social.instagram || "https://instagram.com/yourhandle",
-  facebook_url: SITE_CONFIG.social.facebook || "https://facebook.com/yourpage",
-  whatsapp_channel: SITE_CONFIG.social.whatsappChannel || "https://whatsapp.com/channel/yourlink",
+  youtube_url: SITE_CONFIG.social.youtube || "https://youtube.com/@xyzlawcoaching",
+  instagram_url: SITE_CONFIG.social.instagram || "https://instagram.com/xyzlawcoaching",
+  facebook_url: SITE_CONFIG.social.facebook || "https://facebook.com/xyzlawcoaching",
+  whatsapp_channel: SITE_CONFIG.social.whatsappChannel || "https://whatsapp.com/channel/xyzlawcoaching",
 };
 
 const getGlobalSettings = (): Record<string, string> => {

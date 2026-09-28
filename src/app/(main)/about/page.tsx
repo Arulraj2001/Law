@@ -22,19 +22,22 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/about",
 });
 
+import { getSiteSettingsFull } from "@/lib/sanity/queries";
+
 export const revalidate = 3600;
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getSiteSettingsFull();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
 
   const founderPersonSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "[Founder Name]",
+    name: settings?.founderName || "[Founder Name]",
     jobTitle: "Founder & Chief Faculty",
     worksFor: {
       "@type": "EducationalOrganization",
-      name: SITE_CONFIG.name || "XYZ Law Coaching",
+      name: settings?.siteName || SITE_CONFIG.name || "XYZ Law Coaching",
     },
     knowsAbout: [
       "Civil Judge Exam Coaching",
@@ -43,6 +46,7 @@ export default function AboutPage() {
     ],
     address: {
       "@type": "PostalAddress",
+      streetAddress: settings?.address || SITE_CONFIG.address,
       addressRegion: "Tamil Nadu",
       addressCountry: "IN",
     },
@@ -73,14 +77,15 @@ export default function AboutPage() {
       <SchemaMarkup
         type="home"
         data={{
-          siteName: SITE_CONFIG.name || "XYZ Law Coaching",
+          siteName: settings?.siteName || SITE_CONFIG.name || "XYZ Law Coaching",
           description:
+            settings?.tagline ||
             "Tamil Nadu judiciary coaching institute led by practicing lawyers",
           url: siteUrl,
-          phone: SITE_CONFIG.phone || "",
-          email: SITE_CONFIG.email || "",
-          address: SITE_CONFIG.address || "",
-          establishedYear: SITE_CONFIG.established || "",
+          phone: settings?.phone || SITE_CONFIG.phone || "",
+          email: settings?.email || SITE_CONFIG.email || "",
+          address: settings?.address || SITE_CONFIG.address || "",
+          establishedYear: settings?.establishedYear || SITE_CONFIG.established || "",
           courses: [],
         }}
       />
@@ -109,10 +114,14 @@ export default function AboutPage() {
       <FounderSection />
 
       {/* 3. MissionSection */}
-      <MissionSection />
+      <MissionSection
+        mission={settings?.mission}
+        vision={settings?.vision}
+        values={settings?.values}
+      />
 
       {/* 4. AchievementsTimeline */}
-      <AchievementsTimeline />
+      <AchievementsTimeline milestones={settings?.milestones} />
 
       {/* 5. TeamSection */}
       <TeamSection />

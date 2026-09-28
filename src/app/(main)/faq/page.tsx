@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { FAQPageHero } from "@/components/faq/FAQPageHero";
 import { FAQFullList } from "@/components/faq/FAQFullList";
-import { FAQ_CATEGORIES } from "@/lib/faq-data";
+import { FAQ_CATEGORIES, FALLBACK_FAQS } from "@/lib/faq-data";
 import { SITE_CONFIG } from "@/lib/constants";
 import { generatePageMetadata } from "@/lib/seo/metadata";
+import { getAllFAQsSanity } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "FAQ — Frequently Asked Questions",
@@ -18,8 +19,33 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/faq",
 });
 
-export default function FAQPage() {
+export const revalidate = 3600;
+
+export default async function FAQPage() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
+
+  let faqs: Array<{ question: string; answer: string; category?: string }> = [];
+
+  try {
+    const sanityFaqs = await getAllFAQsSanity();
+    if (sanityFaqs && sanityFaqs.length > 0) {
+      faqs = sanityFaqs;
+    }
+  } catch {
+    faqs = [];
+  }
+
+  const grouped = faqs.length > 0
+    ? faqs.reduce(
+        (acc, faq) => {
+          const cat = faq.category || "about-courses";
+          if (!acc[cat]) acc[cat] = [];
+          acc[cat].push({ question: faq.question, answer: faq.answer });
+          return acc;
+        },
+        {} as Record<string, Array<{ question: string; answer: string }>>
+      )
+    : undefined;
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -41,7 +67,9 @@ export default function FAQPage() {
   };
 
   // Flatten all category questions into single FAQPage schema
-  const allQuestions = FAQ_CATEGORIES.flatMap((category) => category.items);
+  const allQuestions = grouped
+    ? Object.values(grouped).flat()
+    : FAQ_CATEGORIES.flatMap((category) => category.items);
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -69,7 +97,7 @@ export default function FAQPage() {
 
       <main className="min-h-screen">
         <FAQPageHero />
-        <FAQFullList />
+        <FAQFullList groupedFaqs={grouped} />
       </main>
     </>
   );

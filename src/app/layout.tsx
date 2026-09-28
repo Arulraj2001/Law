@@ -22,87 +22,86 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-  ),
-  title: {
-    default:
-      "Civil Judge & APP Exam Coaching in Tamil Nadu | XYZ Law Coaching",
-    template: "%s | XYZ Law Coaching",
-  },
-  description:
-    "XYZ Law Coaching is Tamil Nadu's trusted judiciary coaching institute for TNPSC Civil Judge, APP Exam, Patent Agent, Trademark Agent, UGC-NET & SET Law exams. 25+ students selected. Online & offline. Expert faculty.",
-  keywords: [
-    "civil judge coaching Tamil Nadu",
-    "TNPSC civil judge coaching",
-    "APP exam coaching Tamil Nadu",
-    "judiciary coaching Tamil Nadu",
-    "civil judge coaching Chennai",
-    "APP exam coaching Chennai",
-    "patent agent exam coaching",
-    "trademark agent exam coaching",
-    "UGC NET law coaching Tamil Nadu",
-    "SET law coaching Tamil Nadu",
-    "Tamil Nadu judicial service coaching",
-    "civil judge exam preparation 2026",
-  ],
-  authors: [
-    {
-      name: "XYZ Law Coaching Tamil Nadu",
+import { getSiteConfig } from "@/lib/site-config";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const config = await getSiteConfig();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: config.seo.title,
+      template: `%s | ${config.name}`,
     },
-  ],
-  creator: "XYZ Law Coaching",
-  publisher: "XYZ Law Coaching",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
-    url: process.env.NEXT_PUBLIC_SITE_URL,
-    siteName: "XYZ Law Coaching Tamil Nadu",
-    title:
-      "Civil Judge & APP Exam Coaching in Tamil Nadu | XYZ Law Coaching",
-    description:
-      "Tamil Nadu's trusted judiciary coaching. 1000+ students, 25+ judges selected. Online & offline.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@xyzlawcoaching",
-    creator: "@xyzlawcoaching",
-    title:
-      "Civil Judge & APP Exam Coaching | XYZ Law Coaching Tamil Nadu",
-    description:
-      "Tamil Nadu's trusted judiciary coaching. 25+ judges trained.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
+    description: config.seo.description,
+    keywords: [
+      "civil judge coaching Tamil Nadu",
+      "TNPSC civil judge coaching",
+      "APP exam coaching Tamil Nadu",
+      "judiciary coaching Tamil Nadu",
+      "civil judge coaching Chennai",
+      "APP exam coaching Chennai",
+      "patent agent exam coaching",
+      "trademark agent exam coaching",
+      "UGC NET law coaching Tamil Nadu",
+      "SET law coaching Tamil Nadu",
+      "Tamil Nadu judicial service coaching",
+      "civil judge exam preparation 2026",
+    ],
+    authors: [
+      {
+        name: `${config.name} Tamil Nadu`,
+      },
+    ],
+    creator: config.name,
+    publisher: config.name,
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    openGraph: {
+      type: "website",
+      locale: "en_IN",
+      url: siteUrl,
+      siteName: `${config.name} Tamil Nadu`,
+      title: config.seo.title,
+      description: config.seo.description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@xyzlawcoaching",
+      creator: "@xyzlawcoaching",
+      title: config.seo.title,
+      description: config.seo.description,
+    },
+    robots: {
       index: true,
       follow: true,
-      noimageindex: false,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        noimageindex: false,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
-  },
-  alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL,
-  },
-  category: "education",
-};
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
+    },
+    alternates: {
+      canonical: siteUrl,
+    },
+    category: "education",
+  };
+}
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -1,8 +1,11 @@
-"use client";
-
 import { SITE_CONFIG } from "@/lib/constants";
+import type { SiteConfig } from "@/lib/site-config";
 import { useWhatsApp } from "@/hooks/useWhatsApp";
 import { Phone, Mail, MapPin, Globe, ArrowRight } from "lucide-react";
+
+interface ContactInfoProps {
+  config?: SiteConfig;
+}
 
 function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -13,8 +16,13 @@ function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
-export function ContactInfo() {
-  const { openGeneralEnquiry } = useWhatsApp();
+export function ContactInfo({ config }: ContactInfoProps = {}) {
+  const phone = config?.phone || SITE_CONFIG.phone;
+  const email = config?.email || SITE_CONFIG.email;
+  const address = config?.address || SITE_CONFIG.address;
+  const mapUrl = config?.mapUrl || SITE_CONFIG.mapUrl;
+  const whatsapp = config?.whatsapp || SITE_CONFIG.whatsapp;
+  const { openGeneralEnquiry } = useWhatsApp({ phone: whatsapp });
 
   return (
     <div className="space-y-6">
@@ -34,10 +42,10 @@ export function ContactInfo() {
               Phone / WhatsApp
             </h4>
             <a
-              href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
+              href={`tel:${phone.replace(/\s+/g, "")}`}
               className="text-base font-bold text-navy-dark hover:text-emerald transition-colors"
             >
-              {SITE_CONFIG.phone}
+              {phone}
             </a>
             <p className="text-xs text-slate-500 mt-0.5">Mon–Sat · 9 AM – 7 PM</p>
           </div>
@@ -53,10 +61,10 @@ export function ContactInfo() {
               Email
             </h4>
             <a
-              href={`mailto:${SITE_CONFIG.email}`}
+              href={`mailto:${email}`}
               className="text-base font-bold text-navy-dark hover:text-emerald transition-colors break-all"
             >
-              {SITE_CONFIG.email}
+              {email}
             </a>
             <p className="text-xs text-slate-500 mt-0.5">We respond within 24 hours</p>
           </div>
@@ -72,11 +80,11 @@ export function ContactInfo() {
               Our Centre
             </h4>
             <p className="text-sm font-bold text-navy-dark">
-              {SITE_CONFIG.address}, Tamil Nadu
+              {address}
             </p>
             <p className="text-xs text-slate-500 mt-0.5">Offline coaching available here</p>
             <a
-              href={SITE_CONFIG.mapUrl}
+              href={mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-xs font-semibold text-emerald hover:underline mt-1.5"
@@ -100,7 +108,7 @@ export function ContactInfo() {
               Classes accessible from anywhere in India via live video sessions
             </p>
             <p className="text-xs text-slate-500 mt-0.5">
-              WhatsApp: {SITE_CONFIG.whatsapp}
+              WhatsApp: {whatsapp}
             </p>
           </div>
         </div>

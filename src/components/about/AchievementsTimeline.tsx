@@ -14,15 +14,19 @@ import {
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { SITE_CONFIG } from "@/lib/constants";
 
-interface Milestone {
+export interface Milestone {
   year: string;
   title: string;
   description: string;
-  icon: string;
-  color: "navy" | "emerald" | "gold";
+  icon?: string;
+  color?: "navy" | "emerald" | "gold";
 }
 
-export function AchievementsTimeline() {
+export interface AchievementsTimelineProps {
+  milestones?: Milestone[];
+}
+
+export function AchievementsTimeline({ milestones: customMilestones }: AchievementsTimelineProps = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.1 });
 
@@ -31,7 +35,7 @@ export function AchievementsTimeline() {
       ? parseInt(SITE_CONFIG.established, 10) || 2016
       : 2016;
 
-  const milestones: Milestone[] = [
+  const defaultMilestones: Milestone[] = [
     {
       year: `${startYear}`,
       title: `${SITE_CONFIG.name || "XYZ Law Coaching"} Founded`,
@@ -81,6 +85,16 @@ export function AchievementsTimeline() {
       color: "emerald",
     },
   ];
+
+  const milestones: Milestone[] = customMilestones?.length
+    ? customMilestones.map((m) => ({
+        year: m.year,
+        title: m.title,
+        description: m.description,
+        icon: m.icon || "star",
+        color: (m.color as "navy" | "emerald" | "gold") || "navy",
+      }))
+    : defaultMilestones;
 
   const iconMap: Record<string, LucideIcon> = {
     rocket: Rocket,
@@ -138,8 +152,8 @@ export function AchievementsTimeline() {
           <div className="space-y-10 md:space-y-12">
             {milestones.map((milestone, index) => {
               const isEven = index % 2 === 0;
-              const Icon = iconMap[milestone.icon] || Star;
-              const style = colorStyles[milestone.color];
+              const Icon = (milestone.icon && iconMap[milestone.icon]) || Star;
+              const style = colorStyles[milestone.color || "navy"];
 
               return (
                 <div

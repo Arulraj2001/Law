@@ -107,6 +107,27 @@ export const structure: StructureResolver = (S) =>
             .defaultOrdering([{ field: "sortOrder", direction: "asc" }])
         ),
 
+      S.listItem()
+        .title("❓ Course FAQs")
+        .icon(() => "❓")
+        .child(
+          S.documentTypeList("courseFaq")
+            .title("Course FAQs")
+            .defaultOrdering([{ field: "sortOrder", direction: "asc" }])
+        ),
+
+      S.listItem()
+        .title("❓ General FAQs")
+        .icon(() => "❓")
+        .child(
+          S.documentTypeList("faq")
+            .title("General FAQs")
+            .defaultOrdering([
+              { field: "category", direction: "asc" },
+              { field: "sortOrder", direction: "asc" },
+            ])
+        ),
+
       S.divider(),
 
       // SOCIAL PROOF

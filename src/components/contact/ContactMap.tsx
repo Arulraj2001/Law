@@ -3,11 +3,19 @@
 import { SITE_CONFIG } from "@/lib/constants";
 import { MapPin, Navigation, Video, ExternalLink } from "lucide-react";
 
-export function ContactMap() {
+interface ContactMapProps {
+  mapUrl?: string;
+  address?: string;
+}
+
+export function ContactMap({ mapUrl, address }: ContactMapProps = {}) {
+  const currentMapUrl = mapUrl || SITE_CONFIG.mapUrl;
+  const currentAddress = address || SITE_CONFIG.address;
+
   const isEmbeddable =
-    SITE_CONFIG.mapUrl &&
-    SITE_CONFIG.mapUrl.includes("embed") &&
-    !SITE_CONFIG.mapUrl.includes("your+address");
+    currentMapUrl &&
+    currentMapUrl.includes("embed") &&
+    !currentMapUrl.includes("your+address");
 
   return (
     <section className="py-16 sm:py-20 bg-[#F5F5F0]">
@@ -29,7 +37,7 @@ export function ContactMap() {
         <div className="overflow-hidden rounded-2xl border border-slate-200/90 shadow-sm bg-white">
           {isEmbeddable ? (
             <iframe
-              src={SITE_CONFIG.mapUrl}
+              src={currentMapUrl}
               width="100%"
               height="400"
               style={{ border: 0 }}
@@ -59,12 +67,12 @@ export function ContactMap() {
                     XYZ Law Coaching Centre
                   </h3>
                   <p className="text-sm text-slate-600 mt-1">
-                    {SITE_CONFIG.address}, Tamil Nadu, India
+                    {currentAddress}, Tamil Nadu, India
                   </p>
                 </div>
                 <div>
                   <a
-                    href={SITE_CONFIG.mapUrl}
+                    href={currentMapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-navy-dark hover:bg-navy-mid text-white text-sm font-semibold transition-all shadow-sm"

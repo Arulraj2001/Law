@@ -5,9 +5,33 @@ import { motion, useInView } from "framer-motion";
 import { Target, Eye, Heart } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 
-export function MissionSection() {
+export interface MissionSectionProps {
+  mission?: string;
+  vision?: string;
+  values?: string;
+}
+
+export function MissionSection({ mission, vision, values }: MissionSectionProps = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
+
+  const defaultMission =
+    "To prepare every serious judicial aspirant in Tamil Nadu with expert legal coaching, real courtroom insight, and personal mentorship — so they walk into the judiciary examination hall with complete confidence.";
+
+  const defaultVision =
+    "To be Tamil Nadu's most trusted name in judiciary and law exam coaching — known not just for results, but for the quality of legal thinkers we produce.";
+
+  const defaultValuesList = [
+    "Courtroom-first teaching",
+    "Individual student attention",
+    "Honest, result-oriented guidance",
+    "Continuous improvement of material",
+    "Accessibility — online and offline",
+  ];
+
+  const parsedValuesList = values
+    ? values.split("\n").map((v) => v.trim()).filter(Boolean)
+    : defaultValuesList;
 
   const cards = [
     {
@@ -18,10 +42,7 @@ export function MissionSection() {
       iconBg: "bg-emerald-tint",
       content: (
         <p className="font-sans text-sm leading-[1.7] text-charcoal">
-          To prepare every serious judicial aspirant in Tamil Nadu with expert
-          legal coaching, real courtroom insight, and personal mentorship — so
-          they walk into the judiciary examination hall with complete
-          confidence.
+          {mission || defaultMission}
         </p>
       ),
     },
@@ -33,9 +54,7 @@ export function MissionSection() {
       iconBg: "bg-navy-tint",
       content: (
         <p className="font-sans text-sm leading-[1.7] text-charcoal">
-          To be Tamil Nadu&apos;s most trusted name in judiciary and law exam
-          coaching — known not just for results, but for the quality of legal
-          thinkers we produce.
+          {vision || defaultVision}
         </p>
       ),
     },
@@ -47,26 +66,12 @@ export function MissionSection() {
       iconBg: "bg-gold-light",
       content: (
         <ul className="space-y-2.5 font-sans text-sm leading-[1.6] text-charcoal">
-          <li className="flex items-center gap-2">
-            <span className="text-emerald font-bold">✅</span>
-            <span>Courtroom-first teaching</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="text-emerald font-bold">✅</span>
-            <span>Individual student attention</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="text-emerald font-bold">✅</span>
-            <span>Honest, result-oriented guidance</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="text-emerald font-bold">✅</span>
-            <span>Continuous improvement of material</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="text-emerald font-bold">✅</span>
-            <span>Accessibility — online and offline</span>
-          </li>
+          {parsedValuesList.map((val, idx) => (
+            <li key={idx} className="flex items-center gap-2">
+              <span className="text-emerald font-bold">✅</span>
+              <span>{val}</span>
+            </li>
+          ))}
         </ul>
       ),
     },

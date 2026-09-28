@@ -8,7 +8,8 @@
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint",
-    "test:prod": "npx ts-node --skipProject src/scripts/post-deploy-test.ts"
+    "test:prod": "npx ts-node --skipProject src/scripts/post-deploy-test.ts",
+    "seed:sanity": "npx ts-node --skipProject src/scripts/seed-sanity.ts"
   },
 
   "dependencies": {

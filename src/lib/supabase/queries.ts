@@ -7,6 +7,7 @@ import type {
   Testimonial,
   ExamUpdate,
   SiteSetting,
+  SelectionStat,
 } from "./types";
 
 // ==========================================
@@ -258,3 +259,47 @@ export async function getSetting(key: string): Promise<string | null> {
   if (error) return null;
   return (data as { value: string | null })?.value || null;
 }
+
+// ==========================================
+// SELECTION STATS
+// ==========================================
+export async function getSelectionStats(): Promise<SelectionStat[]> {
+  const isMockEnv =
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL === "your_supabase_url" ||
+    !process.env.NEXT_PUBLIC_SUPABASE_URL.startsWith("http");
+
+  if (isMockEnv) {
+    return [
+      { id: "1", year: "2021", exam_name: "Civil Judge", count: 2, is_active: true, created_at: "", updated_at: "" },
+      { id: "2", year: "2021", exam_name: "APP Exam", count: 0, is_active: true, created_at: "", updated_at: "" },
+      { id: "3", year: "2022", exam_name: "Civil Judge", count: 3, is_active: true, created_at: "", updated_at: "" },
+      { id: "4", year: "2022", exam_name: "APP Exam", count: 0, is_active: true, created_at: "", updated_at: "" },
+      { id: "5", year: "2023", exam_name: "Civil Judge", count: 5, is_active: true, created_at: "", updated_at: "" },
+      { id: "6", year: "2023", exam_name: "APP Exam", count: 2, is_active: true, created_at: "", updated_at: "" },
+      { id: "7", year: "2024", exam_name: "Civil Judge", count: 8, is_active: true, created_at: "", updated_at: "" },
+      { id: "8", year: "2024", exam_name: "APP Exam", count: 5, is_active: true, created_at: "", updated_at: "" },
+      { id: "9", year: "2025", exam_name: "Civil Judge", count: 4, is_active: true, created_at: "", updated_at: "" },
+      { id: "10", year: "2025", exam_name: "APP Exam", count: 2, is_active: true, created_at: "", updated_at: "" },
+    ];
+  }
+
+  try {
+    const supabase = await createServerSupabaseClient();
+    const { data, error } = await supabase
+      .from("selection_stats")
+      .select("*")
+      .eq("is_active", true)
+      .order("year", { ascending: true });
+
+    if (error) {
+      console.error("Error fetching selection_stats:", error);
+      return [];
+    }
+    return (data as SelectionStat[]) || [];
+  } catch (err) {
+    console.error("getSelectionStats failed:", err);
+    return [];
+  }
+}
+

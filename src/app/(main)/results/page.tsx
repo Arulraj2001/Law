@@ -6,6 +6,7 @@ import { ResultsTimeline } from "@/components/results/ResultsTimeline";
 import { ResultsTestimonials } from "@/components/results/ResultsTestimonials";
 import { ResultsCTA } from "@/components/results/ResultsCTA";
 import { getAllToppersSanity } from "@/lib/sanity/queries";
+import { getSelectionStats } from "@/lib/supabase/queries";
 import { SITE_CONFIG } from "@/lib/constants";
 import { generatePageMetadata } from "@/lib/seo/metadata";
 
@@ -152,6 +153,13 @@ export default async function ResultsPage() {
     process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
 
   let toppers: TopperItem[] = placeholderToppers;
+  let stats: any[] = [];
+
+  try {
+    stats = await getSelectionStats();
+  } catch {
+    stats = [];
+  }
 
   try {
     const sanityToppers = await getAllToppersSanity();
@@ -208,7 +216,7 @@ export default async function ResultsPage() {
       <ResultsPageHero />
 
       {/* Section 2: Stats Breakdown */}
-      <ResultsStats />
+      <ResultsStats stats={stats} />
 
       {/* Section 3: Toppers Grid with Multi-Filter */}
       <TopperGrid toppers={toppers} />

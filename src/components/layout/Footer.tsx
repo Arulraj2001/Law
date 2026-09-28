@@ -3,9 +3,29 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ExternalLink, Scale } from "lucide-react";
-import { SITE_CONFIG, COURSES } from "@/lib/constants";
+import { SITE_CONFIG_FALLBACK, type SiteConfig } from "@/lib/site-config";
+import { COURSES } from "@/lib/constants";
 
-export function Footer() {
+interface FooterProps {
+  config?: SiteConfig;
+}
+
+export function Footer({ config }: FooterProps) {
+  const fallback = SITE_CONFIG_FALLBACK;
+  const cfg = {
+    name: config?.name || fallback.name,
+    phone: config?.phone || fallback.phone,
+    email: config?.email || fallback.email,
+    address: config?.address || fallback.address,
+    mapUrl: config?.mapUrl || fallback.mapUrl,
+    social: {
+      youtube: config?.social?.youtube || fallback.social.youtube,
+      instagram: config?.social?.instagram || fallback.social.instagram,
+      facebook: config?.social?.facebook || fallback.social.facebook,
+      whatsappChannel: config?.social?.whatsappChannel || fallback.social.whatsappChannel,
+    },
+  };
+
   const quickLinks = [
     { title: "Home", href: "/" },
     { title: "About Institute", href: "/about" },
@@ -32,7 +52,7 @@ export function Footer() {
               <div className="w-9 h-9 rounded-lg bg-emerald/20 border border-emerald/40 flex items-center justify-center text-emerald-light">
                 <Scale className="w-5 h-5 text-emerald" />
               </div>
-              <span>{SITE_CONFIG.name}</span>
+              <span>{cfg.name}</span>
             </Link>
 
             <p className="text-sm text-slate-300 leading-relaxed">
@@ -47,7 +67,7 @@ export function Footer() {
               <div className="flex items-center gap-3.5">
                 {/* YouTube */}
                 <motion.a
-                  href={SITE_CONFIG.social.youtube}
+                  href={cfg.social.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube"
@@ -70,7 +90,7 @@ export function Footer() {
 
                 {/* Instagram */}
                 <motion.a
-                  href={SITE_CONFIG.social.instagram}
+                  href={cfg.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
@@ -123,7 +143,7 @@ export function Footer() {
 
                 {/* Facebook */}
                 <motion.a
-                  href={SITE_CONFIG.social.facebook}
+                  href={cfg.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
@@ -146,7 +166,7 @@ export function Footer() {
 
                 {/* WhatsApp Channel */}
                 <motion.a
-                  href={SITE_CONFIG.social.whatsappChannel}
+                  href={cfg.social.whatsappChannel}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp Channel"
@@ -221,27 +241,27 @@ export function Footer() {
             </h4>
             <div className="space-y-3 text-sm text-slate-300">
               <a
-                href={`tel:${SITE_CONFIG.phone}`}
+                href={`tel:${cfg.phone}`}
                 className="flex items-start gap-3 hover:text-emerald-light transition-colors group"
               >
                 <Phone className="w-4 h-4 text-emerald shrink-0 mt-1 group-hover:scale-110 transition-transform" />
-                <span>{SITE_CONFIG.phone}</span>
+                <span>{cfg.phone}</span>
               </a>
 
               <a
-                href={`mailto:${SITE_CONFIG.email}`}
+                href={`mailto:${cfg.email}`}
                 className="flex items-start gap-3 hover:text-emerald-light transition-colors group"
               >
                 <Mail className="w-4 h-4 text-emerald shrink-0 mt-1 group-hover:scale-110 transition-transform" />
-                <span>{SITE_CONFIG.email}</span>
+                <span>{cfg.email}</span>
               </a>
 
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-emerald shrink-0 mt-1" />
                 <div className="space-y-1">
-                  <p>{SITE_CONFIG.address}</p>
+                  <p>{cfg.address}</p>
                   <a
-                    href={SITE_CONFIG.mapUrl}
+                    href={cfg.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-emerald-light hover:underline pt-0.5"
@@ -258,7 +278,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>
-            &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights
+            &copy; {new Date().getFullYear()} {cfg.name}. All rights
             reserved.
           </p>
 

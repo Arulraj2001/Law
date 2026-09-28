@@ -106,3 +106,6 @@ export const FAQ_CATEGORIES: FAQCategory[] = [
     ],
   },
 ];
+
+export const FALLBACK_FAQS = FAQ_CATEGORIES;
+

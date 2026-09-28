@@ -10,24 +10,33 @@ import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
 import { generatePageMetadata } from "@/lib/seo/metadata";
+import { getCourseFullData } from "@/lib/sanity/queries";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "UGC NET Law Coaching Tamil Nadu | UGC NET Law Prep",
-  description:
-    "XYZ offers comprehensive UGC-NET Law coaching covering Paper I and Paper II. For law graduates targeting assistant lectureship and JRF. Online classes. Expert faculty.",
-  keywords: [
-    "UGC NET law coaching Tamil Nadu",
-    "UGC NET law preparation",
-    "NET law exam coaching Chennai",
-    "UGC NET law coaching online India",
-    "UGC NET law 2026",
-  ],
-  path: "/courses/ugc-net-law",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const course = await getCourseFullData("ugc-net-law");
+
+  return generatePageMetadata({
+    title:
+      course?.seoTitle ||
+      "UGC NET Law Coaching Tamil Nadu | UGC NET Law Prep",
+    description:
+      course?.seoDescription ||
+      "XYZ offers comprehensive UGC-NET Law coaching covering Paper I and Paper II. For law graduates targeting assistant lectureship and JRF. Online classes. Expert faculty.",
+    keywords: course?.subjects || [
+      "UGC NET law coaching Tamil Nadu",
+      "UGC NET law preparation",
+      "NET law exam coaching Chennai",
+      "UGC NET law coaching online India",
+      "UGC NET law 2026",
+    ],
+    path: "/courses/ugc-net-law",
+  });
+}
 
 export const revalidate = 3600;
 
-export default function UGCNETLawPage() {
+export default async function UGCNETLawPage() {
+  const course = await getCourseFullData("ugc-net-law");
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
 
@@ -206,33 +215,54 @@ export default function UGCNETLawPage() {
     {
       title: "SET Law Coaching",
       slug: "set-law",
-      badge: "State Eligibility",
+      badge: "SET Law",
       description:
         "Complete coaching for the Tamil Nadu State Eligibility Test (TNSET) in Law with state-specific legal coverage.",
     },
     {
       title: "Civil Judge Exam Coaching",
       slug: "civil-judge",
-      badge: "Primary Focus",
+      badge: "Judiciary",
       description:
         "Tamil Nadu judicial service examination preparation for Prelims, Mains, and Viva-Voce.",
     },
     {
       title: "APP Exam Coaching",
       slug: "app-exam",
-      badge: "Primary Focus",
+      badge: "Prosecution",
       description:
         "TNPSC Assistant Public Prosecutor preparation covering criminal law, GS, and interview.",
     },
   ];
 
+  const courseData = {
+    title: course?.title || "UGC-NET Law Coaching",
+    subtitle:
+      course?.shortDescription ||
+      "Complete preparation for the UGC National Eligibility Test in Law — Paper I (Teaching & Research Aptitude) and Paper II (Law). For law graduates targeting assistant lectureship and JRF positions. Online classes available.",
+    badge: course?.badge || "NET · JRF",
+    badgeColor: (course?.badgeColor as "navy" | "emerald" | "gold") || "gold",
+    duration: course?.duration || "4–6 Months",
+    mode: course?.mode || "Live Online Classes",
+    fee: course?.fee || "Contact for fee details",
+    feeNote: course?.feeNote || "",
+    highlights: course?.highlights?.length ? course.highlights : highlights,
+    syllabus: course?.syllabus?.length ? course.syllabus : syllabus,
+    faqs: course?.faqs?.length ? course.faqs : faqs,
+    seoTitle:
+      course?.seoTitle ||
+      "UGC NET Law Coaching Tamil Nadu | UGC NET Law Prep",
+    seoDescription:
+      course?.seoDescription ||
+      "XYZ offers comprehensive UGC-NET Law coaching covering Paper I and Paper II. For law graduates targeting assistant lectureship and JRF. Online classes. Expert faculty.",
+  };
+
   // Schemas
   const courseSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
-    name: "UGC-NET Law Coaching",
-    description:
-      "Complete preparation for the UGC National Eligibility Test in Law — Paper I (Teaching & Research Aptitude) and Paper II (Law).",
+    name: courseData.title,
+    description: courseData.subtitle,
     provider: {
       "@type": "EducationalOrganization",
       name: SITE_CONFIG.name || "XYZ Law Coaching",
@@ -267,7 +297,7 @@ export default function UGCNETLawPage() {
       {
         "@type": "ListItem",
         position: 3,
-        name: "UGC-NET Law",
+        name: courseData.title,
         item: `${siteUrl}/courses/ugc-net-law`,
       },
     ],
@@ -276,7 +306,7 @@ export default function UGCNETLawPage() {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
+    mainEntity: courseData.faqs.map((f: { question: string; answer: string }) => ({
       "@type": "Question",
       name: f.question,
       acceptedAnswer: {
@@ -301,29 +331,25 @@ export default function UGCNETLawPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <CourseStickySidebar courseTitle="UGC-NET Law Coaching" />
+      <CourseStickySidebar courseTitle={courseData.title} />
 
       <CourseHero
-        title="UGC-NET Law Coaching"
-        subtitle="Complete preparation for the UGC National Eligibility Test in Law — Paper I (Teaching & Research Aptitude) and Paper II (Law). For law graduates targeting assistant lectureship and JRF positions. Online classes available."
-        badge="UGC-NET Law · 40% Focus"
-        badgeColor="gold"
-        highlights={[
-          "Paper I + Paper II coverage",
-          "Teaching & Research Aptitude",
-          "All law subjects covered",
-          "JRF preparation included",
-        ]}
-        duration="4–6 Months"
-        mode="Live Online Classes"
-        fee="Contact for fee details"
+        title={courseData.title}
+        subtitle={courseData.subtitle}
+        badge={courseData.badge}
+        badgeColor={courseData.badgeColor}
+        highlights={courseData.highlights.slice(0, 4)}
+        duration={courseData.duration}
+        mode={courseData.mode}
+        fee={courseData.fee}
+        feeNote={courseData.feeNote}
         courseSlug="ugc-net-law"
         breadcrumb={breadcrumb}
       />
 
       <CourseHighlights
-        highlights={highlights}
-        courseTitle="UGC-NET Law"
+        highlights={courseData.highlights}
+        courseTitle={courseData.title}
       />
 
       <ExamPatternSection
@@ -340,13 +366,13 @@ export default function UGCNETLawPage() {
         ]}
       />
 
-      <SyllabusSection courseTitle="UGC-NET Law" syllabus={syllabus} />
+      <SyllabusSection courseTitle={courseData.title} syllabus={courseData.syllabus} />
 
-      <CourseFeatures features={features} courseTitle="UGC-NET Law" />
+      <CourseFeatures features={features} courseTitle={courseData.title} />
 
       {/* No ToppersSection rendered as specified */}
 
-      <CourseFAQ faqs={faqs} courseTitle="UGC-NET Law" />
+      <CourseFAQ faqs={courseData.faqs} courseTitle={courseData.title} />
 
       {/* Related Courses Strip */}
       <RelatedCourses
@@ -357,9 +383,9 @@ export default function UGCNETLawPage() {
       />
 
       <CourseEnrollCTA
-        courseTitle="UGC-NET Law"
+        courseTitle={courseData.title}
         courseSlug="ugc-net-law"
-        defaultCourseName="UGC-NET Law"
+        defaultCourseName={courseData.title}
         subText="Achieve your lectureship qualification or Junior Research Fellowship. Attend a free demo session to learn our structured strategy."
       />
     </>

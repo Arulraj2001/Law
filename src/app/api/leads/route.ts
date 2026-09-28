@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServiceSupabaseClient } from "@/lib/supabase/server";
 import type { LeadInsert } from "@/lib/supabase/types";
 import { SITE_CONFIG } from "@/lib/constants";
+import { getSiteConfig } from "@/lib/site-config";
 
 export async function POST(request: NextRequest) {
   try {
@@ -94,18 +95,19 @@ export async function POST(request: NextRequest) {
       try {
         const { Resend } = await import("resend");
         const resend = new Resend(process.env.RESEND_API_KEY);
+        const config = await getSiteConfig();
 
         const emailHtml = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>New Lead — XYZ Law Coaching</title>
+  <title>New Lead — ${config.name}</title>
 </head>
 <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f0;">
   <div style="background: #042C53; color: white; padding: 24px; border-radius: 12px 12px 0 0;">
     <h1 style="margin: 0; font-size: 22px;">
-      🎯 New Lead — XYZ Law Coaching
+      🎯 New Lead — ${config.name}
     </h1>
     <p style="margin: 8px 0 0; opacity: 0.8; font-size: 14px;">
       ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST
@@ -156,7 +158,7 @@ export async function POST(request: NextRequest) {
     </div>
     
     <p style="margin-top: 20px; font-size: 12px; color: #999; text-align: center;">
-      XYZ Law Coaching Admin · View all leads at /studio
+      ${config.name} Admin · View all leads at /studio
     </p>
   </div>
 </body>
@@ -165,7 +167,7 @@ export async function POST(request: NextRequest) {
 
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev",
-          to: SITE_CONFIG.email,
+          to: config.email,
           subject: `New ${form_type} lead: ${name} — ${course_interest || "General"}`,
           html: emailHtml,
         });

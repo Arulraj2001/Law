@@ -3,18 +3,18 @@ export const SITE_CONFIG = {
   tagline: "Tamil Nadu's Trusted Judiciary Coaching",
   description:
     "Expert coaching for TNPSC Civil Judge, APP Exam, Patent Agent, Trademark Agent, UGC-NET and SET Law exams.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://yourdomain.com",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "91XXXXXXXXXX",
-  phone: "+91 XXXXX XXXXX",
-  email: "contact@yourdomain.com",
-  address: "[Address], Tamil Nadu",
-  established: "[Year]",
-  mapUrl: "https://maps.google.com/?q=your+address",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://xyzlawcoaching.com",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919876543210",
+  phone: "+91 98765 43210",
+  email: "contact@xyzlawcoaching.com",
+  address: "No. 45, High Court Road, George Town, Chennai, Tamil Nadu 600001",
+  established: "2016",
+  mapUrl: "https://maps.google.com/?q=Chennai+High+Court",
   social: {
-    youtube: "https://youtube.com/@yourchannel",
-    instagram: "https://instagram.com/yourhandle",
-    facebook: "https://facebook.com/yourpage",
-    whatsappChannel: "https://whatsapp.com/channel/yourlink",
+    youtube: "https://youtube.com/@xyzlawcoaching",
+    instagram: "https://instagram.com/xyzlawcoaching",
+    facebook: "https://facebook.com/xyzlawcoaching",
+    whatsappChannel: "https://whatsapp.com/channel/xyzlawcoaching",
   },
 };
 
@@ -30,7 +30,7 @@ export const COURSES = [
     id: "civil-judge",
     title: "Civil Judge Exam Coaching",
     slug: "civil-judge",
-    badge: "Primary Focus",
+    badge: "Judiciary",
     badgeColor: "navy",
     icon: "gavel",
     description:
@@ -51,7 +51,7 @@ export const COURSES = [
     id: "app-exam",
     title: "APP Exam Coaching",
     slug: "app-exam",
-    badge: "Primary Focus",
+    badge: "Prosecution",
     badgeColor: "navy",
     icon: "briefcase",
     description:
@@ -72,7 +72,7 @@ export const COURSES = [
     id: "patent-agent",
     title: "Patent Agent Exam",
     slug: "patent-agent",
-    badge: "60% Focus",
+    badge: "Patent Office",
     badgeColor: "emerald",
     icon: "certificate",
     description:
@@ -92,7 +92,7 @@ export const COURSES = [
     id: "trademark-agent",
     title: "Trademark Agent Exam",
     slug: "trademark-agent",
-    badge: "60% Focus",
+    badge: "TM Registry",
     badgeColor: "emerald",
     icon: "registered",
     description:
@@ -112,7 +112,7 @@ export const COURSES = [
     id: "ugc-net-law",
     title: "UGC-NET Law Coaching",
     slug: "ugc-net-law",
-    badge: "40% Focus",
+    badge: "NET · JRF",
     badgeColor: "gold",
     icon: "school",
     description:
@@ -132,7 +132,7 @@ export const COURSES = [
     id: "set-law",
     title: "SET Law Coaching",
     slug: "set-law",
-    badge: "40% Focus",
+    badge: "SET Law",
     badgeColor: "gold",
     icon: "award",
     description:

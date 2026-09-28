@@ -10,24 +10,33 @@ import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { RelatedCourses } from "@/components/courses/RelatedCourses";
 import { SITE_CONFIG } from "@/lib/constants";
 import { generatePageMetadata } from "@/lib/seo/metadata";
+import { getCourseFullData } from "@/lib/sanity/queries";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "Trademark Agent Exam Coaching | Trade Marks Registry Prep",
-  description:
-    "XYZ offers expert Trademark Agent exam coaching covering the Trade Marks Act, TM filing procedures, opposition, registration and IP law. Online classes available.",
-  keywords: [
-    "trademark agent exam coaching",
-    "trademark agent exam preparation India",
-    "trade marks registry agent exam",
-    "how to become a trademark agent India",
-    "trademark agent coaching Tamil Nadu",
-  ],
-  path: "/courses/trademark-agent",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const course = await getCourseFullData("trademark-agent");
+
+  return generatePageMetadata({
+    title:
+      course?.seoTitle ||
+      "Trademark Agent Exam Coaching | Trade Marks Registry Prep",
+    description:
+      course?.seoDescription ||
+      "XYZ offers expert Trademark Agent exam coaching covering the Trade Marks Act, TM filing procedures, opposition, registration and IP law. Online classes available.",
+    keywords: course?.subjects || [
+      "trademark agent exam coaching",
+      "trademark agent exam preparation India",
+      "trade marks registry agent exam",
+      "how to become a trademark agent India",
+      "trademark agent coaching Tamil Nadu",
+    ],
+    path: "/courses/trademark-agent",
+  });
+}
 
 export const revalidate = 3600;
 
-export default function TrademarkAgentPage() {
+export default async function TrademarkAgentPage() {
+  const course = await getCourseFullData("trademark-agent");
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
 
@@ -197,33 +206,54 @@ export default function TrademarkAgentPage() {
     {
       title: "Patent Agent Exam Coaching",
       slug: "patent-agent",
-      badge: "IP Specialisation",
+      badge: "Patent Office",
       description:
         "CGPDTM Patent Agent exam coaching covering Patent Act, rules, and drafting practice.",
     },
     {
       title: "Civil Judge Exam Coaching",
       slug: "civil-judge",
-      badge: "Primary Focus",
+      badge: "Judiciary",
       description:
         "Tamil Nadu judicial service exam preparation for Prelims, Mains, and Viva-Voce.",
     },
     {
       title: "APP Exam Coaching",
       slug: "app-exam",
-      badge: "Primary Focus",
+      badge: "Prosecution",
       description:
         "TNPSC Assistant Public Prosecutor preparation covering criminal law, GS, and interview.",
     },
   ];
 
+  const courseData = {
+    title: course?.title || "Trademark Agent Exam Coaching",
+    subtitle:
+      course?.shortDescription ||
+      "Complete preparation for the Trade Marks Registry Agent examination — Trade Marks Act, filing procedures, opposition, registration and international trademark law. Online classes. Expert IP faculty.",
+    badge: course?.badge || "TM Registry",
+    badgeColor: (course?.badgeColor as "navy" | "emerald" | "gold") || "emerald",
+    duration: course?.duration || "3–4 Months",
+    mode: course?.mode || "Live Online Classes",
+    fee: course?.fee || "Contact for fee details",
+    feeNote: course?.feeNote || "",
+    highlights: course?.highlights?.length ? course.highlights : highlights,
+    syllabus: course?.syllabus?.length ? course.syllabus : syllabus,
+    faqs: course?.faqs?.length ? course.faqs : faqs,
+    seoTitle:
+      course?.seoTitle ||
+      "Trademark Agent Exam Coaching | Trade Marks Registry Prep",
+    seoDescription:
+      course?.seoDescription ||
+      "XYZ offers expert Trademark Agent exam coaching covering the Trade Marks Act, TM filing procedures, opposition, registration and IP law. Online classes available.",
+  };
+
   // Schemas
   const courseSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
-    name: "Trademark Agent Exam Coaching",
-    description:
-      "Complete preparation for the Trade Marks Registry Agent examination — Trade Marks Act, filing procedures, opposition, registration and international trademark law.",
+    name: courseData.title,
+    description: courseData.subtitle,
     provider: {
       "@type": "EducationalOrganization",
       name: SITE_CONFIG.name || "XYZ Law Coaching",
@@ -258,7 +288,7 @@ export default function TrademarkAgentPage() {
       {
         "@type": "ListItem",
         position: 3,
-        name: "Trademark Agent Exam",
+        name: courseData.title,
         item: `${siteUrl}/courses/trademark-agent`,
       },
     ],
@@ -267,7 +297,7 @@ export default function TrademarkAgentPage() {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
+    mainEntity: courseData.faqs.map((f: { question: string; answer: string }) => ({
       "@type": "Question",
       name: f.question,
       acceptedAnswer: {
@@ -292,29 +322,25 @@ export default function TrademarkAgentPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <CourseStickySidebar courseTitle="Trademark Agent Exam" />
+      <CourseStickySidebar courseTitle={courseData.title} />
 
       <CourseHero
-        title="Trademark Agent Exam Coaching"
-        subtitle="Complete preparation for the Trade Marks Registry Agent examination — Trade Marks Act, filing procedures, opposition, registration and international trademark law. Online classes. Expert IP faculty."
-        badge="Trade Marks Registry · 60% Focus"
-        badgeColor="emerald"
-        highlights={[
-          "Trade Marks Act — complete",
-          "TM filing & prosecution",
-          "Opposition & registration",
-          "Online classes — pan India",
-        ]}
-        duration="3–4 Months"
-        mode="Live Online Classes"
-        fee="Contact for fee details"
+        title={courseData.title}
+        subtitle={courseData.subtitle}
+        badge={courseData.badge}
+        badgeColor={courseData.badgeColor}
+        highlights={courseData.highlights.slice(0, 4)}
+        duration={courseData.duration}
+        mode={courseData.mode}
+        fee={courseData.fee}
+        feeNote={courseData.feeNote}
         courseSlug="trademark-agent"
         breadcrumb={breadcrumb}
       />
 
       <CourseHighlights
-        highlights={highlights}
-        courseTitle="Trademark Agent Exam"
+        highlights={courseData.highlights}
+        courseTitle={courseData.title}
       />
 
       <ExamPatternSection
@@ -333,19 +359,19 @@ export default function TrademarkAgentPage() {
 
       <SyllabusSection
         courseTitle="Trademark Agent Exam"
-        syllabus={syllabus}
+        syllabus={courseData.syllabus}
       />
 
       <CourseFeatures
         features={features}
-        courseTitle="Trademark Agent Exam"
+        courseTitle={courseData.title}
       />
 
       {/* No ToppersSection rendered as specified */}
 
       <CourseFAQ
-        faqs={faqs}
-        courseTitle="Trademark Agent Exam"
+        faqs={courseData.faqs}
+        courseTitle={courseData.title}
       />
 
       {/* Related Courses Strip */}
@@ -357,9 +383,9 @@ export default function TrademarkAgentPage() {
       />
 
       <CourseEnrollCTA
-        courseTitle="Trademark Agent Exam"
+        courseTitle={courseData.title}
         courseSlug="trademark-agent"
-        defaultCourseName="Trademark Agent Exam"
+        defaultCourseName={courseData.title}
         subText="Become a certified Trade Mark Agent and practice before the Trade Marks Registry. Attend a free demo class to get started."
       />
     </>

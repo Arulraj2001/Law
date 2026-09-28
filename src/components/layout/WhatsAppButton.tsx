@@ -5,10 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useWhatsApp } from "@/hooks/useWhatsApp";
 import { track } from "@/lib/analytics";
 
-export function WhatsAppButton() {
+interface WhatsAppButtonProps {
+  phone?: string;
+}
+
+export function WhatsAppButton({ phone }: WhatsAppButtonProps = {}) {
   const [isHovered, setIsHovered] = useState(false);
   const [isBusinessHours, setIsBusinessHours] = useState(true);
-  const { openGeneralEnquiry, getWhatsAppUrl } = useWhatsApp();
+  const { openGeneralEnquiry, getWhatsAppUrl } = useWhatsApp({ phone });
 
   useEffect(() => {
     try {

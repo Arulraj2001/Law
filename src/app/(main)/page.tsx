@@ -73,15 +73,18 @@ const FinalCTASection = dynamic(
   }
 );
 
-function HomepageSchemas() {
+import { getSiteConfig, type SiteConfig } from "@/lib/site-config";
+
+function HomepageSchemas({ config }: { config: SiteConfig }) {
   const schemas = [
-    organizationSchema(),
+    organizationSchema(config),
     websiteSchema(),
     localBusinessSchema({
-      phone: SITE_CONFIG.phone,
-      email: SITE_CONFIG.email,
-      address: SITE_CONFIG.address,
-      mapUrl: SITE_CONFIG.mapUrl,
+      name: config.name,
+      phone: config.phone,
+      email: config.email,
+      address: config.address,
+      mapUrl: config.mapUrl,
     }),
     breadcrumbSchema([{ name: "Home", href: "/" }]),
   ];
@@ -102,9 +105,11 @@ function HomepageSchemas() {
 }
 
 export default async function HomePage() {
+  const config = await getSiteConfig();
+
   return (
     <>
-      <HomepageSchemas />
+      <HomepageSchemas config={config} />
       <HeroSection />
       <TrustBar />
       <CoursesSection />

@@ -7,3 +7,5 @@ export { examUpdatesWidget, ExamUpdatesWidget } from "./ExamUpdatesWidget";
 export { contentHealthWidget, ContentHealthWidget } from "./ContentHealthWidget";
 export { leadsWidget, LeadsWidget } from "./LeadsWidget";
 export { studioGuideWidget, StudioGuideWidget } from "./StudioGuideWidget";
+export { selectionStatsWidget, SelectionStatsWidget } from "./SelectionStatsWidget";
+

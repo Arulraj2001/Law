@@ -26,30 +26,84 @@ export async function POST(request: NextRequest) {
     switch (_type) {
       case "blogPost":
         triggerRevalidateTag("blog");
+        revalidatePath("/blog");
         if (slug?.current) {
           revalidatePath(`/blog/${slug.current}`);
         }
-        revalidatePath("/blog");
         break;
+
       case "course":
         triggerRevalidateTag("courses");
+        revalidatePath("/courses/civil-judge");
+        revalidatePath("/courses/app-exam");
+        revalidatePath("/courses/patent-agent");
+        revalidatePath("/courses/trademark-agent");
+        revalidatePath("/courses/ugc-net-law");
+        revalidatePath("/courses/set-law");
         revalidatePath("/courses");
         revalidatePath("/");
         break;
+
       case "topper":
         triggerRevalidateTag("toppers");
         revalidatePath("/results");
         revalidatePath("/");
         break;
+
       case "testimonial":
         triggerRevalidateTag("testimonials");
         revalidatePath("/testimonials");
         revalidatePath("/");
         break;
+
       case "siteSettings":
         triggerRevalidateTag("settings");
         revalidatePath("/");
+        revalidatePath("/about");
+        revalidatePath("/contact");
+        revalidatePath("/faculty");
+        revalidatePath("/courses/civil-judge");
+        revalidatePath("/courses/app-exam");
+        revalidatePath("/courses/patent-agent");
+        revalidatePath("/courses/trademark-agent");
+        revalidatePath("/courses/ugc-net-law");
+        revalidatePath("/courses/set-law");
         break;
+
+      case "faq":
+        triggerRevalidateTag("faqs");
+        revalidatePath("/faq");
+        revalidatePath("/");
+        break;
+
+      case "courseFaq":
+        triggerRevalidateTag("courses");
+        revalidatePath("/courses/civil-judge");
+        revalidatePath("/courses/app-exam");
+        revalidatePath("/courses/patent-agent");
+        revalidatePath("/courses/trademark-agent");
+        revalidatePath("/courses/ugc-net-law");
+        revalidatePath("/courses/set-law");
+        break;
+
+      case "faculty":
+        triggerRevalidateTag("faculty");
+        revalidatePath("/faculty");
+        revalidatePath("/about");
+        revalidatePath("/");
+        break;
+
+      case "batch":
+        triggerRevalidateTag("batches");
+        revalidatePath("/");
+        break;
+
+      case "examUpdate":
+        triggerRevalidateTag("exam-updates");
+        revalidatePath("/blog");
+        revalidatePath("/");
+        break;
+
       default:
         revalidatePath("/");
     }

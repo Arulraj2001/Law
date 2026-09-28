@@ -14,6 +14,7 @@ import {
   contentHealthWidget,
   leadsWidget,
   studioGuideWidget,
+  selectionStatsWidget,
 } from "./plugins/dashboard";
 import { leadsPlugin } from "./plugins/leads";
 
@@ -65,6 +66,7 @@ export default defineConfig({
         examUpdatesWidget,
         contentHealthWidget,
         leadsWidget,
+        selectionStatsWidget,
         studioGuideWidget,
       ],
     }),

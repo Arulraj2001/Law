@@ -12,24 +12,34 @@ import { CourseStickySidebar } from "@/components/courses/CourseStickySidebar";
 import { SITE_CONFIG } from "@/lib/constants";
 import { generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "Civil Judge Exam Coaching in Tamil Nadu | TNPSC Civil Judge Coaching",
-  description:
-    "XYZ offers the most comprehensive TNPSC Civil Judge exam coaching in Tamil Nadu. Prelims + Mains + Viva preparation, BNS/BNSS/BSA coverage, weekly mock tests, translation classes. 25+ students selected. Online & offline.",
-  keywords: [
-    "civil judge coaching Tamil Nadu",
-    "TNPSC civil judge coaching",
-    "civil judge exam preparation Tamil Nadu",
-    "Tamil Nadu judicial service coaching",
-    "civil judge coaching Chennai",
-    "judiciary coaching Tamil Nadu 2026",
-  ],
-  path: "/courses/civil-judge",
-});
+import { getCourseFullData } from "@/lib/sanity/queries";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const course = await getCourseFullData("civil-judge");
+
+  return generatePageMetadata({
+    title:
+      course?.seoTitle ||
+      "Civil Judge Exam Coaching in Tamil Nadu | TNPSC Civil Judge Coaching",
+    description:
+      course?.seoDescription ||
+      "XYZ offers the most comprehensive TNPSC Civil Judge exam coaching in Tamil Nadu. Prelims + Mains + Viva preparation, BNS/BNSS/BSA coverage, weekly mock tests, translation classes. 25+ students selected. Online & offline.",
+    keywords: course?.subjects || [
+      "civil judge coaching Tamil Nadu",
+      "TNPSC civil judge coaching",
+      "civil judge exam preparation Tamil Nadu",
+      "Tamil Nadu judicial service coaching",
+      "civil judge coaching Chennai",
+      "judiciary coaching Tamil Nadu 2026",
+    ],
+    path: "/courses/civil-judge",
+  });
+}
 
 export const revalidate = 3600;
 
-export default function CivilJudgeCoursePage() {
+export default async function CivilJudgeCoursePage() {
+  const course = await getCourseFullData("civil-judge");
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";
 
@@ -255,13 +265,34 @@ export default function CivilJudgeCoursePage() {
     },
   ];
 
+  const courseData = {
+    title: course?.title || "Civil Judge Exam Coaching in Tamil Nadu",
+    subtitle:
+      course?.shortDescription ||
+      "Complete preparation for the TNPSC Tamil Nadu Judicial Service Exam — Preliminary, Mains and Viva-Voce. Taught by a practicing advocate. 25+ students now serving as Civil Judges.",
+    badge: course?.badge || "Judicial Service",
+    badgeColor: (course?.badgeColor as "navy" | "emerald" | "gold") || "emerald",
+    duration: course?.duration || "10–12 Months",
+    mode: course?.mode || "Online + Offline Classes",
+    fee: course?.fee || "Contact for fee details",
+    feeNote: course?.feeNote || "",
+    highlights: course?.highlights?.length ? course.highlights : highlights,
+    syllabus: course?.syllabus?.length ? course.syllabus : syllabus,
+    faqs: course?.faqs?.length ? course.faqs : faqs,
+    seoTitle:
+      course?.seoTitle ||
+      "Civil Judge Exam Coaching in Tamil Nadu | TNPSC Civil Judge Coaching",
+    seoDescription:
+      course?.seoDescription ||
+      "XYZ offers the most comprehensive TNPSC Civil Judge exam coaching in Tamil Nadu. Prelims + Mains + Viva preparation, BNS/BNSS/BSA coverage, weekly mock tests, translation classes. 25+ students selected. Online & offline.",
+  };
+
   // 1. Course Schema
   const courseSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
-    name: "Civil Judge Exam Coaching — Tamil Nadu",
-    description:
-      "Complete TNPSC Civil Judge exam preparation including Prelims, Mains and Viva-Voce. BNS, BNSS & BSA covered.",
+    name: courseData.title,
+    description: courseData.subtitle,
     provider: {
       "@type": "EducationalOrganization",
       name: SITE_CONFIG.name || "XYZ Law Coaching",
@@ -297,7 +328,7 @@ export default function CivilJudgeCoursePage() {
       {
         "@type": "ListItem",
         position: 3,
-        name: "Civil Judge Exam Coaching",
+        name: courseData.title,
         item: `${siteUrl}/courses/civil-judge`,
       },
     ],
@@ -307,7 +338,7 @@ export default function CivilJudgeCoursePage() {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
+    mainEntity: courseData.faqs.map((f: { question: string; answer: string }) => ({
       "@type": "Question",
       name: f.question,
       acceptedAnswer: {
@@ -334,31 +365,27 @@ export default function CivilJudgeCoursePage() {
       />
 
       {/* Desktop Sticky Quick Action Sidebar */}
-      <CourseStickySidebar courseTitle="Civil Judge Coaching" />
+      <CourseStickySidebar courseTitle={courseData.title} />
 
       {/* 1. Hero Section */}
       <CourseHero
-        title="Civil Judge Exam Coaching in Tamil Nadu"
-        subtitle="Complete preparation for the TNPSC Tamil Nadu Judicial Service Exam — Preliminary, Mains and Viva-Voce. Taught by a practicing advocate. 25+ students now serving as Civil Judges."
-        badge="TNPSC Civil Judge Exam · Primary Focus"
-        badgeColor="emerald"
-        highlights={[
-          "Prelims + Mains + Viva",
-          "BNS, BNSS & BSA covered",
-          "Online + Offline",
-          "Weekly Mock Tests",
-        ]}
-        duration="10–12 Months"
-        mode="Online + Offline Classes"
-        fee="Contact for fee details"
+        title={courseData.title}
+        subtitle={courseData.subtitle}
+        badge={courseData.badge}
+        badgeColor={courseData.badgeColor}
+        highlights={courseData.highlights.slice(0, 4)}
+        duration={courseData.duration}
+        mode={courseData.mode}
+        fee={courseData.fee}
+        feeNote={courseData.feeNote}
         courseSlug="civil-judge"
         breadcrumb={breadcrumb}
       />
 
       {/* 2. Course Highlights */}
       <CourseHighlights
-        highlights={highlights}
-        courseTitle="Civil Judge Exam Coaching"
+        highlights={courseData.highlights}
+        courseTitle={courseData.title}
       />
 
       {/* 3. Exam Pattern Section */}
@@ -372,13 +399,13 @@ export default function CivilJudgeCoursePage() {
       {/* 4. Syllabus Section */}
       <SyllabusSection
         courseTitle="Civil Judge Exam"
-        syllabus={syllabus}
+        syllabus={courseData.syllabus}
       />
 
       {/* 5. Course Features */}
       <CourseFeatures
         features={features}
-        courseTitle="Civil Judge Coaching"
+        courseTitle={courseData.title}
       />
 
       {/* 6. Course Toppers (Filtered) */}
@@ -389,8 +416,8 @@ export default function CivilJudgeCoursePage() {
 
       {/* 7. Course FAQ */}
       <CourseFAQ
-        faqs={faqs}
-        courseTitle="Civil Judge Coaching"
+        faqs={courseData.faqs}
+        courseTitle={courseData.title}
       />
 
       {/* Internal Linking SEO Strip */}
@@ -454,9 +481,9 @@ export default function CivilJudgeCoursePage() {
 
       {/* 8. Course Enroll CTA */}
       <CourseEnrollCTA
-        courseTitle="Civil Judge"
+        courseTitle={courseData.title}
         courseSlug="civil-judge"
-        defaultCourseName="Civil Judge Exam Coaching"
+        defaultCourseName={courseData.title}
       />
     </>
   );

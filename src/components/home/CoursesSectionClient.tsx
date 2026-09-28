@@ -12,31 +12,37 @@ export interface CoursesSectionClientProps {
   courses: any[];
 }
 
+type CourseTab = "all" | "judiciary" | "ip" | "academic";
+
 export function CoursesSectionClient({ courses }: CoursesSectionClientProps) {
-  const [activeTab, setActiveTab] = useState<"all" | "primary" | "secondary">("all");
+  const [activeTab, setActiveTab] = useState<CourseTab>("all");
   const { openChat } = useWhatsApp();
 
-  const tabs: { id: "all" | "primary" | "secondary"; label: string }[] = [
-    { id: "all", label: "All Courses" },
-    { id: "primary", label: "Primary Focus" },
-    { id: "secondary", label: "Secondary" },
+  const tabs: { id: CourseTab; label: string }[] = [
+    { id: "all", label: "All Programmes" },
+    { id: "judiciary", label: "Judiciary & APP" },
+    { id: "ip", label: "Patent & TM" },
+    { id: "academic", label: "NET & SET" },
   ];
 
   // Filtering logic
   const filteredCourses = courses.filter((course) => {
     const badgeColor = course.badge_color || course.badgeColor || "navy";
-    if (activeTab === "primary") {
+    if (activeTab === "judiciary") {
       return badgeColor === "navy";
     }
-    if (activeTab === "secondary") {
-      return badgeColor === "emerald" || badgeColor === "gold";
+    if (activeTab === "ip") {
+      return badgeColor === "emerald";
+    }
+    if (activeTab === "academic") {
+      return badgeColor === "gold";
     }
     return true;
   });
 
   const handlePrimaryEnquiry = () => {
     openChat(
-      "Hi, I'd like to enquire about your primary programmes: Civil Judge & APP Exam coaching. Please share the syllabus, schedule, and fee details."
+      "Hi, I'd like to enquire about your flagship programmes: Civil Judge & APP Exam coaching. Please share the syllabus, schedule, and fee details."
     );
   };
 
@@ -120,7 +126,7 @@ export function CoursesSectionClient({ courses }: CoursesSectionClientProps) {
               <span>Most Popular</span>
             </div>
             <p className="font-sans text-xs sm:text-sm text-navy-dark/90 leading-relaxed font-medium">
-              Civil Judge &amp; APP Exam coaching are our primary programmes with
+              Civil Judge &amp; APP Exam coaching are our flagship programmes with
               25+ successful selections. These courses include exclusive
               Tamil-to-English translation classes not available anywhere else.
             </p>
@@ -131,7 +137,7 @@ export function CoursesSectionClient({ courses }: CoursesSectionClientProps) {
             onClick={handlePrimaryEnquiry}
             className="shrink-0 px-6 py-3 rounded-full bg-emerald hover:bg-emerald-dark text-white text-xs sm:text-sm font-semibold tracking-wide shadow-md transition-colors flex items-center gap-2 cursor-pointer w-full sm:w-auto justify-center"
           >
-            <span>Enquire for Primary Courses</span>
+            <span>Enquire for Judiciary &amp; APP</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </motion.div>

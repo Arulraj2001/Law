@@ -86,6 +86,60 @@ export async function getCourseBySlugSanity(slug: string) {
   });
 }
 
+const COURSE_BY_SLUG_FULL_QUERY = groq`
+  *[_type == "course" && slug.current == $slug && isActive == true][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    badge,
+    badgeColor,
+    shortDescription,
+    fullDescription,
+    duration,
+    mode,
+    fee,
+    feeNote,
+    highlights,
+    subjects,
+    syllabus[] {
+      stage,
+      topics
+    },
+    coverImage { 
+      asset->{ url, metadata { dimensions } } 
+    },
+    isFeatured,
+    sortOrder,
+    seoTitle,
+    seoDescription,
+    "faqs": *[_type == "courseFaq" && course._ref == ^._id && isActive == true] | order(sortOrder asc) {
+      question,
+      answer
+    }
+  }
+`;
+
+export async function getCourseFullData(slug: string) {
+  const isMockEnv =
+    !process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your_project_id";
+
+  if (isMockEnv) {
+    return null;
+  }
+
+  try {
+    return await sanityClient.fetch(
+      COURSE_BY_SLUG_FULL_QUERY,
+      { slug },
+      { next: { tags: ["courses"], revalidate: 3600 } }
+    );
+  } catch (err) {
+    console.error(`getCourseFullData(${slug}) failed:`, err);
+    return null;
+  }
+}
+
 // ==========================================
 // BATCHES
 // ==========================================
@@ -371,3 +425,125 @@ export async function getLatestExamUpdatesSanity(limit: number = 5) {
     next: { tags: ["exam-updates"], revalidate: 900 },
   });
 }
+
+// ==========================================
+// FAQS
+// ==========================================
+const ALL_FAQS_QUERY = groq`
+  *[_type == "faq" && isActive == true] |
+  order(category asc, sortOrder asc) {
+    _id,
+    question,
+    answer,
+    category,
+    sortOrder,
+    showOnHomepage
+  }
+`;
+
+export async function getAllFAQsSanity() {
+  const isMockEnv =
+    !process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your_project_id";
+
+  if (isMockEnv) return [];
+
+  try {
+    return await sanityClient.fetch(
+      ALL_FAQS_QUERY,
+      {},
+      { next: { 
+        tags: ['faqs'], 
+        revalidate: 3600 
+      }}
+    );
+  } catch (err) {
+    console.error("getAllFAQsSanity failed:", err);
+    return [];
+  }
+}
+
+const HOMEPAGE_FAQS_QUERY = groq`
+  *[_type == "faq" && 
+    isActive == true && 
+    showOnHomepage == true] |
+  order(sortOrder asc) [0...8] {
+    _id,
+    question,
+    answer
+  }
+`;
+
+export async function getHomepageFAQsSanity() {
+  const isMockEnv =
+    !process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your_project_id";
+
+  if (isMockEnv) return [];
+
+  try {
+    return await sanityClient.fetch(
+      HOMEPAGE_FAQS_QUERY,
+      {},
+      { next: { 
+        tags: ['faqs'], 
+        revalidate: 3600 
+      }}
+    );
+  } catch (err) {
+    console.error("getHomepageFAQsSanity failed:", err);
+    return [];
+  }
+}
+
+// ==========================================
+// SITE SETTINGS FULL
+// ==========================================
+const SITE_SETTINGS_FULL_QUERY = groq`
+  *[_type == "siteSettings"][0] {
+    siteName,
+    tagline,
+    founderName,
+    establishedYear,
+    phone,
+    whatsapp,
+    email,
+    address,
+    mapUrl,
+    logo { asset->{ url } },
+    ogImage { asset->{ url } },
+    socialLinks,
+    stats,
+    seoTitle,
+    seoDescription,
+    whyUsFeatures,
+    processSteps,
+    mission,
+    vision,
+    values,
+    milestones
+  }
+`;
+
+export async function getSiteSettingsFull() {
+  const isMockEnv =
+    !process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your_project_id";
+
+  if (isMockEnv) return null;
+
+  try {
+    return await sanityClient.fetch(
+      SITE_SETTINGS_FULL_QUERY,
+      {},
+      { next: { 
+        tags: ['settings'], 
+        revalidate: 3600 
+      }}
+    );
+  } catch (err) {
+    console.error("getSiteSettingsFull failed:", err);
+    return null;
+  }
+}
+
