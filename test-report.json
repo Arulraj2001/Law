@@ -1,0 +1,947 @@
+{
+  "timestamp": "2026-09-28T12:16:15.821Z",
+  "siteUrl": "http://localhost:3000",
+  "totalPassed": 134,
+  "totalFailed": 0,
+  "criticalFailed": 0,
+  "results": [
+    {
+      "category": "File Existence",
+      "name": "next.config.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "next-sitemap.config.js",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "vercel.json",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "tailwind.config.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": ".env.local",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/layout.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/layout.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/about/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/faculty/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/results/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/testimonials/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/blog/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/blog/[slug]/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/demo-class/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/contact/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/faq/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/thank-you/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/courses/civil-judge/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/courses/app-exam/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/courses/patent-agent/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/courses/trademark-agent/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/courses/ugc-net-law/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/(main)/courses/set-law/page.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/api/leads/route.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/api/admin/stats/route.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/api/admin/leads/route.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/api/admin/settings/route.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/api/revalidate/route.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/api/blog-views/route.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/app/api/track/whatsapp/route.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/site-config.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/supabase/client.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/supabase/server.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/supabase/queries.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/supabase/types.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/sanity/client.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/sanity/queries.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/seo/schemas.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/seo/metadata.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/analytics.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/constants.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/lib/utils.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/course.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/batch.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/faculty.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/topper.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/testimonial.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/blogPost.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/faq.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/courseFaq.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/sanity/schemaTypes/siteSettings.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/components/layout/Navbar.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/components/layout/Footer.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/components/layout/WhatsAppButton.tsx",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/hooks/useWhatsApp.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": true
+    },
+    {
+      "category": "File Existence",
+      "name": "src/hooks/useScrollAnimation.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/hooks/useCounter.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "DEPLOYMENT.md",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "PRODUCTION_CHECKLIST.md",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "VERCEL_ENV_SETUP.md",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/scripts/seed-sanity.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "File Existence",
+      "name": "src/scripts/post-deploy-test.ts",
+      "passed": true,
+      "details": "File exists",
+      "critical": false
+    },
+    {
+      "category": "Build Output",
+      "name": ".next directory exists",
+      "passed": true,
+      "details": "Build artifacts present",
+      "critical": true
+    },
+    {
+      "category": "Build Output",
+      "name": "sitemap.xml generated",
+      "passed": true,
+      "details": "18 URLs in sitemap",
+      "critical": true
+    },
+    {
+      "category": "Build Output",
+      "name": "robots.txt generated",
+      "passed": true,
+      "details": "File exists in /public",
+      "critical": false
+    },
+    {
+      "category": "Build Output",
+      "name": ".env.local in .gitignore",
+      "passed": true,
+      "details": "Secrets protected",
+      "critical": false
+    },
+    {
+      "category": "Build Output",
+      "name": "vercel.json valid JSON",
+      "passed": true,
+      "details": "Parses without error",
+      "critical": false
+    },
+    {
+      "category": "Build Output",
+      "name": "package.json script: dev",
+      "passed": true,
+      "details": "next dev",
+      "critical": false
+    },
+    {
+      "category": "Build Output",
+      "name": "package.json script: build",
+      "passed": true,
+      "details": "next build",
+      "critical": false
+    },
+    {
+      "category": "Build Output",
+      "name": "package.json script: start",
+      "passed": true,
+      "details": "next start",
+      "critical": false
+    },
+    {
+      "category": "Build Output",
+      "name": "package.json script: postbuild",
+      "passed": true,
+      "details": "next-sitemap",
+      "critical": false
+    },
+    {
+      "category": "Build Output",
+      "name": "package.json script: seed:sanity",
+      "passed": true,
+      "details": "npx ts-node --skipProject src/scripts/seed-sanity.ts",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Homepage",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": true
+    },
+    {
+      "category": "Page Status",
+      "name": "About Us",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": true
+    },
+    {
+      "category": "Page Status",
+      "name": "Faculty",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Results & Toppers",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Testimonials",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Blog Archive",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Demo Class",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": true
+    },
+    {
+      "category": "Page Status",
+      "name": "Contact",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": true
+    },
+    {
+      "category": "Page Status",
+      "name": "FAQ",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Civil Judge Course",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": true
+    },
+    {
+      "category": "Page Status",
+      "name": "APP Exam Course",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": true
+    },
+    {
+      "category": "Page Status",
+      "name": "Patent Agent Course",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Trademark Agent Course",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "UGC-NET Law Course",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "SET Law Course",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Sanity Studio",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Sitemap XML",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": true
+    },
+    {
+      "category": "Page Status",
+      "name": "Robots TXT",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": true
+    },
+    {
+      "category": "Page Status",
+      "name": "OG Image",
+      "passed": true,
+      "details": "HTTP 200",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Custom 404 page",
+      "passed": true,
+      "details": "HTTP 404",
+      "critical": false
+    },
+    {
+      "category": "Page Status",
+      "name": "Thank You page noindex",
+      "passed": true,
+      "details": "noindex confirmed",
+      "critical": false
+    },
+    {
+      "category": "API Endpoints",
+      "name": "Leads API — valid submission",
+      "passed": true,
+      "details": "Lead ID: mock-lead-1790597770102",
+      "critical": true
+    },
+    {
+      "category": "API Endpoints",
+      "name": "Leads API — rejects invalid phone",
+      "passed": true,
+      "details": "Returns 400 for bad phone",
+      "critical": false
+    },
+    {
+      "category": "API Endpoints",
+      "name": "Leads API — rejects missing fields",
+      "passed": true,
+      "details": "Returns 400 for missing name/phone",
+      "critical": false
+    },
+    {
+      "category": "API Endpoints",
+      "name": "Admin stats API",
+      "passed": true,
+      "details": "Leads: 18, Batches: 4",
+      "critical": false
+    },
+    {
+      "category": "API Endpoints",
+      "name": "Admin leads API",
+      "passed": true,
+      "details": "6 leads returned",
+      "critical": false
+    },
+    {
+      "category": "API Endpoints",
+      "name": "Admin settings API",
+      "passed": true,
+      "details": "Settings endpoint accessible",
+      "critical": false
+    },
+    {
+      "category": "API Endpoints",
+      "name": "Blog views API",
+      "passed": true,
+      "details": "Returns view count",
+      "critical": false
+    },
+    {
+      "category": "API Endpoints",
+      "name": "WhatsApp tracking API",
+      "passed": true,
+      "details": "Tracking endpoint works",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Homepage title tag",
+      "passed": true,
+      "details": "Title present in HTML",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Homepage meta description",
+      "passed": true,
+      "details": "Description meta present",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Homepage canonical URL",
+      "passed": true,
+      "details": "Canonical link present",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Homepage JSON-LD schema",
+      "passed": true,
+      "details": "Schema markup present",
+      "critical": true
+    },
+    {
+      "category": "SEO",
+      "name": "Sitemap contains /courses/civil-judge",
+      "passed": true,
+      "details": "URL in sitemap",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Sitemap contains /courses/app-exam",
+      "passed": true,
+      "details": "URL in sitemap",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Sitemap contains /demo-class",
+      "passed": true,
+      "details": "URL in sitemap",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Sitemap contains /about",
+      "passed": true,
+      "details": "URL in sitemap",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Sitemap contains /results",
+      "passed": true,
+      "details": "URL in sitemap",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Sitemap excludes /studio",
+      "passed": true,
+      "details": "/studio correctly excluded",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "robots.txt allows /",
+      "passed": true,
+      "details": "Correct",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "robots.txt blocks /studio",
+      "passed": true,
+      "details": "Correctly blocked",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "robots.txt has Sitemap directive",
+      "passed": true,
+      "details": "Sitemap URL present",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "Civil Judge Course schema",
+      "passed": true,
+      "details": "Course JSON-LD present",
+      "critical": true
+    },
+    {
+      "category": "SEO",
+      "name": "Civil Judge FAQ schema",
+      "passed": true,
+      "details": "FAQPage JSON-LD present",
+      "critical": false
+    },
+    {
+      "category": "SEO",
+      "name": "OG image generates",
+      "passed": true,
+      "details": "Returns image/png",
+      "critical": true
+    },
+    {
+      "category": "Security",
+      "name": "Header: X-Content-Type-Options",
+      "passed": true,
+      "details": "Value: nosniff",
+      "critical": false
+    },
+    {
+      "category": "Security",
+      "name": "Header: X-Frame-Options",
+      "passed": true,
+      "details": "Value: SAMEORIGIN",
+      "critical": false
+    },
+    {
+      "category": "Security",
+      "name": "Studio accessible",
+      "passed": true,
+      "details": "Studio loads for authorized users",
+      "critical": false
+    },
+    {
+      "category": "Security",
+      "name": "Service role key not exposed",
+      "passed": true,
+      "details": "No service_role in HTML",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Civil Judge mentioned",
+      "passed": true,
+      "details": "\"Civil Judge\" found in HTML",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Tamil Nadu mentioned",
+      "passed": true,
+      "details": "\"Tamil Nadu\" found in HTML",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "APP exam mentioned",
+      "passed": true,
+      "details": "\"APP\" found in HTML",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "WhatsApp CTA present",
+      "passed": true,
+      "details": "\"WhatsApp\" found in HTML",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "New laws BNS mentioned",
+      "passed": true,
+      "details": "\"BNS\" found in HTML",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Civil Judge: TNPSC mentioned",
+      "passed": true,
+      "details": "Term present",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Civil Judge: Prelims stage",
+      "passed": true,
+      "details": "Term present",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Civil Judge: Mains stage",
+      "passed": true,
+      "details": "Term present",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Civil Judge: Translation paper",
+      "passed": true,
+      "details": "Term present",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Civil Judge: BNS coverage",
+      "passed": true,
+      "details": "Term present",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Contact page has phone",
+      "passed": true,
+      "details": "tel: link found",
+      "critical": false
+    },
+    {
+      "category": "Content",
+      "name": "Contact page has email",
+      "passed": true,
+      "details": "email found",
+      "critical": false
+    }
+  ]
+}

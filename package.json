@@ -8,10 +8,14 @@
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint",
-    "test:prod": "npx ts-node --skipProject src/scripts/post-deploy-test.ts",
+    "test:local": "npx tsx src/scripts/test-all.ts",
+    "test:prod": "node -e \"process.env.NEXT_PUBLIC_SITE_URL=process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com'; require('child_process').spawnSync('npx', ['tsx', 'src/scripts/test-all.ts'], { stdio: 'inherit', shell: true })\"",
+    "test:build": "npm run build && npm run test:local",
+    "check:console-logs": "node src/scripts/check-console-logs.js",
+    "check:hardcoded": "node src/scripts/check-hardcoded.js",
+    "check:env": "node src/scripts/check-env.js",
     "seed:sanity": "npx ts-node --skipProject src/scripts/seed-sanity.ts"
   },
-
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
     "@portabletext/react": "^7.0.1",
@@ -57,6 +61,7 @@
     "eslint-config-next": "16.3.6",
     "postcss": "^8.5.28",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

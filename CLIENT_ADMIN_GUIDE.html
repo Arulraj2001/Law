@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XYZ Law Coaching — Client Admin Training Guide</title>
+  <style>
+    :root {
+      --navy-dark: #042C53;
+      --navy-mid: #0B457D;
+      --navy-light: #EBF3FA;
+      --emerald: #1D9E75;
+      --emerald-dark: #0F6E56;
+      --emerald-light: #E1F5EE;
+      --gold: #DDAA33;
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-300: #CBD5E1;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1E293B;
+      --slate-900: #0F172A;
+      --border-color: #E2E8F0;
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--slate-800);
+      background-color: #FAFAFB;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header Bar */
+    header {
+      background: var(--navy-dark);
+      color: white;
+      padding: 1.25rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(4, 44, 83, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      background: white;
+      color: var(--navy-dark);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      border: 2px solid var(--emerald);
+    }
+
+    .brand-title h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: white;
+    }
+
+    .brand-title p {
+      font-size: 0.8rem;
+      color: #94A3B8;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .search-tip {
+      font-size: 0.8rem;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .search-tip kbd {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.75rem;
+    }
+
+    .btn-print {
+      background: var(--emerald);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-print:hover {
+      background: var(--emerald-dark);
+      transform: translateY(-1px);
+    }
+
+    /* Container Layout */
+    .app-container {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Sidebar Navigation */
+    aside {
+      width: var(--sidebar-width);
+      flex-shrink: 0;
+      height: calc(100vh - 72px);
+      position: sticky;
+      top: 72px;
+      background: white;
+      border-right: 1px solid var(--border-color);
+      padding: 1.5rem 1rem;
+      overflow-y: auto;
+    }
+
+    .nav-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--slate-600);
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .nav-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--slate-700);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .nav-list a:hover {
+      background: var(--navy-light);
+      color: var(--navy-dark);
+      padding-left: 0.85rem;
+    }
+
+    .nav-list .nav-icon {
+      font-size: 1rem;
+      width: 20px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    /* Main Content Area */
+    main {
+      flex: 1;
+      padding: 2.5rem 3.5rem;
+      background: white;
+      min-width: 0;
+    }
+
+    /* Document Intro Hero */
+    .doc-hero {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
+      color: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      margin-bottom: 2.5rem;
+      border-left: 6px solid var(--emerald);
+    }
+
+    .doc-hero h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .doc-hero h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      opacity: 0.9;
+      margin-bottom: 1.25rem;
+    }
+
+    .doc-badge {
+      display: inline-block;
+      background: rgba(29, 158, 117, 0.25);
+      border: 1px solid var(--emerald);
+      color: #A7F3D0;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Section Styling */
+    section {
+      margin-bottom: 3.5rem;
+      padding-top: 1rem;
+      border-bottom: 1px solid var(--slate-200);
+      padding-bottom: 2.5rem;
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 2px solid var(--navy-light);
+    }
+
+    .section-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+
+    h2 {
+      color: var(--navy-dark);
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      color: var(--navy-mid);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--slate-700);
+      font-size: 0.975rem;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: var(--slate-700);
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+      font-size: 0.95rem;
+    }
+
+    strong {
+      color: var(--slate-900);
+    }
+
+    /* Highlight Callouts */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 8px;
+      margin: 1.25rem 0;
+      border-left: 4px solid var(--emerald);
+      background: var(--emerald-light);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: var(--emerald-dark);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .callout-warning {
+      background: #FEF3C7;
+      border-left-color: #F59E0B;
+    }
+
+    .callout-warning .callout-title {
+      color: #B45309;
+    }
+
+    .callout-info {
+      background: var(--navy-light);
+      border-left-color: var(--navy-mid);
+    }
+
+    .callout-info .callout-title {
+      color: var(--navy-dark);
+    }
+
+    /* Cards and Grids */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .card {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      padding: 1.25rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: var(--emerald);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-title {
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 0.15rem 0.2rem;
+    }
+
+    .status-new { background: #FEF3C7; color: #92400E; }
+    .status-contacted { background: #DBEAFE; color: #1E40AF; }
+    .status-enrolled { background: #DCFCE7; color: #166534; }
+    .status-not-interested { background: #F1F5F9; color: #475569; }
+    .status-follow-up { background: #FFEDD5; color: #9A3412; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th {
+      background: var(--navy-dark);
+      color: white;
+      text-align: left;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--slate-200);
+      font-size: 0.9rem;
+      color: var(--slate-700);
+    }
+
+    tr:nth-child(even) td {
+      background: var(--slate-50);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Back to Top */
+    .btn-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--navy-dark);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(4, 44, 83, 0.3);
+      transition: all 0.2s ease;
+      z-index: 90;
+    }
+
+    .btn-top:hover {
+      background: var(--emerald);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--slate-900);
+      color: #94A3B8;
+      padding: 2.5rem;
+      text-align: center;
+      border-top: 1px solid var(--slate-800);
+      font-size: 0.875rem;
+    }
+
+    footer p {
+      color: #94A3B8;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Print Styles */
+    @media print {
+      header, aside, .btn-print, .btn-top, .search-tip {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+        color: black;
+      }
+
+      .app-container {
+        display: block;
+      }
+
+      main {
+        padding: 0 !important;
+      }
+
+      .doc-hero {
+        background: none !important;
+        color: black !important;
+        border: 2px solid var(--navy-dark);
+        padding: 1.5rem !important;
+      }
+
+      .doc-hero h1, .doc-hero h2 {
+        color: var(--navy-dark) !important;
+      }
+
+      section {
+        page-break-inside: avoid;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+      }
+
+      table {
+        page-break-inside: avoid;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      aside {
+        display: none;
+      }
+
+      main {
+        padding: 1.5rem 1rem;
+      }
+
+      header {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="brand-wrap">
+      <div class="brand-logo">XYZ</div>
+      <div class="brand-title">
+        <h1>XYZ Law Coaching — Admin Guide</h1>
+        <p>Complete Content Management Documentation</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="search-tip">Quick search: Press <kbd>Ctrl</kbd> + <kbd>F</kbd></div>
+      <button class="btn-print" onclick="window.print()">
+        🖨️ Print / Save PDF
+      </button>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <!-- Desktop Sidebar Navigation -->
+    <aside>
+      <div class="nav-title">Guide Navigation</div>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="#access"><span class="nav-icon">🔑</span> Admin Login</a></li>
+          <li><a href="#section-1"><span class="nav-icon">📊</span> 1. Dashboard</a></li>
+          <li><a href="#section-2"><span class="nav-icon">🎯</span> 2. Leads & Enquiries</a></li>
+          <li><a href="#section-3"><span class="nav-icon">🏆</span> 3. Toppers & Results</a></li>
+          <li><a href="#section-4"><span class="nav-icon">📅</span> 4. Batches & Schedule</a></li>
+          <li><a href="#section-5"><span class="nav-icon">✍️</span> 5. Blog Posts</a></li>
+          <li><a href="#section-6"><span class="nav-icon">🔔</span> 6. Exam Updates</a></li>
+          <li><a href="#section-7"><span class="nav-icon">💬</span> 7. Testimonials</a></li>
+          <li><a href="#section-8"><span class="nav-icon">📚</span> 8. Course Fees</a></li>
+          <li><a href="#section-9"><span class="nav-icon">⚙️</span> 9. Contact Details</a></li>
+          <li><a href="#section-10"><span class="nav-icon">📈</span> 10. Homepage Stats</a></li>
+          <li><a href="#section-11"><span class="nav-icon">👨🏫</span> 11. Faculty Members</a></li>
+          <li><a href="#section-12"><span class="nav-icon">❓</span> 12. Managing FAQs</a></li>
+          <li><a href="#section-13"><span class="nav-icon">🔒</span> 13. Developer Scope</a></li>
+          <li><a href="#section-14"><span class="nav-icon">🛠️</span> 14. Common Fixes</a></li>
+          <li><a href="#section-15"><span class="nav-icon">📋</span> 15. Quick Reference</a></li>
+          <li><a href="#support"><span class="nav-icon">📞</span> Technical Support</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Hero Intro -->
+      <div class="doc-hero">
+        <span class="doc-badge">Handover Document · Version 1.0</span>
+        <h1 style="margin-top: 0.75rem;">XYZ Law Coaching — Admin Guide</h1>
+        <h2>How to Manage Your Website Without Coding</h2>
+        <p style="opacity: 0.85; margin-bottom: 0;">Prepared for XYZ Law Coaching Team | 100% Code-Free Content Control</p>
+      </div>
+
+      <!-- Access Section -->
+      <section id="access">
+        <div class="section-header">
+          <span class="section-icon">🔑</span>
+          <h2>HOW TO ACCESS YOUR ADMIN PANEL</h2>
+        </div>
+        <p>Your website admin panel is located securely at:</p>
+        <div class="callout callout-info">
+          <div class="callout-title">🌐 Admin URL</div>
+          <p style="font-size: 1.15rem; font-weight: 700; color: var(--navy-dark); margin: 0.25rem 0 0.5rem;">
+            https://yourdomain.com/studio
+          </p>
+          <p style="margin-bottom: 0; font-size: 0.875rem;">Bookmark this URL on your smartphone, tablet, and office laptop for instant access.</p>
+        </div>
+        <p><strong>Login Credentials:</strong> Use the verified email address and password you configured when creating your Sanity account at <a href="https://sanity.io" target="_blank" style="color: var(--navy-mid); font-weight: 600;">sanity.io</a>.</p>
+      </section>
+
+      <!-- Section 1 -->
+      <section id="section-1">
+        <div class="section-header">
+          <span class="section-icon">📊</span>
+          <h2>SECTION 1: YOUR ADMIN DASHBOARD</h2>
+        </div>
+        <p>When you log in, you will be greeted by your central command dashboard featuring these vital tools:</p>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title">✨ Welcome Bar</div>
+            <p style="margin: 0; font-size: 0.875rem;">Displays today's calendar date and real-time counter of new student leads received today.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📈 Metric Counters</div>
+            <p style="margin: 0; font-size: 0.875rem;">Live counts: Total leads, selected judicial officers, active teaching batches, and published articles.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">⚙️ Site Settings Widget</div>
+            <p style="margin: 0; font-size: 0.875rem;">Instant one-click updates for office phone, WhatsApp number, enquiry email, and academy address.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">⚡ Quick Actions</div>
+            <p style="margin: 0; font-size: 0.875rem;">One-tap shortcut buttons to compose a new blog post, post a batch, or add a student topper.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📅 Upcoming Batches</div>
+            <p style="margin: 0; font-size: 0.875rem;">Live seat counters (+ / -) to update remaining classroom and online batch availability instantly.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🎯 Leads & Enquiries</div>
+            <p style="margin: 0; font-size: 0.875rem;">Instant real-time feed of all student consultation and demo class requests with WhatsApp links.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🔔 Exam Updates</div>
+            <p style="margin: 0; font-size: 0.875rem;">Manage TNPSC, APP, and high court exam alert notifications featured on homepage banner.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section id="section-2">
+        <div class="section-header">
+          <span class="section-icon">🎯</span>
+          <h2>SECTION 2: MANAGING LEADS & ENQUIRIES</h2>
+        </div>
+        <p>Every time an aspiring student fills a contact, demo class, or counselling form on the website, it appears here automatically in real time.</p>
+        
+        <h3>How to view new leads:</h3>
+        <ol>
+          <li>Open your Studio at <code>/studio</code>.</li>
+          <li>Click <strong>"🎯 Leads & Enquiries"</strong> in the left navigation sidebar.</li>
+          <li>A comprehensive table of all enquiries appears, sorted chronologically.</li>
+          <li>Fresh, uncontacted leads are prominently highlighted in <strong>amber / yellow</strong>.</li>
+        </ol>
+
+        <h3>How to respond to a lead:</h3>
+        <ol>
+          <li>Locate the student lead row in the table.</li>
+          <li>Click the <strong>green WhatsApp button</strong> next to their mobile number.</li>
+          <li>WhatsApp Web or your WhatsApp app opens with a personalized pre-composed message — simply hit Send.</li>
+          <li>Click <strong>"Mark Contacted"</strong> to update their status and log your interaction.</li>
+        </ol>
+
+        <h3>Lead statuses explained:</h3>
+        <p>Keep your admissions pipeline organized using standard color-coded badges:</p>
+        <p>
+          <span class="status-badge status-new">🟡 New</span> — Just submitted from website, awaiting your first outreach.<br>
+          <span class="status-badge status-contacted">🔵 Contacted</span> — You or your admissions counsellor has phoned or messaged them.<br>
+          <span class="status-badge status-enrolled">🟢 Enrolled</span> — Student has paid fees and successfully joined a batch.<br>
+          <span class="status-badge status-not-interested">⚫ Not Interested</span> — Candidate decided not to prepare or postponed.<br>
+          <span class="status-badge status-follow-up">🟠 Follow Up</span> — Student requested to be contacted next week or before next batch.
+        </p>
+
+        <h3>How to export leads to Excel:</h3>
+        <ol>
+          <li>Navigate to <strong>Leads & Enquiries</strong>.</li>
+          <li>Click the <strong>"Export All Leads → CSV"</strong> button in top header.</li>
+          <li>A clean CSV file downloads to your laptop immediately.</li>
+          <li>Open directly in Microsoft Excel, Google Sheets, or Apple Numbers for reporting.</li>
+        </ol>
+
+        <div class="callout">
+          <div class="callout-title">📧 Instant Email Alerts</div>
+          <p style="margin: 0;">Every website enquiry immediately triggers an automated notification email to your registered inbox, complete with student course choice, notes, and a direct 1-tap WhatsApp reply button.</p>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section id="section-3">
+        <div class="section-header">
+          <span class="section-icon">🏆</span>
+          <h2>SECTION 3: ADDING A NEW TOPPER/RESULT</h2>
+        </div>
+        <p>When an XYZ student cracks the TNPSC Judicial Service or APP examination and secures appointment:</p>
+        <ol>
+          <li>Click <strong>"🏆 Toppers & Results"</strong> in the left sidebar menu.</li>
+          <li>Click the <strong>"+ New"</strong> button in the top right corner.</li>
+          <li>Fill in the student's credentials:
+            <ul>
+              <li><strong>Full Name</strong> — Student's full legal name.</li>
+              <li><strong>Current Post</strong> — e.g. "Civil Judge" or "Assistant Public Prosecutor (APP)".</li>
+              <li><strong>Course</strong> — Select Civil Judge, APP Exam, or other specialized coaching.</li>
+              <li><strong>College</strong> — Name of their law college (e.g. Dr. Ambedkar Govt Law College, Chennai).</li>
+              <li><strong>Batch Year</strong> — Academic coaching year (e.g. "2024").</li>
+              <li><strong>District</strong> — District posting or hometown in Tamil Nadu.</li>
+              <li><strong>Photo</strong> — Click Upload and choose a professional high-resolution photo.</li>
+              <li><strong>Quote</strong> — A short testimonial quote from the student praising your coaching.</li>
+              <li><strong>Show on Homepage</strong> — Toggle ON to feature this topper on the homepage showcase.</li>
+            </ul>
+          </li>
+          <li>Click the green <strong>"Publish"</strong> button at bottom right.</li>
+          <li>Their achievement card will automatically display across the website within 1 hour.</li>
+        </ol>
+        <div class="callout callout-warning">
+          <div class="callout-title">⚖️ Legal Compliance Notice</div>
+          <p style="margin: 0;">Always obtain explicit verbal or written consent from the candidate before publishing their photograph, rank, and judicial designation on the public web.</p>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section id="section-4">
+        <div class="section-header">
+          <span class="section-icon">📅</span>
+          <h2>SECTION 4: ADDING A NEW BATCH</h2>
+        </div>
+        <p>Whenever you launch a new classroom or online intake for upcoming exams:</p>
+        <ol>
+          <li>Click <strong>"📅 Batches & Schedule"</strong> in left menu.</li>
+          <li>Click <strong>"+ New"</strong>.</li>
+          <li>Enter the batch details:
+            <ul>
+              <li><strong>Course Name</strong> — e.g. "Civil Judge Exam — Morning Regular Batch".</li>
+              <li><strong>Course</strong> — Link to the relevant course dropdown.</li>
+              <li><strong>Start Date</strong> — Select commencement date from date picker.</li>
+              <li><strong>Timing</strong> — e.g. "7:00 AM – 9:00 AM (Monday to Friday)".</li>
+              <li><strong>Mode</strong> — Select "Online", "Offline Classroom", or "Hybrid".</li>
+              <li><strong>Total Seats</strong> — Maximum seating capacity (e.g. 30).</li>
+              <li><strong>Seats Filled</strong> — Initialize with 0.</li>
+              <li><strong>Status</strong> — Set to "Open".</li>
+              <li><strong>Show on Website</strong> — Toggle ON.</li>
+            </ul>
+          </li>
+          <li>Click <strong>"Publish"</strong>.</li>
+        </ol>
+
+        <h3>Updating seats as admissions come in:</h3>
+        <p>From your main Studio Dashboard:</p>
+        <ul>
+          <li>Find the batch in the <strong>"Batches & Schedule"</strong> widget.</li>
+          <li>Click <strong>"+"</strong> to register an enrolled seat.</li>
+          <li>Click <strong>"-"</strong> to reduce if needed.</li>
+          <li>When remaining seats fall below 5, click the status pill to change to <strong>"Filling Fast"</strong> (creates high urgency for visitors).</li>
+          <li>When full capacity is reached, change status to <strong>"Full"</strong>.</li>
+        </ul>
+      </section>
+
+      <!-- Section 5 -->
+      <section id="section-5">
+        <div class="section-header">
+          <span class="section-icon">✍️</span>
+          <h2>SECTION 5: WRITING A BLOG POST</h2>
+        </div>
+        <p>Publish regular legal updates, TNPSC notifications, and preparation strategies to grow organic Google traffic.</p>
+        <ol>
+          <li>Click <strong>"✍️ Blog Posts"</strong> in left menu, then click <strong>"+ New"</strong>.</li>
+          <li>Fill in post parameters:
+            <ul>
+              <li><strong>Post Title</strong> — e.g. "How to Clear TNPSC Civil Judge Exam in First Attempt".</li>
+              <li><strong>URL Slug</strong> — Click the "Generate" button (automatically creates clean web URL).</li>
+              <li><strong>Status</strong> — Keep as "Draft" while writing.</li>
+              <li><strong>Published Date</strong> — Set to today's date.</li>
+              <li><strong>Category</strong> — Select Exam Guide, Legal Update, or Study Material.</li>
+              <li><strong>Tags</strong> — Enter search keywords separated by commas (e.g. "civil judge, TNPSC, Tamil Nadu, BNS").</li>
+              <li><strong>Cover Image</strong> — Upload an attractive widescreen banner photo.</li>
+              <li><strong>Excerpt</strong> — Write 2 to 3 sentences summarizing the key takeaways.</li>
+              <li><strong>Blog Content</strong> — Draft your full article using the rich text editor.</li>
+            </ul>
+          </li>
+          <li><strong>SEO Configuration (Crucial for Google Ranking):</strong>
+            <ul>
+              <li><strong>SEO Title</strong> — Keyword-rich title (leave blank to mirror post title).</li>
+              <li><strong>Meta Description</strong> — 1-2 compelling sentences displayed in Google search results.</li>
+              <li><strong>Focus Keyword</strong> — Target search term you want to rank #1 for.</li>
+            </ul>
+          </li>
+          <li>When satisfied, change <strong>Status</strong> to "Published" and click the green <strong>"Publish"</strong> button.</li>
+        </ol>
+        <div class="callout callout-info">
+          <div class="callout-title">💡 Rich Text Formatting Tips</div>
+          <p style="margin: 0;">Highlight text and press <strong>Ctrl+B</strong> for bold. Use the <strong>H2 / H3</strong> heading buttons to break up sections. Insert legal diagrams with the image button.</p>
+        </div>
+      </section>
+
+      <!-- Section 6 -->
+      <section id="section-6">
+        <div class="section-header">
+          <span class="section-icon">🔔</span>
+          <h2>SECTION 6: ADDING EXAM NOTIFICATIONS</h2>
+        </div>
+        <p>When TNPSC, the High Court, or Madras Bar Council issues fresh exam notifications or syllabus changes:</p>
+        <ol>
+          <li>Click <strong>"🔔 Exam Updates"</strong> in the left sidebar menu.</li>
+          <li>Click <strong>"+ New"</strong>.</li>
+          <li>Complete the notification fields:
+            <ul>
+              <li><strong>Notification Title</strong> — Clear concise announcement title.</li>
+              <li><strong>Exam Name</strong> — e.g. "TNPSC Civil Judge Notification 2026".</li>
+              <li><strong>Type</strong> — Choose: Notification, Result, Admit Card, Syllabus, or News.</li>
+              <li><strong>Details</strong> — Brief breakdown of vacancies, age criteria, and key dates.</li>
+              <li><strong>Notification Date</strong> — Official gazette release date.</li>
+              <li><strong>Last Date to Apply</strong> — Application deadline.</li>
+              <li><strong>Official Link</strong> — Direct URL link to official TNPSC PDF or portal.</li>
+              <li><strong>Show as Featured Alert</strong> — Toggle ON to trigger urgent top notification bar across website.</li>
+            </ul>
+          </li>
+          <li>Click <strong>"Publish"</strong>.</li>
+        </ol>
+      </section>
+
+      <!-- Section 7 -->
+      <section id="section-7">
+        <div class="section-header">
+          <span class="section-icon">💬</span>
+          <h2>SECTION 7: ADDING A TESTIMONIAL</h2>
+        </div>
+        <ol>
+          <li>Click <strong>"💬 Testimonials"</strong> in left menu, then click <strong>"+ New"</strong>.</li>
+          <li>Fill in candidate review details:
+            <ul>
+              <li><strong>Student Name</strong> — Full student name.</li>
+              <li><strong>Current Post</strong> — Judicial appointment or current designation.</li>
+              <li><strong>Course Completed</strong> — Select programme attended.</li>
+              <li><strong>College</strong> — Law university/college graduated from.</li>
+              <li><strong>Batch Year</strong> — e.g. "2024".</li>
+              <li><strong>Testimonial Quote</strong> — Exact feedback on mentoring, translation, or mock tests.</li>
+              <li><strong>Student Photo</strong> — Upload clear headshot.</li>
+              <li><strong>Type</strong> — Text Review, Video Testimonial, or Both.</li>
+              <li><strong>YouTube Video URL</strong> — If student recorded a video interview, paste YouTube link.</li>
+              <li><strong>Rating</strong> — 5 stars recommended.</li>
+              <li><strong>Show on Homepage</strong> — Toggle ON for prominent carousel inclusion.</li>
+            </ul>
+          </li>
+          <li>Click <strong>"Publish"</strong>.</li>
+        </ol>
+      </section>
+
+      <!-- Section 8 -->
+      <section id="section-8">
+        <div class="section-header">
+          <span class="section-icon">📚</span>
+          <h2>SECTION 8: UPDATING COURSE FEES & DETAILS</h2>
+        </div>
+        <p>When course structures, fees, or installment schedules are adjusted:</p>
+        <ol>
+          <li>Click <strong>"📚 Courses"</strong> in the left sidebar menu.</li>
+          <li>Select the specific course (e.g. "Civil Judge Exam Coaching" or "APP Exam Coaching").</li>
+          <li>Locate the <strong>"Course Fee"</strong> field and update the amount (e.g. "₹18,000").</li>
+          <li>Adjust the <strong>"Fee Note"</strong> (e.g. "Easy 2-installment EMI available · Inclusive of BNS study material").</li>
+          <li>Update <strong>"Course Duration"</strong> (e.g. "6 Months Intensive").</li>
+          <li>Switch to the <strong>"SEO"</strong> tab to update meta descriptions if fee structure was advertised.</li>
+          <li>Click <strong>"Publish"</strong>.</li>
+        </ol>
+        <div class="callout">
+          <div class="callout-title">📝 Editing Course Highlights</div>
+          <p style="margin: 0;">Under the course edit view, expand the <strong>"Course Highlights"</strong> list. Click any existing bullet to edit wording, or click <strong>"Add Item"</strong> to append a new curriculum highlight.</p>
+        </div>
+      </section>
+
+      <!-- Section 9 -->
+      <section id="section-9">
+        <div class="section-header">
+          <span class="section-icon">⚙️</span>
+          <h2>SECTION 9: UPDATING CONTACT DETAILS</h2>
+        </div>
+        <p>Keep your academy phone, WhatsApp desk, and location accurate at all times.</p>
+
+        <h3>Method 1 — From Main Studio Dashboard (Fastest):</h3>
+        <ol>
+          <li>Open <code>/studio</code> dashboard.</li>
+          <li>Locate the <strong>"Site Settings"</strong> widget in the center column.</li>
+          <li>Modify Phone, WhatsApp, or Email fields directly.</li>
+          <li>Click the blue <strong>"Save Changes"</strong> button. The website updates immediately.</li>
+        </ol>
+
+        <h3>Method 2 — From Left Menu:</h3>
+        <ol>
+          <li>Click <strong>"⚙️ Site Settings"</strong> in the left menu.</li>
+          <li>Update address, branch coordinates, or phone lines.</li>
+          <li>Click <strong>"Publish"</strong> in the top right corner.</li>
+        </ol>
+
+        <div class="callout callout-warning">
+          <div class="callout-title">⚠️ WhatsApp Format Rule</div>
+          <p style="margin: 0;">WhatsApp numbers must always start with country code (<strong>91</strong> for India) with <strong>NO leading + symbol, spaces, or dashes</strong>. Correct Example: <code>919876543210</code>.</p>
+        </div>
+      </section>
+
+      <!-- Section 10 -->
+      <section id="section-10">
+        <div class="section-header">
+          <span class="section-icon">📈</span>
+          <h2>SECTION 10: UPDATING HOMEPAGE STATS</h2>
+        </div>
+        <p>The high-trust metric counters displayed in your homepage hero section (1000+ Students, 25+ Judges, 10+ Years):</p>
+        <ol>
+          <li>Navigate to the <code>/studio</code> dashboard.</li>
+          <li>Locate the <strong>"Site Settings"</strong> widget.</li>
+          <li>Under <strong>"Homepage Statistics"</strong>, update the numerical fields:
+            <ul>
+              <li><strong>Students Trained</strong> — e.g. 1200</li>
+              <li><strong>Judges & APPs Selected</strong> — e.g. 28</li>
+              <li><strong>Years of Experience</strong> — e.g. 11</li>
+              <li><strong>States Covered</strong> — e.g. 15</li>
+            </ul>
+          </li>
+          <li>Click <strong>"Save Changes"</strong>. Counters update live across the website within 1 hour.</li>
+        </ol>
+      </section>
+
+      <!-- Section 11 -->
+      <section id="section-11">
+        <div class="section-header">
+          <span class="section-icon">👨🏫</span>
+          <h2>SECTION 11: ADDING FACULTY MEMBERS</h2>
+        </div>
+        <p>Introduce new senior advocates, retired judicial officers, or subject matter specialists:</p>
+        <ol>
+          <li>Click <strong>"👨🏫 Faculty"</strong> in the left menu, then click <strong>"+ New"</strong>.</li>
+          <li>Complete profile:
+            <ul>
+              <li><strong>Full Name</strong> — e.g. "Adv. K. Ramesh".</li>
+              <li><strong>Designation</strong> — e.g. "Senior Faculty — Criminal Major Acts".</li>
+              <li><strong>Qualification</strong> — e.g. "B.A. B.L., LL.M. (Constitutional Law)".</li>
+              <li><strong>Specialization</strong> — e.g. "BNS, BNSS, BSA & Criminal Trial Procedure".</li>
+              <li><strong>Years of Experience</strong> — Number of active teaching/court years.</li>
+              <li><strong>Profile Photo</strong> — Upload clear advocate courtroom robe/formal attire picture.</li>
+              <li><strong>Short Bio</strong> — 2 to 3 punchy sentences for the homepage faculty cards.</li>
+              <li><strong>Full Bio</strong> — Detailed profile for the dedicated <code>/faculty</code> page.</li>
+              <li><strong>Credential Badges</strong> — Tags such as "High Court Advocate", "Author", "15+ Yrs".</li>
+              <li><strong>Is this the Founder?</strong> — Toggle ON only for the principal founder.</li>
+            </ul>
+          </li>
+          <li>Click <strong>"Publish"</strong>.</li>
+        </ol>
+      </section>
+
+      <!-- Section 12 -->
+      <section id="section-12">
+        <div class="section-header">
+          <span class="section-icon">❓</span>
+          <h2>SECTION 12: MANAGING FAQs</h2>
+        </div>
+        <h3>Adding a general FAQ:</h3>
+        <ol>
+          <li>Click <strong>"❓ General FAQs"</strong> in left sidebar menu.</li>
+          <li>Click <strong>"+ New"</strong>.</li>
+          <li>Enter Question, comprehensive Answer, and select Category (Admission, Eligibility, Syllabus).</li>
+          <li>Set <strong>Sort Order</strong> (lower numbers appear first, e.g. 1, 2, 3).</li>
+          <li>Toggle <strong>"Show on Homepage"</strong> if this resolves a common pre-enquiry question.</li>
+          <li>Click <strong>"Publish"</strong>.</li>
+        </ol>
+
+        <h3>Adding a course-specific FAQ:</h3>
+        <ol>
+          <li>Click <strong>"❓ Course FAQs"</strong> in left menu, click <strong>"+ New"</strong>.</li>
+          <li>Select the specific Course it belongs to (e.g. Civil Judge Exam).</li>
+          <li>Add Question & Answer (e.g. "Is the new criminal law syllabus included?").</li>
+          <li>Publish.</li>
+        </ol>
+      </section>
+
+      <!-- Section 13 -->
+      <section id="section-13">
+        <div class="section-header">
+          <span class="section-icon">🔒</span>
+          <h2>SECTION 13: WHAT YOU CANNOT CHANGE WITHOUT A DEVELOPER</h2>
+        </div>
+        <p>To preserve enterprise-grade speed, Google Core Web Vitals, and responsive mobile layout, the following actions require your developer:</p>
+        <ul>
+          <li>Modifying overall website color theme, visual layout, or core CSS styling.</li>
+          <li>Creating fundamentally new page routes (e.g. <code>/scholarship-test</code>).</li>
+          <li>Introducing brand new course types or payment gateway architectures.</li>
+          <li>Restructuring the primary desktop or mobile navigation drawer menus.</li>
+          <li>Altering typography, Google Web Fonts, or custom letterings.</li>
+          <li>Modifying Framer Motion transitions and interactive scroll effects.</li>
+          <li>Embedding external third-party widgets or custom JavaScript scripts.</li>
+        </ul>
+        <div class="callout callout-info">
+          <div class="callout-title">✨ Zero Developer Needed for Content</div>
+          <p style="margin: 0;">Over 98% of your website content — including all text, course fees, batches, faculty, results, blog posts, and contact points — is completely manageable from your Sanity Studio admin panel.</p>
+        </div>
+      </section>
+
+      <!-- Section 14 -->
+      <section id="section-14">
+        <div class="section-header">
+          <span class="section-icon">🛠️</span>
+          <h2>SECTION 14: COMMON PROBLEMS & FIXES</h2>
+        </div>
+        
+        <h3>1. "My change is not showing on the website"</h3>
+        <ul>
+          <li><strong>Check Publish Status:</strong> Ensure you pressed the green <strong>"Publish"</strong> button, not just saved as a draft.</li>
+          <li><strong>Cache Invalidation:</strong> Content changes synchronize within 1 hour due to high-speed CDN caching.</li>
+          <li>If content has not appeared after 1 hour, contact your technical agency.</li>
+        </ul>
+
+        <h3>2. "I published but my phone/laptop still shows old content"</h3>
+        <ul>
+          <li>Your personal browser has cached the previous version.</li>
+          <li>Perform a hard refresh: Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> (Windows) or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> (Mac).</li>
+          <li>Open an Incognito / Private window to verify the fresh content.</li>
+        </ul>
+
+        <h3>3. "A student form submission did not arrive in my email"</h3>
+        <ul>
+          <li>Inspect your Email Spam / Junk folders. Mark as "Not Spam" to whitelist future alerts.</li>
+          <li>Check the <strong>Leads & Enquiries</strong> table inside Sanity Studio — every lead is saved permanently in your database regardless of email delivery.</li>
+        </ul>
+
+        <h3>4. "I cannot log in to Sanity Studio"</h3>
+        <ul>
+          <li>Navigate to <a href="https://sanity.io" target="_blank" style="color: var(--navy-mid); font-weight: 600;">sanity.io</a> and click "Reset Password".</li>
+          <li>Confirm you are using the specific email registered during handover.</li>
+        </ul>
+
+        <h3>5. "I accidentally deleted a post or topper"</h3>
+        <ul>
+          <li><strong>Do NOT panic.</strong> Sanity maintains full version history and point-in-time document snapshots.</li>
+          <li>Contact your developer immediately — deleted documents can be restored from audit logs.</li>
+        </ul>
+      </section>
+
+      <!-- Section 15 -->
+      <section id="section-15">
+        <div class="section-header">
+          <span class="section-icon">📋</span>
+          <h2>SECTION 15: QUICK REFERENCE CARD</h2>
+        </div>
+        <p>Keep this quick reference desk card printed or bookmarked for daily admissions operations:</p>
+        
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40%;">Administrative Task</th>
+              <th style="width: 60%;">Where to Perform in Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>View new student leads</strong></td>
+              <td>Studio → 🎯 Leads & Enquiries</td>
+            </tr>
+            <tr>
+              <td><strong>Reply to an enquiry</strong></td>
+              <td>Click the green WhatsApp button in the row</td>
+            </tr>
+            <tr>
+              <td><strong>Add a selected judge / topper</strong></td>
+              <td>Studio → 🏆 Toppers & Results → "+ New"</td>
+            </tr>
+            <tr>
+              <td><strong>Add a new coaching batch</strong></td>
+              <td>Studio → 📅 Batches & Schedule → "+ New"</td>
+            </tr>
+            <tr>
+              <td><strong>Update seat availability</strong></td>
+              <td>Dashboard → "Batches & Schedule" widget (+ / -)</td>
+            </tr>
+            <tr>
+              <td><strong>Publish a legal blog post</strong></td>
+              <td>Studio → ✍️ Blog Posts → "+ New"</td>
+            </tr>
+            <tr>
+              <td><strong>Post exam notification alert</strong></td>
+              <td>Studio → 🔔 Exam Updates → "+ New"</td>
+            </tr>
+            <tr>
+              <td><strong>Add a student review</strong></td>
+              <td>Studio → 💬 Testimonials → "+ New"</td>
+            </tr>
+            <tr>
+              <td><strong>Update phone or WhatsApp number</strong></td>
+              <td>Dashboard → Site Settings widget → Save</td>
+            </tr>
+            <tr>
+              <td><strong>Change course coaching fees</strong></td>
+              <td>Studio → 📚 Courses → Select course → Publish</td>
+            </tr>
+            <tr>
+              <td><strong>Download leads to Excel</strong></td>
+              <td>Studio → 🎯 Leads → "Export All Leads → CSV"</td>
+            </tr>
+            <tr>
+              <td><strong>Add a student FAQ</strong></td>
+              <td>Studio → ❓ General FAQs → "+ New"</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Need Help / Support Section -->
+      <section id="support" style="border-bottom: none;">
+        <div class="section-header">
+          <span class="section-icon">📞</span>
+          <h2>NEED HELP? TECHNICAL SUPPORT</h2>
+        </div>
+        <div class="card" style="background: var(--navy-light); border: 2px solid var(--navy-mid); padding: 1.75rem;">
+          <h3 style="margin-top: 0; color: var(--navy-dark); font-size: 1.25rem;">Agency Contact & SLA Support</h3>
+          <p style="margin-bottom: 1rem;">For technical issues with the website code, hosting, or database infrastructure:</p>
+          <ul style="list-style: none; padding-left: 0; margin-bottom: 1.25rem;">
+            <li style="margin-bottom: 0.5rem;">🏢 <strong>Agency:</strong> [Your Agency Name]</li>
+            <li style="margin-bottom: 0.5rem;">📧 <strong>Support Email:</strong> [Your Email]</li>
+            <li style="margin-bottom: 0.5rem;">💬 <strong>Support WhatsApp:</strong> [Your Number]</li>
+            <li style="margin-bottom: 0.5rem;">⏱️ <strong>Support Hours:</strong> Monday – Saturday, 9:00 AM – 7:00 PM IST</li>
+          </ul>
+          <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--slate-600);">
+            <em>For content updates (how to post a blog, add a topper, or update course fees), please refer to the specific sections above in this guide first.</em>
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button class="btn-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" title="Back to top">
+    ↑
+  </button>
+
+  <!-- Document Footer -->
+  <footer>
+    <p><strong>Guide prepared by [Your Agency Name]</strong></p>
+    <p>Website engineered for XYZ Law Coaching · Built with Next.js, Supabase & Sanity CMS</p>
+    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 0.5rem;">Version 1.0 — September 2026 | All rights reserved</p>
+  </footer>
+
+</body>
+</html>
