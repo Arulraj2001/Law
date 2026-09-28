@@ -14,7 +14,7 @@
     "check:console-logs": "node src/scripts/check-console-logs.js",
     "check:hardcoded": "node src/scripts/check-hardcoded.js",
     "check:env": "node src/scripts/check-env.js",
-    "seed:sanity": "npx ts-node --skipProject src/scripts/seed-sanity.ts"
+    "seed:sanity": "npx tsx src/scripts/seed-sanity.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
