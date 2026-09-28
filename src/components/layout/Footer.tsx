@@ -281,18 +281,6 @@ export function Footer({ config }: FooterProps) {
             &copy; {new Date().getFullYear()} {cfg.name}. All rights
             reserved.
           </p>
-
-          <p className="flex items-center gap-1">
-            <span>Designed &amp; built by</span>
-            <a
-              href="https://ostrune.netlify.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slate-300 hover:text-emerald-light font-medium underline underline-offset-4 transition-colors"
-            >
-              Ostrune
-            </a>
-          </p>
         </div>
       </div>
     </footer>
