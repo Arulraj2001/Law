@@ -1,87 +1,17 @@
 import type { StructureResolver } from "sanity/structure";
 import React from "react";
 
+const EmojiIcon = (emoji: string) => () =>
+  React.createElement("span", { style: { fontSize: "1.1em" } }, emoji);
+
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("XYZ Law Coaching Admin")
     .items([
-      // TOP: Quick access
+      // SETTINGS
       S.listItem()
-        .title("📊 Dashboard Home")
-        .icon(() => "📊")
-        .child(
-          S.component()
-            .title("Dashboard")
-            .id("dashboard-shortcut")
-            .component(() => {
-              if (typeof window !== "undefined") {
-                window.location.href = "/studio/dashboard";
-              }
-              return React.createElement(
-                "div",
-                { style: { padding: "32px", fontFamily: "system-ui" } },
-                React.createElement(
-                  "h3",
-                  { style: { color: "#042C53", margin: "0 0 8px 0" } },
-                  "📊 Opening Studio Dashboard..."
-                ),
-                React.createElement(
-                  "p",
-                  null,
-                  React.createElement(
-                    "a",
-                    {
-                      href: "/studio/dashboard",
-                      style: { color: "#1D9E75", fontWeight: "600" },
-                    },
-                    "Click here to open Dashboard immediately →"
-                  )
-                )
-              );
-            })
-        ),
-
-      S.listItem()
-        .title("🎯 Leads & Enquiries")
-        .icon(() => "🎯")
-        .child(
-          S.component()
-            .title("All Leads")
-            .id("leads-shortcut")
-            .component(() => {
-              if (typeof window !== "undefined") {
-                window.location.href = "/studio/leads";
-              }
-              return React.createElement(
-                "div",
-                { style: { padding: "32px", fontFamily: "system-ui" } },
-                React.createElement(
-                  "h3",
-                  { style: { color: "#042C53", margin: "0 0 8px 0" } },
-                  "🎯 Opening Leads Manager..."
-                ),
-                React.createElement(
-                  "p",
-                  null,
-                  React.createElement(
-                    "a",
-                    {
-                      href: "/studio/leads",
-                      style: { color: "#1D9E75", fontWeight: "600" },
-                    },
-                    "Click here to open Leads Manager immediately →"
-                  )
-                )
-              );
-            })
-        ),
-
-      S.divider(),
-
-      // CONTENT: Main content types
-      S.listItem()
-        .title("⚙️ Site Settings")
-        .icon(() => "⚙️")
+        .title("Site Settings")
+        .icon(EmojiIcon("⚙️"))
         .child(
           S.document()
             .schemaType("siteSettings")
@@ -90,8 +20,8 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("📅 Batches & Schedule")
-        .icon(() => "📅")
+        .title("Batches & Schedule")
+        .icon(EmojiIcon("📅"))
         .child(
           S.documentTypeList("batch")
             .title("Batches & Schedule")
@@ -99,8 +29,8 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("📚 Courses")
-        .icon(() => "📚")
+        .title("Courses")
+        .icon(EmojiIcon("📚"))
         .child(
           S.documentTypeList("course")
             .title("All Courses")
@@ -108,8 +38,8 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("❓ Course FAQs")
-        .icon(() => "❓")
+        .title("Course FAQs")
+        .icon(EmojiIcon("❓"))
         .child(
           S.documentTypeList("courseFaq")
             .title("Course FAQs")
@@ -117,8 +47,8 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("❓ General FAQs")
-        .icon(() => "❓")
+        .title("General FAQs")
+        .icon(EmojiIcon("❓"))
         .child(
           S.documentTypeList("faq")
             .title("General FAQs")
@@ -132,8 +62,8 @@ export const structure: StructureResolver = (S) =>
 
       // SOCIAL PROOF
       S.listItem()
-        .title("👨‍🏫 Faculty")
-        .icon(() => "👨‍🏫")
+        .title("Faculty")
+        .icon(EmojiIcon("👨‍🏫"))
         .child(
           S.documentTypeList("faculty")
             .title("Faculty Members")
@@ -141,8 +71,8 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("🏆 Toppers & Results")
-        .icon(() => "🏆")
+        .title("Toppers & Results")
+        .icon(EmojiIcon("🏆"))
         .child(
           S.documentTypeList("topper")
             .title("Toppers & Results")
@@ -150,8 +80,8 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("💬 Testimonials")
-        .icon(() => "💬")
+        .title("Testimonials")
+        .icon(EmojiIcon("💬"))
         .child(
           S.documentTypeList("testimonial")
             .title("Student Testimonials")
@@ -162,8 +92,8 @@ export const structure: StructureResolver = (S) =>
 
       // BLOG & UPDATES
       S.listItem()
-        .title("✍️ Blog Posts")
-        .icon(() => "✍️")
+        .title("Blog Posts")
+        .icon(EmojiIcon("✍️"))
         .child(
           S.list()
             .title("Blog")
@@ -198,8 +128,8 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("🔔 Exam Updates")
-        .icon(() => "🔔")
+        .title("Exam Updates")
+        .icon(EmojiIcon("🔔"))
         .child(
           S.documentTypeList("examUpdate")
             .title("Exam Notifications")
