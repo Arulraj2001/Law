@@ -50,7 +50,7 @@ export default async function ContactPage() {
       />
 
       <main className="min-h-screen">
-        <ContactHero />
+        <ContactHero phone={config.phone} email={config.email} whatsapp={config.whatsapp} />
         <ContactFormSection config={config} />
         <ContactMap mapUrl={config.mapUrl} address={config.address} />
 

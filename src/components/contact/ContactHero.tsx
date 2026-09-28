@@ -6,8 +6,17 @@ import { SITE_CONFIG } from "@/lib/constants";
 import { useWhatsApp } from "@/hooks/useWhatsApp";
 import { Phone, Mail, MessageSquare } from "lucide-react";
 
-export function ContactHero() {
-  const { openGeneralEnquiry } = useWhatsApp();
+interface ContactHeroProps {
+  phone?: string;
+  email?: string;
+  whatsapp?: string;
+}
+
+export function ContactHero({ phone: phoneProp, email: emailProp, whatsapp: whatsappProp }: ContactHeroProps = {}) {
+  const phone = phoneProp || SITE_CONFIG.phone;
+  const email = emailProp || SITE_CONFIG.email;
+  const whatsapp = whatsappProp || SITE_CONFIG.whatsapp;
+  const { openGeneralEnquiry } = useWhatsApp({ phone: whatsapp });
 
   return (
     <section className="relative overflow-hidden min-h-[360px] pt-32 pb-16 text-white flex items-center justify-center bg-[linear-gradient(135deg,#0D1B2A_0%,#1B263B_60%,#274060_100%)]">
@@ -77,7 +86,7 @@ export function ContactHero() {
           </button>
 
           <a
-            href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
+            href={`tel:${phone.replace(/\s+/g, "")}`}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald hover:bg-emerald-dark text-white text-sm font-semibold transition-all shadow-sm shadow-emerald/30 cursor-pointer"
           >
             <Phone className="w-4 h-4" />
@@ -85,7 +94,7 @@ export function ContactHero() {
           </a>
 
           <a
-            href={`mailto:${SITE_CONFIG.email}`}
+            href={`mailto:${email}`}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald hover:bg-emerald-dark text-white text-sm font-semibold transition-all shadow-sm shadow-emerald/30 cursor-pointer"
           >
             <Mail className="w-4 h-4" />
