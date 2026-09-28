@@ -15,9 +15,11 @@ export interface ProcessStep {
 
 export interface ProcessSectionClientProps {
   steps: ProcessStep[];
+  phone?: string;
 }
 
-export function ProcessSectionClient({ steps }: ProcessSectionClientProps) {
+export function ProcessSectionClient({ steps, phone: phoneProp }: ProcessSectionClientProps) {
+  const phone = phoneProp || SITE_CONFIG.phone;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
@@ -327,10 +329,10 @@ export function ProcessSectionClient({ steps }: ProcessSectionClientProps) {
           <span className="font-sans text-xs sm:text-sm text-slate-500">
             or call us at{" "}
             <a
-              href={`tel:${SITE_CONFIG.phone.replace(/[^0-9+]/g, "")}`}
+              href={`tel:${phone.replace(/[^0-9+]/g, "")}`}
               className="font-medium text-[#042C53] hover:text-[#1D9E75] transition-colors underline underline-offset-4"
             >
-              {SITE_CONFIG.phone}
+              {phone}
             </a>
           </span>
         </motion.div>

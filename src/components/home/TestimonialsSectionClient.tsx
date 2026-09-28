@@ -34,6 +34,7 @@ export interface TestimonialItem {
 
 export interface TestimonialsSectionClientProps {
   testimonials: TestimonialItem[];
+  youtubeUrl?: string;
 }
 
 function getCourseBadge(courseName?: string, currentPost?: string): string {
@@ -57,7 +58,9 @@ function getYouTubeId(url?: string | null): string | null {
 
 export function TestimonialsSectionClient({
   testimonials,
+  youtubeUrl: youtubeUrlProp,
 }: TestimonialsSectionClientProps) {
+  const youtubeUrl = youtubeUrlProp || SITE_CONFIG.social?.youtube || "";
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
 
@@ -67,7 +70,7 @@ export function TestimonialsSectionClient({
   );
 
   const hasVideos = videoTestimonials.length > 0;
-  const hasYouTubeLink = Boolean(SITE_CONFIG.social?.youtube);
+  const hasYouTubeLink = Boolean(youtubeUrl);
 
   return (
     <section
@@ -183,7 +186,7 @@ export function TestimonialsSectionClient({
                 Video testimonials coming soon —{" "}
                 {hasYouTubeLink ? (
                   <a
-                    href={SITE_CONFIG.social.youtube}
+                    href={youtubeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-semibold text-[#042C53] underline hover:text-[#1D9E75] transition-colors"
@@ -241,7 +244,7 @@ export function TestimonialsSectionClient({
             </span>
 
             <a
-              href={SITE_CONFIG.social.youtube}
+              href={youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#FF0000] hover:bg-[#CC0000] text-white text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer"

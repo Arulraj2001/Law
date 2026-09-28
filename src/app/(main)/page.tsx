@@ -113,6 +113,7 @@ export default async function HomePage() {
   ]);
 
   const stats = sanitySettings?.stats ?? undefined;
+  const whatsappChannel = sanitySettings?.socialLinks?.whatsappChannel ?? undefined;
   const courseNames =
     Array.isArray(sanityCourses) && sanityCourses.length > 0
       ? sanityCourses.map((c: any) => c.title as string)
@@ -131,11 +132,11 @@ export default async function HomePage() {
       <TestimonialsSection />
       <ExamOverviewSection />
       <BatchesSection />
-      <DemoClassSection courseNames={courseNames} />
+      <DemoClassSection courseNames={courseNames} whatsappChannel={whatsappChannel} />
       <BlogPreviewSection />
       <FAQSection />
       <SEOTextSection />
-      <FinalCTASection />
+      <FinalCTASection config={config} />
     </>
   );
 }

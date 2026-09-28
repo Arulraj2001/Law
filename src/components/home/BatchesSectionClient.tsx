@@ -21,6 +21,7 @@ export interface BatchItem {
 
 export interface BatchesSectionClientProps {
   batches: BatchItem[];
+  phone?: string;
 }
 
 function formatDate(dateStr: string): string {
@@ -37,10 +38,11 @@ function formatDate(dateStr: string): string {
   }
 }
 
-export function BatchesSectionClient({ batches }: BatchesSectionClientProps) {
+export function BatchesSectionClient({ batches, phone: phoneProp }: BatchesSectionClientProps) {
+  const phone = phoneProp || SITE_CONFIG.phone;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
-  const { openBatchEnquiry, openChat } = useWhatsApp();
+  const { openBatchEnquiry, openChat } = useWhatsApp({ phone });
 
   return (
     <section
@@ -256,7 +258,7 @@ export function BatchesSectionClient({ batches }: BatchesSectionClientProps) {
             </button>
             <span className="text-white/30">|</span>
             <a
-              href={`tel:${SITE_CONFIG.phone.replace(/[^0-9+]/g, "")}`}
+              href={`tel:${phone.replace(/[^0-9+]/g, "")}`}
               className="text-sm font-semibold text-[#1D9E75] hover:text-[#9FE1CB] underline transition-colors inline-flex items-center gap-1"
             >
               <Phone className="w-3.5 h-3.5" />

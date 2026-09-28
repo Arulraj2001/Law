@@ -1,4 +1,4 @@
-import { getFeaturedTestimonialsSanity } from "@/lib/sanity/queries";
+import { getFeaturedTestimonialsSanity, getSiteSettingsFull } from "@/lib/sanity/queries";
 import {
   TestimonialsSectionClient,
   TestimonialItem,
@@ -73,9 +73,13 @@ const placeholderTestimonials: TestimonialItem[] = [
 
 export async function TestimonialsSection() {
   let testimonials: TestimonialItem[] = placeholderTestimonials;
+  let youtubeUrl: string | undefined;
 
   try {
-    const sanityTestimonials = await getFeaturedTestimonialsSanity();
+    const [sanityTestimonials, settings] = await Promise.all([
+      getFeaturedTestimonialsSanity(),
+      getSiteSettingsFull(),
+    ]);
     if (Array.isArray(sanityTestimonials) && sanityTestimonials.length > 0) {
       testimonials = sanityTestimonials.map((t: any, index: number) => ({
         id: t._id || String(index + 1),
@@ -94,11 +98,14 @@ export async function TestimonialsSection() {
         sort_order: t.sortOrder || index + 1,
       }));
     }
+    if (settings?.socialLinks?.youtube) {
+      youtubeUrl = settings.socialLinks.youtube;
+    }
   } catch {
     testimonials = placeholderTestimonials;
   }
 
-  return <TestimonialsSectionClient testimonials={testimonials} />;
+  return <TestimonialsSectionClient testimonials={testimonials} youtubeUrl={youtubeUrl} />;
 }
 
 export default TestimonialsSection;

@@ -16,7 +16,7 @@ function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
-export function DemoClassSection({ courseNames: courseNamesProp }: { courseNames?: string[] } = {}) {
+export function DemoClassSection({ courseNames: courseNamesProp, whatsappChannel: whatsappChannelProp }: { courseNames?: string[]; whatsappChannel?: string } = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -26,6 +26,8 @@ export function DemoClassSection({ courseNames: courseNamesProp }: { courseNames
     courseNamesProp && courseNamesProp.length > 0
       ? courseNamesProp
       : COURSES.map((c) => c.title);
+
+  const whatsappChannel = whatsappChannelProp || SITE_CONFIG.social.whatsappChannel;
 
   const benefits = [
     "Experience our teaching style first-hand",
@@ -98,7 +100,7 @@ export function DemoClassSection({ courseNames: courseNamesProp }: { courseNames
                       </p>
 
                       <a
-                        href={SITE_CONFIG.social.whatsappChannel}
+                        href={whatsappChannel}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1D9E75] hover:bg-emerald-dark text-white text-sm font-semibold tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer"

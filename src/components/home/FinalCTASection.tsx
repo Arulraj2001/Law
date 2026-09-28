@@ -6,6 +6,14 @@ import { Phone, Mail, MapPin, ArrowRight, Star } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
 import { useWhatsApp } from "@/hooks/useWhatsApp";
 
+interface SiteInfo {
+  phone?: string;
+  email?: string;
+  address?: string;
+  mapUrl?: string;
+  whatsapp?: string;
+}
+
 function WhatsAppIcon({ className = "w-6 h-6" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor">
@@ -15,10 +23,15 @@ function WhatsAppIcon({ className = "w-6 h-6" }: { className?: string }) {
   );
 }
 
-export function FinalCTASection() {
+export function FinalCTASection({ config }: { config?: SiteInfo } = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
-  const { openGeneralEnquiry } = useWhatsApp();
+  const phone = config?.phone || SITE_CONFIG.phone;
+  const email = config?.email || SITE_CONFIG.email;
+  const address = config?.address || SITE_CONFIG.address;
+  const mapUrl = config?.mapUrl || SITE_CONFIG.mapUrl;
+  const whatsapp = config?.whatsapp || SITE_CONFIG.whatsapp;
+  const { openGeneralEnquiry } = useWhatsApp({ phone: whatsapp });
 
   const benefits = [
     "Understand your exact preparation gap",
@@ -32,7 +45,7 @@ export function FinalCTASection() {
     "🎓 Demo class available before enrolment",
   ];
 
-  const cleanPhone = (SITE_CONFIG.phone || "").replace(/\s+/g, "");
+  const cleanPhone = (phone || "").replace(/\s+/g, "");
 
   return (
     <section
@@ -192,20 +205,20 @@ export function FinalCTASection() {
                 >
                   <Phone className="w-5 h-5 text-white/90 shrink-0" />
                   <span className="font-semibold text-sm sm:text-base text-white truncate">
-                    {SITE_CONFIG.phone}
+                    {phone}
                   </span>
                 </motion.a>
 
                 {/* Row 3 — Email */}
                 <motion.a
-                  href={`mailto:${SITE_CONFIG.email}`}
+                  href={`mailto:${email}`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full flex items-center gap-3 bg-white/10 hover:bg-white/15 border border-white/25 text-white rounded-xl px-5 py-3.5 transition-colors duration-200"
                 >
                   <Mail className="w-5 h-5 text-white/90 shrink-0" />
                   <span className="font-semibold text-sm sm:text-base text-white truncate">
-                    {SITE_CONFIG.email}
+                    {email}
                   </span>
                 </motion.a>
               </div>
@@ -214,12 +227,12 @@ export function FinalCTASection() {
               <div className="mt-4 pt-4 border-t border-white/10">
                 <div className="flex items-start gap-2.5 text-white/60 text-[13px] leading-relaxed">
                   <MapPin className="w-4 h-4 text-white/80 shrink-0 mt-0.5" />
-                  <span>{SITE_CONFIG.address}</span>
+                  <span>{address}</span>
                 </div>
-                {SITE_CONFIG.mapUrl && (
+                {mapUrl && (
                   <div className="mt-2 pl-6">
                     <a
-                      href={SITE_CONFIG.mapUrl}
+                      href={mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-emerald hover:text-emerald-light transition-colors font-medium text-[13px] inline-flex items-center gap-1"

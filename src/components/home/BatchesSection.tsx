@@ -1,4 +1,4 @@
-import { getActiveBatchesSanity } from "@/lib/sanity/queries";
+import { getActiveBatchesSanity, getSiteSettingsFull } from "@/lib/sanity/queries";
 import { BatchesSectionClient, BatchItem } from "./BatchesSectionClient";
 
 const placeholderBatches: BatchItem[] = [
@@ -54,9 +54,13 @@ const placeholderBatches: BatchItem[] = [
 
 export async function BatchesSection() {
   let batches: BatchItem[] = placeholderBatches;
+  let phone: string | undefined;
 
   try {
-    const sanityBatches = await getActiveBatchesSanity();
+    const [sanityBatches, settings] = await Promise.all([
+      getActiveBatchesSanity(),
+      getSiteSettingsFull(),
+    ]);
     if (Array.isArray(sanityBatches) && sanityBatches.length > 0) {
       batches = sanityBatches.map((b: any, index: number) => ({
         id: b._id || String(index + 1),
@@ -71,11 +75,14 @@ export async function BatchesSection() {
         is_active: true,
       }));
     }
+    if (settings?.phone) {
+      phone = settings.phone;
+    }
   } catch {
     batches = placeholderBatches;
   }
 
-  return <BatchesSectionClient batches={batches} />;
+  return <BatchesSectionClient batches={batches} phone={phone} />;
 }
 
 export default BatchesSection;
