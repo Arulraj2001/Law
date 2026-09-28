@@ -25,6 +25,8 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/courses/trademark-agent",
 });
 
+export const revalidate = 3600;
+
 export default function TrademarkAgentPage() {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";

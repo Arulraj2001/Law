@@ -22,6 +22,8 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/results",
 });
 
+export const revalidate = 3600;
+
 const placeholderToppers: TopperItem[] = [
   {
     id: "1",

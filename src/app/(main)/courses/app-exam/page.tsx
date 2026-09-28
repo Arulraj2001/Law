@@ -26,6 +26,8 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/courses/app-exam",
 });
 
+export const revalidate = 3600;
+
 export default function APPExamPage() {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url || "https://yourdomain.com";

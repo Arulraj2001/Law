@@ -23,6 +23,8 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/blog",
 });
 
+export const revalidate = 1800;
+
 const placeholderPosts: BlogPostItem[] = [
   {
     _id: "1",

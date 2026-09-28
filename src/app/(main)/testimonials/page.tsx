@@ -23,6 +23,8 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/testimonials",
 });
 
+export const revalidate = 3600;
+
 const placeholderTestimonials: TestimonialItem[] = [
   {
     id: "1",

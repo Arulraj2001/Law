@@ -14,6 +14,8 @@ import {
   breadcrumbSchema,
 } from "@/lib/seo/schemas";
 
+export const revalidate = 3600;
+
 // Below the fold sections loaded dynamically with shimmer fallbacks
 const ToppersSection = dynamic(
   () => import("@/components/home/ToppersSection"),

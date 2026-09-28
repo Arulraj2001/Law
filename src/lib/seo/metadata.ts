@@ -18,9 +18,8 @@ export function generatePageMetadata({
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const url = `${siteUrl}${path}`;
-  const image = ogImage || "/og-image.jpg";
 
-  return {
+  const metadata: Metadata = {
     title,
     description,
     keywords,
@@ -31,24 +30,36 @@ export function generatePageMetadata({
       title,
       description,
       url,
-      images: [
-        {
-          url: `${siteUrl}${image}`,
-          width: 1200,
-          height: 630,
-        },
-      ],
+      ...(ogImage
+        ? {
+            images: [
+              {
+                url: ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`,
+                width: 1200,
+                height: 630,
+              },
+            ],
+          }
+        : {}),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [`${siteUrl}${image}`],
+      site: process.env.NEXT_PUBLIC_TWITTER_HANDLE || "@xyzlawcoaching",
+      creator: process.env.NEXT_PUBLIC_TWITTER_HANDLE || "@xyzlawcoaching",
+      ...(ogImage
+        ? {
+            images: [ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`],
+          }
+        : {}),
     },
     robots: noIndex
       ? { index: false, follow: false }
       : { index: true, follow: true },
   };
+
+  return metadata;
 }
 
 export function generateBlogMetadata(post: {
@@ -64,7 +75,7 @@ export function generateBlogMetadata(post: {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt || "";
-  const image = post.coverImage?.asset?.url || "/og-image.jpg";
+  const coverUrl = post.coverImage?.asset?.url;
   const url = `${siteUrl}/blog/${post.slug}`;
 
   return {
@@ -78,12 +89,16 @@ export function generateBlogMetadata(post: {
       description,
       url,
       publishedTime: post.publishedAt,
-      images: [{ url: image }],
+      ...(coverUrl ? { images: [{ url: coverUrl }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      site: process.env.NEXT_PUBLIC_TWITTER_HANDLE || "@xyzlawcoaching",
+      creator: process.env.NEXT_PUBLIC_TWITTER_HANDLE || "@xyzlawcoaching",
+      ...(coverUrl ? { images: [coverUrl] } : {}),
     },
   };
 }
+

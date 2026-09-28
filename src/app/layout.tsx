@@ -60,22 +60,15 @@ export const metadata: Metadata = {
       "Civil Judge & APP Exam Coaching in Tamil Nadu | XYZ Law Coaching",
     description:
       "Tamil Nadu's trusted judiciary coaching. 1000+ students, 25+ judges selected. Online & offline.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "XYZ Law Coaching Tamil Nadu — Civil Judge & APP Exam Coaching",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
+    site: "@xyzlawcoaching",
+    creator: "@xyzlawcoaching",
     title:
       "Civil Judge & APP Exam Coaching | XYZ Law Coaching Tamil Nadu",
     description:
       "Tamil Nadu's trusted judiciary coaching. 25+ judges trained.",
-    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,

@@ -23,6 +23,8 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/faculty",
 });
 
+export const revalidate = 3600;
+
 const placeholderFaculty: FacultyDetailItem[] = [
   {
     id: "1",
