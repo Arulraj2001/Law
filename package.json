@@ -7,8 +7,10 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:prod": "npx ts-node --skipProject src/scripts/post-deploy-test.ts"
   },
+
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
     "@portabletext/react": "^7.0.1",

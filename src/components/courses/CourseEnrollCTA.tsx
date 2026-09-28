@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { CheckCircle2, MessageSquare, ArrowRight } from "lucide-react";
 import { LeadForm } from "@/components/shared/LeadForm";
 import { COURSES } from "@/lib/constants";
+import { useWhatsApp } from "@/hooks/useWhatsApp";
 import Link from "next/link";
 
 export interface CourseEnrollCTAProps {
@@ -19,6 +20,7 @@ export function CourseEnrollCTA({
   defaultCourseName = "Civil Judge Exam Coaching",
   subText = "Join the coaching programme that has produced 25+ Civil Judges across Tamil Nadu. Online and offline batches available.",
 }: CourseEnrollCTAProps) {
+  const { openCourseEnquiry } = useWhatsApp();
   const courseOptions = COURSES.map((c) => c.title);
 
   const steps = [
@@ -70,13 +72,28 @@ export function CourseEnrollCTA({
 
               <div className="space-y-4">
                 {steps.map((step) => (
-                  <div key={step.number} className="flex items-start gap-3.5">
+                  <div
+                    key={step.number}
+                    className={`flex items-start gap-3.5 ${
+                      step.number === "1"
+                        ? "cursor-pointer hover:bg-white/5 p-2 -ml-2 rounded-lg transition-colors"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      if (step.number === "1") openCourseEnquiry(courseTitle);
+                    }}
+                  >
                     <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-heading font-bold text-sm text-white shrink-0">
                       {step.number}
                     </div>
                     <div>
-                      <h4 className="font-heading font-bold text-sm text-white">
-                        {step.title}
+                      <h4 className="font-heading font-bold text-sm text-white flex items-center gap-2">
+                        <span>{step.title}</span>
+                        {step.number === "1" && (
+                          <span className="text-[10px] bg-[#25D366] text-white px-2 py-0.5 rounded-full font-sans">
+                            Instant
+                          </span>
+                        )}
                       </h4>
                       <p className="text-xs text-white/70 leading-relaxed mt-0.5">
                         {step.desc}
@@ -85,7 +102,19 @@ export function CourseEnrollCTA({
                   </div>
                 ))}
               </div>
+
+              <div className="mt-4">
+                <button
+                  type="button"
+                  onClick={() => openCourseEnquiry(courseTitle)}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba5c] text-white text-xs sm:text-sm font-bold shadow-md transition-all active:scale-95"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Enquire on WhatsApp</span>
+                </button>
+              </div>
             </div>
+
 
             {/* Reassurance link */}
             <div className="pt-4 border-t border-white/10 text-xs text-white/60">

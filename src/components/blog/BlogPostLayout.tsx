@@ -18,6 +18,7 @@ import { PortableTextRenderer } from "./PortableTextRenderer";
 import { BlogPostCTA } from "./BlogPostCTA";
 import { BlogSidebar, ExamUpdateItem } from "./BlogSidebar";
 import { BlogPostItem } from "./BlogGrid";
+import { track } from "@/lib/analytics";
 
 export interface SinglePostData {
   _id: string;
@@ -92,6 +93,9 @@ export function BlogPostLayout({
   // Track & Fetch Views
   useEffect(() => {
     if (!post?.slug) return;
+
+    // GA4 Analytics event
+    track.blogRead(post.title, post.category);
 
     // Increment View
     fetch("/api/blog-views", {

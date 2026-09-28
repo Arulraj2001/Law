@@ -329,6 +329,24 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["blog_views"]["Insert"]>;
         Relationships: [];
       };
+      whatsapp_clicks: {
+        Row: {
+          id: string;
+          message_type: string | null;
+          clicked_at: string;
+          ip_address: string | null;
+          user_agent: string | null;
+        };
+        Insert: {
+          id?: string;
+          message_type?: string | null;
+          clicked_at?: string;
+          ip_address?: string | null;
+          user_agent?: string | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["whatsapp_clicks"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -358,6 +376,9 @@ export type SiteSetting =
   Database["public"]["Tables"]["site_settings"]["Row"];
 export type BlogView =
   Database["public"]["Tables"]["blog_views"]["Row"];
+export type WhatsAppClick =
+  Database["public"]["Tables"]["whatsapp_clicks"]["Row"];
+
 
 export type BatchStatus = "open" | "filling" | "full" | "completed";
 export type LeadStatus =

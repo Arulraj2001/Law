@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { SchemaMarkup } from "@/components/shared/SchemaMarkup";
+import { useWhatsApp } from "@/hooks/useWhatsApp";
 
 export interface CourseFAQItem {
   question: string;
@@ -18,10 +19,12 @@ export interface CourseFAQProps {
 
 export function CourseFAQ({ faqs, courseTitle }: CourseFAQProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const { openGeneralEnquiry } = useWhatsApp();
 
   const handleToggle = (index: number) => {
     setActiveIndex((prev) => (prev === index ? null : index));
   };
+
 
   return (
     <section className="py-20 bg-white" id="faq">
@@ -106,11 +109,29 @@ export function CourseFAQ({ faqs, courseTitle }: CourseFAQProps) {
           })}
         </div>
 
+        {/* Below Accordion WhatsApp CTA */}
+        <div className="mt-10 text-center p-6 sm:p-7 rounded-2xl bg-[#F5F5F0] border border-black/[0.06] max-w-[800px] mx-auto shadow-sm">
+          <p className="font-heading font-bold text-navy-dark text-base sm:text-lg mb-1">
+            Have a question that is not answered here?
+          </p>
+          <p className="text-xs sm:text-sm text-slate-600 mb-4">
+            Our expert faculty and student counsellors are available to assist you.
+          </p>
+          <button
+            type="button"
+            onClick={openGeneralEnquiry}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20ba5c] text-white text-xs sm:text-sm font-bold shadow-md transition-all active:scale-95"
+          >
+            <span>Chat on WhatsApp</span>
+          </button>
+        </div>
+
         {/* Embedded FAQPage Schema */}
         <SchemaMarkup type="faq" data={{ faqs }} />
       </div>
     </section>
   );
 }
+
 
 export default CourseFAQ;

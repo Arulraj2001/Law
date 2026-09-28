@@ -12,7 +12,7 @@ export interface CourseStickySidebarProps {
 
 export function CourseStickySidebar({ courseTitle }: CourseStickySidebarProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const { openCourseEnquiry, openChat } = useWhatsApp();
+  const { openCourseEnquiry, openSyllabusRequest } = useWhatsApp();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,10 +33,9 @@ export function CourseStickySidebar({ courseTitle }: CourseStickySidebarProps) {
   }, []);
 
   const handleDownloadSyllabus = () => {
-    openChat(
-      `Hi, please share the ${courseTitle} exam syllabus PDF and batch details.`
-    );
+    openSyllabusRequest(courseTitle);
   };
+
 
   return (
     <AnimatePresence>

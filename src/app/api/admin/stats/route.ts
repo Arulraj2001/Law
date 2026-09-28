@@ -32,6 +32,7 @@ export async function GET() {
         publishedPosts,
         activeBatches: 4,
         totalToppers: 25,
+        whatsappClicksToday: 12,
       });
     }
 
@@ -46,6 +47,17 @@ export async function GET() {
 
     const lastWeekStart = new Date(now);
     lastWeekStart.setDate(now.getDate() - 14);
+
+    let whatsappClicksToday = 0;
+    try {
+      const { count } = await supabase
+        .from("whatsapp_clicks")
+        .select("*", { count: "exact", head: true })
+        .gte("clicked_at", todayStart.toISOString());
+      if (typeof count === "number") whatsappClicksToday = count;
+    } catch {
+      whatsappClicksToday = 0;
+    }
 
     const [
       { count: totalLeads },
@@ -88,11 +100,13 @@ export async function GET() {
       publishedPosts,
       activeBatches: activeBatches || 0,
       totalToppers: totalToppers || 0,
+      whatsappClicksToday: whatsappClicksToday || 0,
     });
   } catch (error: any) {
     return NextResponse.json(
       { error: error?.message || "Failed to load admin stats" },
       { status: 500 }
     );
+
   }
 }

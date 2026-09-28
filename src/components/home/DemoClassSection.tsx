@@ -20,7 +20,7 @@ export function DemoClassSection() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const { openGeneralEnquiry } = useWhatsApp();
+  const { openDemoClass } = useWhatsApp();
 
   const courseNames = COURSES.map((c) => c.title);
 
@@ -221,9 +221,10 @@ export function DemoClassSection() {
               </p>
               <button
                 type="button"
-                onClick={openGeneralEnquiry}
+                onClick={() => openDemoClass()}
                 className="w-full py-3.5 px-5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-sm font-semibold tracking-wide transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
               >
+
                 <WhatsAppIcon className="w-5 h-5 fill-white" />
                 <span>Chat on WhatsApp — We Reply in Minutes</span>
               </button>

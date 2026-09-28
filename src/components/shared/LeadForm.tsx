@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, CheckCircle2, AlertCircle, Send } from "lucide-react";
 import { COURSES, SITE_CONFIG } from "@/lib/constants";
+import { track } from "@/lib/analytics";
 
 export interface LeadFormProps {
   formType?: "enquiry" | "demo_class" | "counselling" | "contact";
@@ -159,6 +160,7 @@ export function LeadForm({
       }
 
       setStatus("success");
+      track.formSubmit(formType, formData.course_interest);
       if (onSuccess) onSuccess(formData.course_interest);
 
       // If WhatsApp variant, open chat with prefilled text

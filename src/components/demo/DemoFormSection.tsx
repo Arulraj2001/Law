@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { LeadForm } from "@/components/shared/LeadForm";
 import { COURSES } from "@/lib/constants";
 import { useWhatsApp } from "@/hooks/useWhatsApp";
+import { track } from "@/lib/analytics";
 import { ShieldCheck, Zap, GraduationCap, Quote } from "lucide-react";
 
 function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
@@ -20,12 +21,14 @@ export function DemoFormSection() {
   const { openDemoClass } = useWhatsApp();
 
   const handleSuccess = (course?: string) => {
+    track.demoClassBook(course);
     const query = new URLSearchParams({ type: "demo" });
     if (course) {
       query.set("course", course);
     }
     router.push(`/thank-you?${query.toString()}`);
   };
+
 
   return (
     <section id="demo-form" className="py-16 sm:py-20 bg-white">

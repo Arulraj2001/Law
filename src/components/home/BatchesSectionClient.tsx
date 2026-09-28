@@ -40,7 +40,7 @@ function formatDate(dateStr: string): string {
 export function BatchesSectionClient({ batches }: BatchesSectionClientProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
-  const { openCourseEnquiry, openChat } = useWhatsApp();
+  const { openBatchEnquiry, openChat } = useWhatsApp();
 
   return (
     <section
@@ -221,12 +221,13 @@ export function BatchesSectionClient({ batches }: BatchesSectionClientProps) {
                   type="button"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => openCourseEnquiry(batch.course_name)}
+                  onClick={() => openBatchEnquiry(batch.course_name)}
                   className="w-full py-3 px-4 rounded-full bg-[#1D9E75] hover:bg-[#0F6E56] text-white text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Enquire Now</span>
                   <ArrowRight className="w-4 h-4" />
                 </motion.button>
+
               </motion.div>
             );
           })}

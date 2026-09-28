@@ -86,7 +86,7 @@ export function BatchTable({
   showTitle = true,
   limit,
 }: BatchTableProps) {
-  const { openCourseEnquiry, openGeneralEnquiry } = useWhatsApp();
+  const { openBatchEnquiry, openGeneralEnquiry } = useWhatsApp();
 
   const sourceBatches =
     batches && batches.length > 0 ? batches : DEFAULT_BATCHES;
@@ -263,7 +263,7 @@ export function BatchTable({
                 <td className="py-4 px-6 text-right whitespace-nowrap">
                   <button
                     type="button"
-                    onClick={() => openCourseEnquiry(batch.course_name)}
+                    onClick={() => openBatchEnquiry(batch.course_name)}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-navy-mid hover:bg-emerald px-4 py-2 rounded-full transition-colors shadow-sm"
                   >
                     <span>Enquire</span>
@@ -323,12 +323,13 @@ export function BatchTable({
             {/* Mobile CTA Button */}
             <button
               type="button"
-              onClick={() => openCourseEnquiry(batch.course_name)}
+              onClick={() => openBatchEnquiry(batch.course_name)}
               className="w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-white bg-navy-mid hover:bg-emerald py-2.5 rounded-xl transition-colors shadow-sm"
             >
               <span>Enquire for this Batch</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
+
           </motion.div>
         ))}
       </div>

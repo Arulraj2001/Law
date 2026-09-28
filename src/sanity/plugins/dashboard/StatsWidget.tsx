@@ -8,7 +8,9 @@ interface StatsData {
   publishedPosts: number;
   activeBatches: number;
   totalToppers: number;
+  whatsappClicksToday?: number;
 }
+
 
 export function StatsWidget() {
   const [stats, setStats] = useState<StatsData | null>(null);
@@ -100,7 +102,16 @@ export function StatsWidget() {
       badgeColor: "#ca8a04",
       bgColor: "#FEF9C3",
     },
+    {
+      title: "WhatsApp Clicks (Today)",
+      value: stats?.whatsappClicksToday ?? 0,
+      icon: "💬",
+      badge: "Today",
+      badgeColor: "#16a34a",
+      bgColor: "#DCFCE7",
+    },
   ];
+
 
   return (
     <div
@@ -206,7 +217,7 @@ export function StatsWidget() {
             gap: "16px",
           }}
         >
-          {[1, 2, 3, 4, 5, 6].map((i) => (
+          {[1, 2, 3, 4, 5, 6, 7].map((i) => (
             <div
               key={i}
               style={{

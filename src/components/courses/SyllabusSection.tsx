@@ -22,13 +22,12 @@ export function SyllabusSection({
   syllabus,
 }: SyllabusSectionProps) {
   const [activeTab, setActiveTab] = useState(0);
-  const { openChat } = useWhatsApp();
+  const { openSyllabusRequest } = useWhatsApp();
 
   const handleDownloadPdf = () => {
-    openChat(
-      `Hi, please share the ${courseTitle} exam syllabus PDF and batch details.`
-    );
+    openSyllabusRequest(courseTitle);
   };
+
 
   return (
     <section className="py-20 bg-[#F5F5F0]" id="syllabus">

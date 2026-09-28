@@ -1,18 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SITE_CONFIG } from "@/lib/constants";
+import { useWhatsApp } from "@/hooks/useWhatsApp";
+import { track } from "@/lib/analytics";
 
 export function WhatsAppButton() {
   const [isHovered, setIsHovered] = useState(false);
+  const [isBusinessHours, setIsBusinessHours] = useState(true);
+  const { openGeneralEnquiry, getWhatsAppUrl } = useWhatsApp();
 
-  // Clean non-numeric characters from the WhatsApp number
-  const cleanPhone = (SITE_CONFIG.whatsapp || "919876543210").replace(/\D/g, "");
-  const defaultMessage = encodeURIComponent(
-    "Hi, I'm interested in your coaching programmes. Please share details."
+  useEffect(() => {
+    try {
+      const now = new Date();
+      const istHour = new Date(
+        now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+      ).getHours();
+      const istDay = new Date(
+        now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+      ).getDay();
+      const isBusiness =
+        istDay >= 1 && istDay <= 6 && istHour >= 9 && istHour < 19;
+      setIsBusinessHours(isBusiness);
+    } catch {
+      setIsBusinessHours(true);
+    }
+  }, []);
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    track.whatsappClick("general_enquiry");
+    openGeneralEnquiry();
+  };
+
+  const defaultUrl = getWhatsAppUrl(
+    "Hi XYZ Law Coaching,\n\nI found your website and would like to learn more about your judicial exam coaching programmes in Tamil Nadu.\n\nPlease share details about available courses, batches, and fees.\n\nThank you."
   );
-  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${defaultMessage}`;
 
   return (
     <div
@@ -28,46 +51,64 @@ export function WhatsAppButton() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 6, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="hidden md:flex items-center gap-1.5 absolute bottom-full mb-3 right-0 whitespace-nowrap bg-navy-dark text-white text-xs font-medium py-1.5 px-3 rounded-lg shadow-xl border border-white/10"
+            className="hidden md:flex flex-col gap-1 items-end absolute bottom-full mb-3 right-0 whitespace-nowrap bg-navy-dark text-white text-xs font-medium py-2 px-3.5 rounded-xl shadow-xl border border-white/10"
           >
-            <span className="w-2 h-2 rounded-full bg-emerald animate-pulse" />
-            We reply in minutes
+            <div className="flex items-center gap-2">
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  isBusinessHours
+                    ? "bg-emerald-400 animate-pulse"
+                    : "bg-gray-400"
+                }`}
+              />
+              <span className="font-semibold text-white/90">
+                {isBusinessHours ? "Online now" : "Will reply soon"}
+              </span>
+            </div>
+            <div className="text-[11px] text-white/70">
+              Chat with us — we reply in minutes
+            </div>
             <span className="absolute top-full right-5 -mt-1 border-4 border-transparent border-t-navy-dark" />
           </motion.div>
         )}
       </AnimatePresence>
 
       <a
-        href={whatsappUrl}
+        href={defaultUrl}
+        onClick={handleClick}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
         className="relative flex items-center shadow-lg hover:shadow-2xl transition-shadow rounded-full"
       >
-        {/* Pulse ring animation every 3s (1s pulse + 2s delay) */}
-        <motion.span
-          className="absolute inset-0 rounded-full bg-[#25D366] pointer-events-none -z-10"
-          animate={{
-            scale: [1, 1.5, 1.5],
-            opacity: [0.8, 0, 0],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            times: [0, 0.33, 1],
-            ease: "easeOut",
-          }}
-        />
+        {/* Pulse ring animation only during business hours */}
+        {isBusinessHours && (
+          <motion.span
+            className="absolute inset-0 rounded-full bg-[#25D366] pointer-events-none -z-10"
+            animate={{
+              scale: [1, 1.5, 1.5],
+              opacity: [0.8, 0, 0],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              times: [0, 0.33, 1],
+              ease: "easeOut",
+            }}
+          />
+        )}
 
-        {/* Floating action button with hover expansion */}
+        {/* Floating action button: 48px mobile, 56px desktop */}
         <motion.div
-          className="flex items-center justify-center bg-[#25D366] text-white rounded-full h-12 md:h-14 px-3 md:px-3.5 overflow-hidden cursor-pointer"
+          className="flex items-center justify-center bg-[#25D366] text-white rounded-full h-12 w-12 md:h-14 md:w-14 overflow-hidden cursor-pointer"
           animate={{
             width: isHovered ? "auto" : undefined,
+            paddingLeft: isHovered ? "14px" : undefined,
+            paddingRight: isHovered ? "16px" : undefined,
           }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          {/* WhatsApp SVG Icon (28px desktop, 24px mobile) */}
+          {/* WhatsApp SVG Icon */}
           <svg
             viewBox="0 0 24 24"
             className="w-6 h-6 md:w-7 md:h-7 shrink-0 fill-white"
@@ -85,7 +126,7 @@ export function WhatsAppButton() {
                 animate={{ opacity: 1, width: "auto", marginLeft: 8 }}
                 exit={{ opacity: 0, width: 0, marginLeft: 0 }}
                 transition={{ duration: 0.25 }}
-                className="hidden md:inline-block font-sans text-sm font-semibold tracking-wide whitespace-nowrap pr-2"
+                className="hidden md:inline-block font-sans text-sm font-semibold tracking-wide whitespace-nowrap"
               >
                 Chat with us
               </motion.span>
